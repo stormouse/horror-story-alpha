@@ -2,7 +2,7 @@
 
 public class CapsulePlayerControl : MonoBehaviour {
 
-    public float moveSpeed = 2.0f;
+    public float moveSpeed = 2.00f;
 
     private Animator _animator;
 
