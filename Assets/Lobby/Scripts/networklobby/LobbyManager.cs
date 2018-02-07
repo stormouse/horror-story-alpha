@@ -209,9 +209,10 @@ public class LobbyManager : NetworkLobbyManager {
                 lastSpawnpointIndex = i;
             }
             NetworkServer.Spawn(newPlayer);
+            NetworkServer.Destroy(gamePlayer);
             NetworkServer.ReplacePlayerForConnection(lobbyPlayer.GetComponent<NetworkIdentity>().connectionToClient, newPlayer, 0);
         }
-        else if(lobbyPlayer.GetComponent<LobbyPlayer>().team == TeamType.Survivor)
+        else if (lobbyPlayer.GetComponent<LobbyPlayer>().team == TeamType.Survivor)
         {
             var newPlayer = Instantiate(survivorPrefab);
             if (spawnPoints.Length > 0)
@@ -221,6 +222,7 @@ public class LobbyManager : NetworkLobbyManager {
                 lastSpawnpointIndex = i;
             }
             NetworkServer.Spawn(newPlayer);
+            NetworkServer.Destroy(gamePlayer);
             NetworkServer.ReplacePlayerForConnection(lobbyPlayer.GetComponent<NetworkIdentity>().connectionToClient, newPlayer, 0);
         }
 
