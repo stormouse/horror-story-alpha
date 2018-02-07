@@ -2,7 +2,7 @@
 
 public class CapsulePlayerControl : MonoBehaviour {
 
-    public float moveSpeed = 2.00f;
+    public float moveSpeed = 2.0f;
 
     private Animator _animator;
 
@@ -24,7 +24,7 @@ public class CapsulePlayerControl : MonoBehaviour {
         Vector3 movement = new Vector3(h, 0, v) * moveSpeed;
         if (movement.magnitude > moveSpeed)
             movement = movement.normalized * moveSpeed;
-        if (movement.magnitude > 0.5f)
+        if (movement.magnitude > moveSpeed * 0.3f)
         {
             if (_animator) _animator.SetBool("isWalking", true);
             GetComponent<Rigidbody>().MoveRotation(Quaternion.LookRotation(movement));
@@ -33,7 +33,7 @@ public class CapsulePlayerControl : MonoBehaviour {
         {
             if (_animator) _animator.SetBool("isWalking", false);
         }
-        transform.Translate(movement * Time.deltaTime, Space.World);
+        GetComponent<Rigidbody>().MovePosition(transform.position + movement * Time.deltaTime);
     }
 
 }
