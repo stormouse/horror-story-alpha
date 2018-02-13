@@ -1,0 +1,16 @@
+Standby,1,50
+walk,55,97
+run,103,137
+Attack1,143,196
+Beaten,201,230
+Victory,235,327
+Roar,332,397
+Attack2,402,466
+Death,471,509
+Jump,514,580
+strafe_right,585,617
+strafe_left,622,654
+Attack2,659,694,
+Attack_standby,699,752
+Attack3,757,787
+recover,792,894
