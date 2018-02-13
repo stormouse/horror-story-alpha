@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class Hunter : NetworkBehaviour {
 
 	//Move Spped
-	public float moveSpeed = 15f;
+	public float moveSpeed = 5f;
 	public float hookRange = 20f;
 	public float hookSpeed = 50f;
 	public bool hasHook = true;
