@@ -3235,7 +3235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557d56b6a5c044754b7b52e1eacbc194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  moveSpeed: 5
   hookRange: 20
   hookSpeed: 30
   hasHook: 1
