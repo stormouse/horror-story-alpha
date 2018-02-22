@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 114337787889127000}
   - component: {fileID: 114694952665830406}
   - component: {fileID: 114597809870883788}
+  - component: {fileID: 114791609835523202}
   m_Layer: 0
   m_Name: PlayerPrefab_Survivor
   m_TagString: Player
@@ -187,7 +188,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1366605860087522}
   serializedVersion: 2
-  m_Mass: 6
+  m_Mass: 12
   m_Drag: 1
   m_AngularDrag: 1
   m_UseGravity: 1
@@ -310,3 +311,15 @@ MonoBehaviour:
     i15: 240
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114791609835523202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1366605860087522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8139e5e069844a18f511b25b18592d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionButtonName: Interaction
