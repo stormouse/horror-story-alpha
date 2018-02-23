@@ -11,6 +11,7 @@ public class PowerSourceController : NetworkBehaviour
 	public float m_PowerLeakingDelay = 5f;
     public float m_PowerSpeed = 20f;
 
+    public GameObject destructableVersion;
 
 	public Slider m_Slider;                            
 	public Image m_FillImage;                          
@@ -66,14 +67,20 @@ public class PowerSourceController : NetworkBehaviour
 		m_Charged = true;
 
         //gameObject.SetActive (false);
-        RpcActivate();
+        RpcDeactivate();
 	}
 
     [ClientRpc]
-    void RpcActivate()
+    void RpcDeactivate()
     {
         m_Charged = true;
         gameObject.SetActive(false);
+        CreateDestruction();
+    }
+
+    void CreateDestruction()
+    {
+        Instantiate(destructableVersion, transform.position, transform.rotation);
     }
 
 
