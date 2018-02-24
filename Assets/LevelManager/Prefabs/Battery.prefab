@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 223855010859955992}
   - component: {fileID: 114787886398495340}
   - component: {fileID: 114636263008393662}
+  - component: {fileID: 225325621733338970}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -172,7 +173,7 @@ Transform:
   m_GameObject: {fileID: 1356235814632506}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4806567266932088}
   - {fileID: 4883795517918570}
@@ -211,15 +212,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095918437375190}
-  m_LocalRotation: {x: 0, y: 0.42261827, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: -80.8, y: 0, z: -67.6}
+  m_LocalRotation: {x: 0, y: 0.8191521, z: -0, w: -0.5735764}
+  m_LocalPosition: {x: 28.5, y: 0, z: 20.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224982195076637084}
   - {fileID: 4050687671603630}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 50, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 250, z: 0}
 --- !u!23 &23150629549139468
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -355,7 +356,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1387794816414842}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -505,16 +506,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxPower: 100
-  m_StartingPower: 50
+  m_StartingPower: 1
   m_PowerLeakingSpead: 3
   m_PowerLeakingDelay: 5
   m_PowerSpeed: 20
   destructableVersion: {fileID: 1373123856207656, guid: 87f4668d390ddbf4b9b18518a745fc26,
     type: 2}
+  canvasGroup: {fileID: 225325621733338970}
   m_Slider: {fileID: 114446693725933942}
   m_FillImage: {fileID: 114904946646895136}
   m_FullPowerColor: {r: 1, g: 0, b: 0, a: 1}
-  m_ZeroPowerColor: {r: 0.8235294, g: 0.79396254, b: 0.78719723, a: 1}
+  m_ZeroPowerColor: {r: 0.21997963, g: 0.75, b: 0.17647058, a: 1}
 --- !u!114 &114904946646895136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -681,3 +683,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.1}
   m_SizeDelta: {x: 5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225325621733338970
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1567186009233176}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

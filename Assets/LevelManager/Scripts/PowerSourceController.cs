@@ -13,6 +13,7 @@ public class PowerSourceController : NetworkBehaviour
 
     public GameObject destructableVersion;
 
+    public CanvasGroup canvasGroup;
 	public Slider m_Slider;                            
 	public Image m_FillImage;                          
 	public Color m_FullPowerColor = Color.green;       
@@ -26,11 +27,13 @@ public class PowerSourceController : NetworkBehaviour
         get { return m_Charged; }
     }
     private bool m_Charged = false;
+    private bool m_Charging = false;
 
     private void Start()
 	{
 		m_CurrentPower = m_StartingPower;
 		m_Charged = false;
+        m_Charging = false;
 		m_age = 0f;
 
 		SetPowerUI();
@@ -39,6 +42,21 @@ public class PowerSourceController : NetworkBehaviour
 	void Update() {
         if (m_Charged) {
             return;
+        }
+        if (m_Charging) {
+            m_Charging = false;
+
+            if (m_CurrentPower < m_MaxPower)
+            {
+                m_CurrentPower += Time.deltaTime * m_PowerSpeed;
+            }
+
+
+            if (m_CurrentPower >= m_MaxPower && !m_Charged)
+            {
+                m_CurrentPower = m_MaxPower;
+                OnCharged();
+            }
         }
 		m_age += Time.deltaTime;
 		if (m_CurrentPower > 0f && m_age > m_PowerLeakingDelay && !m_Charged) {
@@ -59,6 +77,13 @@ public class PowerSourceController : NetworkBehaviour
 	{
 		m_Slider.value = m_CurrentPower;
 		m_FillImage.color = Color.Lerp (m_ZeroPowerColor, m_FullPowerColor, m_CurrentPower / m_MaxPower);
+        if (m_Slider.value <= 0f)
+        {
+            canvasGroup.alpha = 0f;
+        } else
+        {
+            canvasGroup.alpha = 1f;
+        }
 	}
 
     [ServerCallback]
@@ -85,19 +110,11 @@ public class PowerSourceController : NetworkBehaviour
 
 
 
-	public void Charge (float deltatime)
+	public void Charge ()
 	{
 		m_age = 0f;
-		if (m_CurrentPower < m_MaxPower) {
-			m_CurrentPower += deltatime * m_PowerSpeed;
-		}
 
-
-		if (m_CurrentPower >= m_MaxPower && !m_Charged)
-		{
-			m_CurrentPower = m_MaxPower;
-			OnCharged ();
-		}
+        m_Charging = true;
 
 		SetPowerUI ();
 	}
