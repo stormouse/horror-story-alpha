@@ -173,7 +173,7 @@ Transform:
   m_GameObject: {fileID: 1356235814632506}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children:
   - {fileID: 4806567266932088}
   - {fileID: 4883795517918570}
@@ -212,8 +212,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095918437375190}
-  m_LocalRotation: {x: 0, y: 0.8191521, z: -0, w: -0.5735764}
-  m_LocalPosition: {x: 28.5, y: 0, z: 20.7}
+  m_LocalRotation: {x: 0, y: 0.42261827, z: 0, w: 0.9063079}
+  m_LocalPosition: {x: 7.6, y: 0, z: -33.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224982195076637084}
@@ -506,10 +506,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxPower: 100
-  m_StartingPower: 1
+  m_StartingPower: 20
   m_PowerLeakingSpead: 3
   m_PowerLeakingDelay: 5
-  m_PowerSpeed: 20
+  m_PowerSpeed: 15
   destructableVersion: {fileID: 1373123856207656, guid: 87f4668d390ddbf4b9b18518a745fc26,
     type: 2}
   canvasGroup: {fileID: 225325621733338970}
@@ -680,7 +680,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.1}
+  m_AnchoredPosition: {x: 0, y: 0.3}
   m_SizeDelta: {x: 5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &225325621733338970

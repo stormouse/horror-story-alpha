@@ -82,7 +82,7 @@ public class PowerSourceController : NetworkBehaviour
             canvasGroup.alpha = 0f;
         } else
         {
-            canvasGroup.alpha = 1f;
+            canvasGroup.alpha = 255f;
         }
 	}
 
