@@ -2,6 +2,7 @@
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using GameEnum;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : NetworkLobbyManager {
 
@@ -196,6 +197,19 @@ public class LobbyManager : NetworkLobbyManager {
         }
     }
 
+    public override void OnLobbyClientSceneChanged(NetworkConnection conn)
+    {
+        base.OnLobbyClientSceneChanged(conn);
+
+        if (SceneManager.GetActiveScene().name == playScene)
+        {
+            if (lobbyUIContainer)
+            {
+                lobbyUIContainer.SetActive(false);
+            }
+        }
+    }
+
     // lobby hook
     public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobbyPlayer, GameObject gamePlayer)
     {
@@ -212,6 +226,10 @@ public class LobbyManager : NetworkLobbyManager {
             {
                 int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
                 newPlayer.transform.position = spawnPoints[i].transform.position;
+                newPlayer.transform.rotation = Quaternion.identity;
+                var character = newPlayer.GetComponent<NetworkCharacter>();
+                // assert character!
+                character.SetTeam(TeamType.Hunter);
                 lastSpawnpointIndex = i;
             }
             NetworkServer.Spawn(newPlayer);
@@ -225,6 +243,10 @@ public class LobbyManager : NetworkLobbyManager {
             {
                 int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
                 newPlayer.transform.position = spawnPoints[i].transform.position;
+                newPlayer.transform.rotation = Quaternion.identity;
+                var character = newPlayer.GetComponent<NetworkCharacter>();
+                // assert character!
+                character.SetTeam(TeamType.Survivor);
                 lastSpawnpointIndex = i;
             }
             NetworkServer.Spawn(newPlayer);

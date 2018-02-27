@@ -1,53 +1,64 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class HookControl : MonoBehaviour {
+[NetworkSettings(sendInterval = 0)]
+public class HookControl : NetworkBehaviour {
 
     //private
-    private float x, z;
-    private Vector3 fwd;
-    private float hookSpeed = 30f;
-    private float hookRange = 20f;
-    private string hunterTag = "Hunter";
+    private Vector3 origin;
+    [HideInInspector]
+    public float hookSpeed;
+    [HideInInspector]
+    public float hookRange;
 
     //public hunter
     public GameObject hunter;
+    
 
-    // Use this for initialization
     void Start()
     {
-        //Get born position and move direction
-        x = transform.position.x;
-        z = transform.position.z;
-        hookSpeed = hunter.GetComponent<HunterSkills>().hookSpeed;
-        hookRange = hunter.GetComponent<HunterSkills>().hookRange;
-        fwd = transform.forward;
-        GetComponent<Rigidbody>().velocity = fwd * hookSpeed;
+        origin = transform.position;
+    }
+    
+
+    public void Throw()
+    {
+        GetComponent<Rigidbody>().velocity = transform.forward * hookSpeed;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if ((transform.position.z - z) * (transform.position.z - z) + (transform.position.x - x) * (transform.position.x - x)
-            > hookRange * hookRange)
+        if (!isServer) return;
+
+        if (Vector3.SqrMagnitude(transform.position - origin) > hookRange * hookRange)
         {
             hunter.GetComponent<HunterSkills>().ReturnHook();
-            Debug.Log("Update Destroy");
-            Destroy(this.gameObject);
+            NetworkServer.Destroy(this.gameObject);
         }
     }
+    
 
-
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.tag == hunterTag)
+        if (!isServer) return;
+
+        var otherCharacter = other.GetComponent<NetworkCharacter>();
+        if (otherCharacter)
         {
-            collision.collider.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
+            var dir = (transform.position - origin).normalized;
+            var offset = dir * 3.5f;
+            var duration = Vector3.Distance(transform.position, origin) / hookSpeed;
+            var args = new StunArgument();
+            args.time = duration + 0.3f;
+            otherCharacter.Perform("Stun", gameObject, args);
+            otherCharacter.MoveTo(hunter.transform.position + offset, MoveMethod.Tween, duration);
         }
         hunter.GetComponent<HunterSkills>().ReturnHook();
-        Debug.Log("Collision Destroy");
-        Destroy(this.gameObject);
+        NetworkServer.Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
 }

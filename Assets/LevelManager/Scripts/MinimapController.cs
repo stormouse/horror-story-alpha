@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class MinimapController : MonoBehaviour {
 
@@ -13,7 +14,7 @@ public class MinimapController : MonoBehaviour {
 
     private void LateUpdate()
     {
-        if (player != null)
+        if (player.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
             Vector3 newPos = player.position;
             newPos.y = transform.position.y;

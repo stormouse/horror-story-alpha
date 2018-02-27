@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 4135079849824596}
   - component: {fileID: 54030175233645006}
   - component: {fileID: 65916899565638612}
+  - component: {fileID: 114309721182642536}
   - component: {fileID: 114704475673516036}
   m_Layer: 0
   m_Name: Hook_prefab
@@ -267,7 +268,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1931548332930490}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.2233992, y: 0.39731932, z: 0.6656716}
@@ -365,6 +366,38 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
+--- !u!114 &114309721182642536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1931548332930490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 174
+    i1: 174
+    i2: 178
+    i3: 171
+    i4: 25
+    i5: 212
+    i6: 84
+    i7: 138
+    i8: 90
+    i9: 172
+    i10: 19
+    i11: 15
+    i12: 110
+    i13: 65
+    i14: 122
+    i15: 22
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114704475673516036
 MonoBehaviour:
   m_ObjectHideFlags: 1

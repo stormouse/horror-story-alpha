@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(Rigidbody), typeof(NetworkCharacter)), NetworkSettings(sendInterval = 0f)]
@@ -96,6 +97,8 @@ public class HunterSkills : NetworkBehaviour {
         {
             return;
         }
+        _HookMethodServer(dir);
+        _HookMethod(dir);
         RpcHook(dir);
     }
 
@@ -107,11 +110,32 @@ public class HunterSkills : NetworkBehaviour {
     }
 
 
+    void _HookMethodServer(Vector3 dir)
+    {
+        // TODO: limit switch coroutine from outside
+        character.SwitchCoroutine(StartCoroutine(_ThrowHookDelay(dir, 0.4f)));
+    }
+
+
+    IEnumerator _ThrowHookDelay(Vector3 dir, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        hook = Instantiate(hookPrefab, transform.position + mDiff * dir, Quaternion.LookRotation(dir));
+        var hc = hook.GetComponent<HookControl>();
+        hc.hunter = gameObject;
+        hc.hookSpeed = hookSpeed;
+        hc.hookRange = hookRange;
+        hc.Throw();
+        NetworkServer.Spawn(hook);
+    }
+
+
     void _HookMethod(Vector3 dir)
     {
+        character.Perform("StopMovement", gameObject, null);
+        // TODO: limit transition command from outside!
         character.Transit(CharacterState.Casting);
-        hook = GameObject.Instantiate(hookPrefab, transform.position + mDiff * dir, Quaternion.LookRotation(dir));
-        hook.GetComponent<HookControl>().hunter = gameObject;
+        character.Animator.SetBool("Throwing", true);
         hasHook = false;
     }
     #endregion Hook_Cast
@@ -130,6 +154,7 @@ public class HunterSkills : NetworkBehaviour {
     void RpcReturnHook()
     {
         hasHook = true;
+        character.Animator.SetBool("Throwing", false);
         character.Perform("EndCasting", gameObject, null);
     }
     #endregion Hook_Return

@@ -13,6 +13,11 @@ public enum CharacterState
     Dead
 }
 
+public enum MoveMethod
+{
+    Teleport,
+    Tween
+}
 
 public class ActionArgument { }
 public class StunArgument : ActionArgument { public float time; }
@@ -20,7 +25,7 @@ public class MoveArgument : ActionArgument { public float h, v; }
 public delegate void ActionFunction(GameObject sender, ActionArgument args);
 
 
-[RequireComponent(typeof(Rigidbody), typeof(Animator)), NetworkSettings(sendInterval = 0f)]
+[RequireComponent(typeof(Rigidbody)), NetworkSettings(sendInterval = 0f)]
 public class NetworkCharacter : NetworkBehaviour {
 
     /* Static Keywords */
@@ -29,6 +34,7 @@ public class NetworkCharacter : NetworkBehaviour {
     public static readonly string Die      = "Die";
     public static readonly string Stun     = "Stun";
     public static readonly string EndCasting = "EndCasting";
+    public static readonly string StopMovement = "StopMovement";
 
 
     /* Private Components */
@@ -41,7 +47,11 @@ public class NetworkCharacter : NetworkBehaviour {
     [SerializeField]
     private CharacterState currentState;
     public CharacterState CurrentState { get { return currentState; }}
+
+    private GameEnum.TeamType team;
+    public GameEnum.TeamType Team { get { return team; } }
     public float attackAnimationLength;
+    
 
 
     /* Character State Machine */
@@ -89,6 +99,16 @@ public class NetworkCharacter : NetworkBehaviour {
     }
 
 
+    public void SwitchCoroutine(Coroutine c)
+    {
+        if(currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+            currentCoroutine = c;
+        }
+    }
+
+
     public void Register(CharacterState state, string action, ActionFunction method)
     {
         actions[state][action] = method;
@@ -115,6 +135,14 @@ public class NetworkCharacter : NetworkBehaviour {
     private void SetupComponents()
     {
         m_animator = GetComponent<Animator>();
+        if(m_animator == null)
+        {
+            m_animator = GetComponentInChildren<Animator>();
+        }
+        if(m_animator == null)
+        {
+            Debug.LogWarning("No animator attached to character " + gameObject.name); 
+        }
         m_rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -134,10 +162,19 @@ public class NetworkCharacter : NetworkBehaviour {
     private void SetupActionMethods()
     {
         Register(CharacterState.Normal, Attack, AttackMethod);
+        Register(CharacterState.Normal, Stun, StunMethod);
+        Register(CharacterState.Normal, StopMovement, StopMovementMethod);
         Register(CharacterState.Casting, EndCasting, EndCastingMethod);
+        Register(CharacterState.Casting, Stun, StunMethod);
         Register(CharacterState.Stunned, Stun, StunMethod);
         Register(CharacterState.Stunned, Wake, WakeMethod);
     }
+
+    public void SetTeam(GameEnum.TeamType _team)
+    {
+        team = _team;
+    }
+
     #endregion Charater_Setup
 
 
@@ -290,6 +327,102 @@ public class NetworkCharacter : NetworkBehaviour {
     private void UpdateAnimatorSpeed()
     {
         m_animator.SetFloat("Speed", m_rigidbody.velocity.magnitude);
+    }
+
+    // only server can call this
+    public void MoveTo(Vector3 destination, MoveMethod method, float duration = 0.0f)
+    {
+        if (!isServer) return;
+        RpcMoveToPosition(destination, method, duration);
+    }
+
+
+    [ClientRpc]
+    private void RpcMoveToPosition(Vector3 destination, MoveMethod method, float duration)
+    {
+        _MoveToPosition(destination, method, duration);
+    }
+
+
+    private void _MoveToPosition(Vector3 destination, MoveMethod method, float duration)
+    {
+        // all because of localPlayerAuthority
+        if (!isLocalPlayer) return;
+
+        if(duration <= 0.01f || method == MoveMethod.Teleport)
+        {
+            m_rigidbody.MovePosition(destination);
+            m_rigidbody.velocity = new Vector3(0, m_rigidbody.velocity.y, 0);
+        }
+        else if (method == MoveMethod.Tween && duration > 0.01f)
+        {
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+            }
+            currentCoroutine = StartCoroutine(MoveTweenCoroutine(destination, duration));
+        }
+    }
+
+    //// This cannot be invoked since rpc cannot pass Transform object
+    //private void _MoveToTarget(Transform target, MoveMethod method, float duration, float offset)
+    //{
+    //    var off = offset * (transform.position - target.position).normalized;
+    //    if (duration <= 0.01f || method == MoveMethod.Teleport)
+    //    {
+    //        m_rigidbody.MovePosition(target.position + off);
+    //        m_rigidbody.velocity = new Vector3(0, m_rigidbody.velocity.y, 0);
+    //    }
+    //    else if(method == MoveMethod.Tween && duration > 0.01f)
+    //    {
+    //        if (currentCoroutine != null)
+    //        {
+    //            StopCoroutine(currentCoroutine);
+    //        }
+    //        currentCoroutine = StartCoroutine(MoveTweenCoroutine(target, off, duration));
+    //    }
+    //}
+
+
+    private IEnumerator MoveTweenCoroutine(Vector3 destination, float duration)
+    {
+        float startTime = Time.time;
+        float now = startTime;
+        Vector3 original = transform.position;
+        while (now - startTime < duration)
+        {
+            now = Time.time;
+            float p = Mathf.Clamp01((now - startTime) / duration);
+            m_rigidbody.MovePosition(Vector3.Lerp(original, destination, p));
+            m_rigidbody.velocity = new Vector3(0, m_rigidbody.velocity.y, 0);
+            yield return new WaitForEndOfFrame();
+        }
+        currentCoroutine = null;
+    }
+
+
+    private IEnumerator MoveTweenCoroutine(Transform target, Vector3 offset, float duration)
+    {
+        float startTime = Time.time;
+        float now = startTime;
+        Vector3 original = transform.position;
+        while (now - startTime < duration)
+        {
+            now = Time.time;
+            float p = (now - startTime) / duration;
+            if(target == null)
+            {
+                yield break; // if we lose target
+            }
+            m_rigidbody.MovePosition(Vector3.Lerp(original, target.position + offset, p));
+            yield return new WaitForEndOfFrame();
+        }
+        currentCoroutine = null;
+    }
+
+    private void StopMovementMethod(GameObject sender, ActionArgument args)
+    {
+        m_rigidbody.velocity = Vector3.zero;
     }
 
     #endregion Move_Logic

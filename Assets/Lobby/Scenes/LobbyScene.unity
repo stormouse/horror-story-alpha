@@ -332,7 +332,8 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 1
   m_OfflineScene: LobbyScene
   m_OnlineScene: 
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 1931548332930490, guid: aeaeb2ab19d4548a5aac130f6e417a16, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -405,7 +406,7 @@ MonoBehaviour:
   lobbyUIContainer: {fileID: 1669691104}
   hunterPrefab: {fileID: 1843327644783622, guid: 6db93c167d8616848b520396c5cf7de8,
     type: 2}
-  survivorPrefab: {fileID: 1421495779513086, guid: 11f61c85b1f94de4592aa01b26038ebf,
+  survivorPrefab: {fileID: 1560030811934570, guid: 96225ecbedfa15f448df77d1de73c89d,
     type: 2}
   spectatorPrefab: {fileID: 0}
 --- !u!1 &1255708015
