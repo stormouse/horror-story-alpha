@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Lobby/Scenes/LobbyScene.unity
-    guid: 1c09c4cb63d3d2647a3cf687b79817e6
+    path: Assets/GameAlpha/Scenes/LobbyAlpha.unity
+    guid: 7a6d99110c741c447a4958e2f0115507
+  - enabled: 0
+    path: Assets/GameAlpha/Scenes/GameAlpha.unity
+    guid: c6903cd33a766e147b3b9cd4c1ef64b7
   - enabled: 1
-    path: Assets/Lobby/Scenes/test_level.unity
-    guid: 064ca20b1e7a5aa4aaa1ff49c40de5fc
+    path: Assets/LevelManager/Scenes/Level.unity
+    guid: e8526870a1214452bbba980ace076e47
