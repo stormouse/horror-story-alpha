@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33769513425045408}
   - component: {fileID: 65620317514834930}
   - component: {fileID: 23602756376217886}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,8 @@ GameObject:
   - component: {fileID: 114694952665830406}
   - component: {fileID: 114597809870883788}
   - component: {fileID: 114791609835523202}
-  m_Layer: 0
+  - component: {fileID: 114500825220314424}
+  m_Layer: 8
   m_Name: PlayerPrefab_Survivor
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -59,7 +60,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4892500493275156}
   - component: {fileID: 108764863858708198}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +75,7 @@ Transform:
   m_GameObject: {fileID: 1101808521880096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 4150960253313890}
   m_RootOrder: 1
@@ -86,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1366605860087522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.42, y: 0.76, z: -2.6131191}
+  m_LocalPosition: {x: -6.42, y: 2.14, z: -2.6131191}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4892500493275156}
@@ -258,6 +259,20 @@ MonoBehaviour:
   pushPower: 60
   gravityScale: 1
   maxSpeed: 10
+--- !u!114 &114500825220314424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1366605860087522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c958b9e717f4e0445a353a113fa4304c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hooked: 0
+  force: 30
+  alive: 1
 --- !u!114 &114597809870883788
 MonoBehaviour:
   m_ObjectHideFlags: 1

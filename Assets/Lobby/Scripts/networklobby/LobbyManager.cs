@@ -22,7 +22,7 @@ public class LobbyManager : NetworkLobbyManager {
     private List<LobbyPlayer> hunterPlayers = new List<LobbyPlayer>();
     private List<LobbyPlayer> survivorPlayers = new List<LobbyPlayer>();
 
-
+    public GameObject lobbyUIContainer = null;
     public GameObject hunterPrefab = null;
     public GameObject survivorPrefab = null;
     public GameObject spectatorPrefab = null;
@@ -189,7 +189,8 @@ public class LobbyManager : NetworkLobbyManager {
             if (canvas) canvas.enabled = false;
             foreach (var p in lobbySlots)
             {
-                p.GetComponent<LobbyPlayer>().RpcReadyForPlayScene();
+                if(p.GetComponent<LobbyPlayer>())
+                    p.GetComponent<LobbyPlayer>().RpcReadyForPlayScene();
             }
             ServerChangeScene(playScene);
         }
@@ -198,6 +199,11 @@ public class LobbyManager : NetworkLobbyManager {
     // lobby hook
     public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobbyPlayer, GameObject gamePlayer)
     {
+        if (lobbyUIContainer)
+        {
+            lobbyUIContainer.SetActive(false);
+        }
+
         var spawnPoints = FindObjectsOfType<NetworkStartPosition>();
         if (lobbyPlayer.GetComponent<LobbyPlayer>().team == TeamType.Hunter)
         {

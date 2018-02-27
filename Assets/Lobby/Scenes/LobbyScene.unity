@@ -302,9 +302,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 216.69081, y: 161.91177, z: -374.0469}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1669691110}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1109623344
 MonoBehaviour:
@@ -401,9 +402,10 @@ MonoBehaviour:
   maxSpectatorPlayers: 1
   maxHunterPlayers: 2
   maxSurvivorPlayers: 4
-  hunterPrefab: {fileID: 1471067075984744, guid: 4d7dc34c1170e4e41b755fce61900c96,
+  lobbyUIContainer: {fileID: 1669691104}
+  hunterPrefab: {fileID: 1843327644783622, guid: 6db93c167d8616848b520396c5cf7de8,
     type: 2}
-  survivorPrefab: {fileID: 1366605860087522, guid: 7077b17680a7d2545a723e8fb34697f0,
+  survivorPrefab: {fileID: 1421495779513086, guid: 11f61c85b1f94de4592aa01b26038ebf,
     type: 2}
   spectatorPrefab: {fileID: 0}
 --- !u!1 &1255708015
@@ -985,7 +987,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1643520527
 GameObject:
@@ -1140,8 +1142,8 @@ RectTransform:
   - {fileID: 1317008861}
   - {fileID: 1439060352}
   - {fileID: 1255708016}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 1109623343}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
