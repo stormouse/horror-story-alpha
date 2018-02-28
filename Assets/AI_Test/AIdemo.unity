@@ -694,7 +694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be665e3b9c75d7c4bb89c5d27295109c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 4.5
 --- !u!1 &1337201879
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,9 +911,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewAngle: 120
-  distance: 7
+  distance: 8
   hostSensible: 0
-  numOfPoints: 8
+  numOfPoints: 16
   viewMeshFilter: {fileID: 484482988}
 --- !u!114 &1938644091
 MonoBehaviour:
@@ -953,8 +953,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad906cacf76124479f049780109e508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  steeringForce: 1
+  moveSpeed: 3
+  steeringForce: 8
   movementType: 0
 --- !u!1 &1979396618
 GameObject:

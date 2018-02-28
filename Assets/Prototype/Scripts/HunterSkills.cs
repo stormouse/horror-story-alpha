@@ -49,8 +49,6 @@ public class HunterSkills : NetworkBehaviour {
 
     void AttachSkillsToCharacter()
     {
-        var character = GetComponent<NetworkCharacter>();
-        if (!character) return;
         character.Register(CharacterState.Normal, "Hook", HookMethod);
     }
     #endregion Setup_Skills
@@ -158,6 +156,5 @@ public class HunterSkills : NetworkBehaviour {
         character.Perform("EndCasting", gameObject, null);
     }
     #endregion Hook_Return
-    
 
 }

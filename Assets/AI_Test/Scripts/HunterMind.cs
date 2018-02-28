@@ -34,7 +34,7 @@ public class HunterMind : MonoBehaviour, ISensible {
             playerInSight = obj;
             if (movement)
             {
-                movement.Seek(playerInSight.transform);
+                movement.Pursue(playerInSight.transform);
             }
             GetComponent<Renderer>().material.color = Color.red;
         }

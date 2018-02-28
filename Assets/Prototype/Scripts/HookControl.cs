@@ -30,7 +30,7 @@ public class HookControl : NetworkBehaviour {
 
 
     void Update()
-    {
+    { 
         if (!isServer) return;
 
         if (Vector3.SqrMagnitude(transform.position - origin) > hookRange * hookRange)
@@ -46,11 +46,12 @@ public class HookControl : NetworkBehaviour {
         if (!isServer) return;
 
         var otherCharacter = other.GetComponent<NetworkCharacter>();
-        if (otherCharacter)
+        if (otherCharacter && otherCharacter.Team == GameEnum.TeamType.Survivor)
         {
             var dir = (transform.position - origin).normalized;
             var offset = dir * 3.5f;
             var duration = Vector3.Distance(transform.position, origin) / hookSpeed;
+
             var args = new StunArgument();
             args.time = duration + 0.3f;
             otherCharacter.Perform("Stun", gameObject, args);

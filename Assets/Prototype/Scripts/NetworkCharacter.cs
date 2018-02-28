@@ -312,9 +312,21 @@ public class NetworkCharacter : NetworkBehaviour {
 
     private void RpcEndCastingMethod()
     {
-        Transit(CharacterState.Normal);
+        if(currentState == CharacterState.Casting)
+            Transit(CharacterState.Normal);
     }
     #endregion Skill_Logic
+
+
+    #region Die_Logic
+    void DieMethod(GameObject sender, ActionArgument args)
+    {
+        
+    }
+
+
+    #endregion Die_Logic
+
 
     #region Move_Logic
     /*
@@ -349,7 +361,7 @@ public class NetworkCharacter : NetworkBehaviour {
         // all because of localPlayerAuthority
         if (!isLocalPlayer) return;
 
-        if(duration <= 0.01f || method == MoveMethod.Teleport)
+        if (duration <= 0.01f || method == MoveMethod.Teleport)
         {
             m_rigidbody.MovePosition(destination);
             m_rigidbody.velocity = new Vector3(0, m_rigidbody.velocity.y, 0);
