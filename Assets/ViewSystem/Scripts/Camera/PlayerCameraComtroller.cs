@@ -16,7 +16,7 @@ public class PlayerCameraComtroller : NetworkBehaviour {
 		focusPlayer = this.transform;
 		cameraOffset = new Vector3 (0f, 0f, -m_cameraDistance_z);
 		mainCamera = Camera.main.transform;
-		mainCamera.rotation = Quaternion.Euler (90f, 0f, 0f);
+		mainCamera.rotation = Quaternion.Euler (60f, 0f, 0f);
 		CameraMove ();
 	}
 

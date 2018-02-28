@@ -319,9 +319,34 @@ public class NetworkCharacter : NetworkBehaviour {
 
 
     #region Die_Logic
-    void DieMethod(GameObject sender, ActionArgument args)
+    // server only
+    private void DieMethod(GameObject sender, ActionArgument args)
+    {
+        RpcDie();
+    }
+
+    [ClientRpc]
+    void RpcDie()
     {
         
+        _Die();
+    }
+
+
+    void _DieServer()
+    {
+        m_animator.SetTrigger("Die");
+        Transit(CharacterState.Dead);
+    }
+
+    void _Die()
+    {
+        // for host, same thing has been done on server
+        if (isClient && isServer)
+            return;
+
+        m_animator.SetTrigger("Die");
+        Transit(CharacterState.Dead);
     }
 
 
