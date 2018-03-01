@@ -39,13 +39,11 @@ GameObject:
   - component: {fileID: 4150960253313890}
   - component: {fileID: 23157734325291494}
   - component: {fileID: 54331510582916742}
-  - component: {fileID: 114337787889127000}
   - component: {fileID: 114694952665830406}
   - component: {fileID: 114597809870883788}
-  - component: {fileID: 114791609835523202}
-  - component: {fileID: 114500825220314424}
+  - component: {fileID: 114492873341107904}
   m_Layer: 8
-  m_Name: PlayerPrefab_Survivor
+  m_Name: SpectatorCube
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,7 +243,7 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114337787889127000
+--- !u!114 &114492873341107904
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -253,26 +251,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1366605860087522}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaddf0ed001777646a59d5b3be47e26d, type: 3}
+  m_Script: {fileID: 11500000, guid: be665e3b9c75d7c4bb89c5d27295109c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushPower: 60
-  gravityScale: 1
-  maxSpeed: 10
---- !u!114 &114500825220314424
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1366605860087522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c958b9e717f4e0445a353a113fa4304c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hooked: 0
-  force: 30
-  alive: 1
+  moveSpeed: 2
 --- !u!114 &114597809870883788
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -326,15 +308,3 @@ MonoBehaviour:
     i15: 240
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114791609835523202
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1366605860087522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd8139e5e069844a18f511b25b18592d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_InteractionButtonName: Interaction

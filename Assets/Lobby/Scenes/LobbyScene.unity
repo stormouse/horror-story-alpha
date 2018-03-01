@@ -408,7 +408,8 @@ MonoBehaviour:
     type: 2}
   survivorPrefab: {fileID: 1560030811934570, guid: 96225ecbedfa15f448df77d1de73c89d,
     type: 2}
-  spectatorPrefab: {fileID: 0}
+  spectatorPrefab: {fileID: 1366605860087522, guid: 7077b17680a7d2545a723e8fb34697f0,
+    type: 2}
 --- !u!1 &1255708015
 GameObject:
   m_ObjectHideFlags: 0

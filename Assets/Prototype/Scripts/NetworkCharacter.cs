@@ -50,7 +50,6 @@ public class NetworkCharacter : NetworkBehaviour {
 
     private GameEnum.TeamType team;
     public GameEnum.TeamType Team { get { return team; } }
-    public float attackAnimationLength;
     
 
 
@@ -161,13 +160,15 @@ public class NetworkCharacter : NetworkBehaviour {
 
     private void SetupActionMethods()
     {
-        Register(CharacterState.Normal, Attack, AttackMethod);
         Register(CharacterState.Normal, Stun, StunMethod);
         Register(CharacterState.Normal, StopMovement, StopMovementMethod);
         Register(CharacterState.Casting, EndCasting, EndCastingMethod);
         Register(CharacterState.Casting, Stun, StunMethod);
         Register(CharacterState.Stunned, Stun, StunMethod);
         Register(CharacterState.Stunned, Wake, WakeMethod);
+        Register(CharacterState.Normal, Die, DieMethod);
+        Register(CharacterState.Stunned, Die, DieMethod);
+        Register(CharacterState.Casting, Die, DieMethod);
     }
 
     public void SetTeam(GameEnum.TeamType _team)
@@ -246,72 +247,21 @@ public class NetworkCharacter : NetworkBehaviour {
     #endregion Wake_Logic
 
 
-    #region Attack_Logic
-
-    private void AttackMethod(GameObject sender, ActionArgument args)
-    {
-        CmdAttack();
-    }
-
-    [Command]
-    private void CmdAttack()
-    {
-        ServerAttack();
-        RpcAttack();
-    }
-
-    [ClientRpc]
-    private void RpcAttack()
-    {
-        _AttackMethod();
-    }
-
-    private void ServerAttack()
-    {
-        // deal real damage if hit
-        // maybe call RpcSplashBlood()
-    }
-
-    private void _AttackMethod()
-    {
-        m_rigidbody.velocity = Vector3.zero;
-        m_animator.SetTrigger(Attack);
-        Transit(CharacterState.Casting);
-        currentCoroutine = StartCoroutine(AttackCoroutine());
-    }
-
-    private IEnumerator AttackCoroutine()
-    {
-        float startTime = Time.time;
-        while (true)
-        {
-            float now = Time.time;
-            if (now - startTime < attackAnimationLength)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-            else break;
-        }
-        currentCoroutine = null;
-        // do not directly transit: Transit(CharacterState.Normal); 
-        // be ready for counter-skill that can stun hunters while they attack
-        Perform(EndCasting, gameObject, null);
-    }
-
-    #endregion
-
-
     #region Skill_Logic
     private void EndCastingMethod(GameObject sender, ActionArgument args)
     {
         if (isServer)
         {
             RpcEndCastingMethod();
+            if (currentState == CharacterState.Casting)
+                Transit(CharacterState.Normal);
         }
     }
 
+    [ClientRpc]
     private void RpcEndCastingMethod()
     {
+        if (isServer) return;
         if(currentState == CharacterState.Casting)
             Transit(CharacterState.Normal);
     }
@@ -322,13 +272,18 @@ public class NetworkCharacter : NetworkBehaviour {
     // server only
     private void DieMethod(GameObject sender, ActionArgument args)
     {
-        RpcDie();
+        if (isServer)
+        {
+            _DieServer();
+            RpcDie();
+            _Die();
+        }
     }
 
     [ClientRpc]
     void RpcDie()
     {
-        
+        if (isServer) return;
         _Die();
     }
 
@@ -337,7 +292,13 @@ public class NetworkCharacter : NetworkBehaviour {
     {
         m_animator.SetTrigger("Die");
         Transit(CharacterState.Dead);
+
+        Observation ob = new Observation();
+        ob.subject = gameObject;
+        ob.what = Observation.Death;
+        LevelManager.Singleton.Observe(ob);
     }
+
 
     void _Die()
     {

@@ -1502,7 +1502,7 @@ GameObject:
   - component: {fileID: 114244322774433520}
   - component: {fileID: 114735295300703876}
   m_Layer: 8
-  m_Name: Werewolf_Generic
+  m_Name: HunterWerewolf
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3323,7 +3323,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  attackAnimationLength: 1
 --- !u!114 &114289740518080488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3404,6 +3403,9 @@ MonoBehaviour:
   moveSpeed: 6
   hookRange: 18
   hookSpeed: 80
+  attackRange: 5
+  attackAngle: 90
+  attackAnimationLength: 2
   hasHook: 1
   hookPrefab: {fileID: 1931548332930490, guid: aeaeb2ab19d4548a5aac130f6e417a16, type: 2}
 --- !u!114 &114787435481096718

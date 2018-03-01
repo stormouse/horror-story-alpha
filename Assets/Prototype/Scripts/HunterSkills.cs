@@ -9,6 +9,9 @@ public class HunterSkills : NetworkBehaviour {
     public float moveSpeed = 5f;
     public float hookRange = 5.0f;
     public float hookSpeed = 1.0f;
+    public float attackRange = 5.0f;
+    public float attackAngle = 90.0f;
+    public float attackAnimationLength;
     public bool hasHook = true;
 
     // components
@@ -50,6 +53,7 @@ public class HunterSkills : NetworkBehaviour {
     void AttachSkillsToCharacter()
     {
         character.Register(CharacterState.Normal, "Hook", HookMethod);
+        character.Register(CharacterState.Normal, "Attack", AttackMethod);
     }
     #endregion Setup_Skills
 
@@ -66,6 +70,87 @@ public class HunterSkills : NetworkBehaviour {
             character.Perform("Attack", gameObject, null);
         }
     }
+
+
+
+    #region Attack_Logic
+
+    private void AttackMethod(GameObject sender, ActionArgument args)
+    {
+        CmdAttack();
+    }
+
+    [Command]
+    private void CmdAttack()
+    {
+        ServerAttack();
+        RpcAttack();
+        _AttackMethod();
+    }
+
+    [ClientRpc]
+    private void RpcAttack()
+    {
+        if (isServer) return;
+        _AttackMethod();
+    }
+
+    private void ServerAttack()
+    {
+        var survivors = LevelManager.Singleton.GetAllSurvivorCharacters();
+        foreach(var survivor in survivors)
+        {
+            if (Reachable(survivor.transform.position))
+            {
+                survivor.Perform("Die", gameObject, null);
+            }
+        }
+    }
+
+
+    private void _AttackMethod()
+    {
+        m_rigidbody.velocity = Vector3.zero;
+        character.Animator.SetTrigger("Attack");
+        character.Transit(CharacterState.Casting);
+        character.SwitchCoroutine(StartCoroutine(AttackCoroutine()));
+    }
+
+
+    private IEnumerator AttackCoroutine()
+    {
+        float startTime = Time.time;
+        while (true)
+        {
+            float now = Time.time;
+            if (now - startTime < attackAnimationLength)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            else break;
+        }
+        character.SwitchCoroutine(null);
+        // do not directly transit: Transit(CharacterState.Normal); 
+        // be ready for counter-skill that can stun hunters while they attack
+        character.Perform("EndCasting", gameObject, null);
+    }
+
+
+    bool Reachable(Vector3 position)
+    {
+        float sqrDistance = (position.x - transform.position.x) * (position.x - transform.position.x) + (position.y - transform.position.y) * (position.y - transform.position.y);
+        if (sqrDistance < attackRange * attackRange)
+        {
+            if(Vector3.Angle(position-transform.position, transform.forward) < attackAngle * 0.5f)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    #endregion Attack_Logic
+
+
 
 
 

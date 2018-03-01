@@ -3,37 +3,73 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+
 public class LevelManager : NetworkBehaviour
 {
 
-    public static LevelManager Singleton
-    {
-        get { return _singleton; }
-    }
     protected static LevelManager _singleton = null;
+    public static LevelManager Singleton { get { return _singleton; }}
+    
 
-    private void Awake()
-    {
-        _singleton = this;
-    }
+    /* character resources */
+    private GameObject hunterPrefab;
+    private GameObject survivorPrefab;
+    private GameObject spectatorPrefab;
+    
 
+    /* game scene resources */
+    [Header("Game Resources")]
     public int m_NumPowerSourceToOpenDoor = 3;
     public DoorControl m_TheDoor;
     public PowerSourceController[] m_PowerSources;
 
+
+    /* game arguments */
+    [Header("Game Settings")]
+    // ~ dying animation duration
+    public float timeBeforeDeadBodyDisappear;    
+    // use longer time to prevent 'null reference deletion' caused by early scene switch
+    public float timeBeforeLoadingLobbyAfterGameOver; 
+    
+
+    /* game flags */
     bool m_GameEnd = false;
     bool m_PowerEnough = false;
     int m_EscapeCount = 0;
 
 
-    void Start()
+    private void Awake()
     {
+        SetSingleton();
+        GetPrefabsFromLobbyManager();
+    }
 
-        //SpwanAllPowerSources()
-
+    private void Start()
+    {
         StartCoroutine(GameLoop());
     }
 
+
+
+    #region GM_Setup
+
+    private void SetSingleton()
+    {
+        _singleton = this;
+    }
+
+    private void GetPrefabsFromLobbyManager()
+    {
+        hunterPrefab = LobbyManager.Singleton.hunterPrefab;
+        survivorPrefab = LobbyManager.Singleton.survivorPrefab;
+        spectatorPrefab = LobbyManager.Singleton.spectatorPrefab;
+    }
+
+    #endregion GM_Setup
+
+
+
+    #region Game_Progress_Control
 
     private IEnumerator GameLoop()
     {
@@ -103,14 +139,12 @@ public class LevelManager : NetworkBehaviour
 
         return m_PowerEnough;
     }
+    #endregion Game_Progress_Control
 
-    [ClientRpc]
-    void RpcOpenDoor()
-    {
-        m_TheDoor.OpenDoor();
-        m_PowerEnough = true;
-    }
 
+
+    #region Game_State_Checker
+        
     bool SurvivorAllDead()
     {
         return false;
@@ -136,6 +170,82 @@ public class LevelManager : NetworkBehaviour
     {
         return false;
     }
+
+    #endregion Game_State_Checker
+
+
+
+    #region Game_Control_Interface
+
+    [ClientRpc]
+    void RpcOpenDoor()
+    {
+        m_TheDoor.OpenDoor();
+        m_PowerEnough = true;
+    }
+
+    
+    public void Observe(Observation observation)
+    {
+        Debug.Log("Observed: " + observation.subject.name + "'s " + observation.what);
+        if(observation.what == Observation.Death)
+        {
+            KillSurvivor(observation.subject);
+        }
+    }
+
+
+    // Destory a survivor and put the player in a spectator
+    public void KillSurvivor(GameObject survivorObject)
+    {
+        var character = survivorObject.GetComponent<NetworkCharacter>();
+        var identity = survivorObject.GetComponent<NetworkIdentity>();
+        NetworkConnection conn = identity.connectionToClient;
+
+        GameObject spectator = GameObject.Instantiate(spectatorPrefab);
+        NetworkServer.ReplacePlayerForConnection(conn, spectator, 0);
+        NetworkServer.Spawn(spectator);
+
+        DestoryNetworkObject(survivorObject, timeBeforeDeadBodyDisappear);
+    }
+
+
+    public void DestoryNetworkObject(GameObject obj, float after = 0.0f)
+    {
+        if(after < 0.01f)
+        {
+            NetworkServer.Destroy(obj);
+        }
+        else
+        {
+            StartCoroutine(DelayDestroy(obj, after));
+        }
+    }
+
+    private IEnumerator DelayDestroy(GameObject obj, float after)
+    {
+        yield return new WaitForSeconds(after);
+        NetworkServer.Destroy(obj);
+    }
+
+
+    public List<NetworkCharacter> GetAllSurvivorCharacters()
+    {
+        List<NetworkCharacter> survivors = new List<NetworkCharacter>();
+        var players = GameObject.FindGameObjectsWithTag("Player");
+        foreach(var player in players)
+        {
+            var character = player.GetComponent<NetworkCharacter>();
+            if (character && character.Team == GameEnum.TeamType.Survivor && character.CurrentState != CharacterState.Dead)
+            {
+                survivors.Add(character);
+            }
+        }
+        return survivors;
+    }
+
+    
+    #endregion Game_Control_Interface
 
 }
 

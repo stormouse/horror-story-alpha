@@ -30,7 +30,7 @@ public class HookControl : NetworkBehaviour {
 
 
     void Update()
-    { 
+    {
         if (!isServer) return;
 
         if (Vector3.SqrMagnitude(transform.position - origin) > hookRange * hookRange)
