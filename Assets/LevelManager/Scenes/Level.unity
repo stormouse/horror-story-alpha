@@ -3943,7 +3943,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -4441,6 +4441,11 @@ Prefab:
     - target: {fileID: 1690197823709460, guid: 7ce7ec3a018394841a6066e2912e8395, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108655622442487174, guid: 7ce7ec3a018394841a6066e2912e8395,
+        type: 2}
+      propertyPath: m_Shadows.m_Type
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ce7ec3a018394841a6066e2912e8395, type: 2}
