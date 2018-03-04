@@ -22,8 +22,10 @@ public class HunterController : NetworkBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Space) && isLocalPlayer) {
-			Vector3 mouseP = Camera.main.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y));
-			m_Skill.Skill (1, new Vector3(mouseP.x - transform.position.x, 0f,mouseP.z - transform.position.z).normalized);
+			//Vector3 mouseP = Camera.main.ScreenToWorldPoint (new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y));
+
+			//m_Skill.Skill (1, new Vector3(mouseP.x - transform.position.x, 0f,mouseP.z - transform.position.z).normalized);
+			m_Skill.Skill(1, transform.forward);
 		}
 	}
 	void FixedUpdate() {

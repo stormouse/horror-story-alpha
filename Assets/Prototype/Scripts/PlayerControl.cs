@@ -26,7 +26,7 @@ public class PlayerControl : NetworkBehaviour {
     {
         if(!isLocalPlayer)
         {
-            Destroy(this);
+			Destroy (this);
             return;
         }
         SetupComponents();

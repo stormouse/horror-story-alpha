@@ -29,7 +29,7 @@ public class PowerInteraction : NetworkBehaviour
         {
 
             m_InteractingPowerSource.Charge();
-
+			GetComponent<Animator> ().SetTrigger ("Charge");//zx_change for Animator
             // CmdCharge (m_CurrentChargingSpeed * Time.deltaTime);
         }
 
