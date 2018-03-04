@@ -90,15 +90,17 @@ public class SurvivorSkills : NetworkBehaviour {
 
 	[ClientRpc]
 	void RpcDeploy() {
-		_DeployMethod (); 
+		_DeployMethodClient (); 
 	}
 	void _DeployMethodServer() {
-		
+		//character.Perform("StopMovement", gameObject, null);
 		trap = Instantiate (trapPrefab);
 		trap.transform.position = trapSpawn.position;
 		NetworkServer.Spawn (trap);
+		//character.Transit(CharacterState.Casting);
+		//character.SwitchCoroutine (StartCoroutine(_DeployAnimationDelay()));
 	}
-	void _DeployMethod() {
+	void _DeployMethodClient() {
 		character.Perform("StopMovement", gameObject, null);
 		// TODO: limit transition command from outside!
 		character.Animator.SetTrigger ("Deploy");

@@ -190,6 +190,7 @@ public class NetworkCharacter : NetworkBehaviour {
     }
 
     // downward
+	[ClientRpc]
     private void RpcStun(float time)
     {
         _StunMethod(time);
