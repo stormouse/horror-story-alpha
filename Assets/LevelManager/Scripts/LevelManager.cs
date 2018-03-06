@@ -46,10 +46,25 @@ public class LevelManager : NetworkBehaviour
 
     private void Start()
     {
+        SetupAiMasterMinds();
         StartCoroutine(GameLoop());
     }
 
-
+    void SetupAiMasterMinds()
+    {
+        if (isServer)
+        {
+            var players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var p in players)
+            {
+                var ai = p.GetComponent<ISensible>();
+                if (ai != null)
+                {
+                    ai.Activate();
+                }
+            }
+        }
+    }
 
     #region GM_Setup
 
@@ -60,9 +75,12 @@ public class LevelManager : NetworkBehaviour
 
     private void GetPrefabsFromLobbyManager()
     {
-        hunterPrefab = LobbyManager.Singleton.hunterPrefab;
-        survivorPrefab = LobbyManager.Singleton.survivorPrefab;
-        spectatorPrefab = LobbyManager.Singleton.spectatorPrefab;
+        if (LobbyManager.Singleton)
+        {
+            hunterPrefab = LobbyManager.Singleton.hunterPrefab;
+            survivorPrefab = LobbyManager.Singleton.survivorPrefab;
+            spectatorPrefab = LobbyManager.Singleton.spectatorPrefab;
+        }
     }
 
     #endregion GM_Setup

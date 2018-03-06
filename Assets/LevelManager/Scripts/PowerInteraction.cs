@@ -54,6 +54,15 @@ public class PowerInteraction : NetworkBehaviour
 
     }
 
+    public void Charge()
+    {
+        if (m_InteractingPowerSource)
+        {
+            m_InteractingPowerSource.Charge();
+        }
+    }
+
+
     [Command]
     void CmdCharge(bool isCharging)
     {

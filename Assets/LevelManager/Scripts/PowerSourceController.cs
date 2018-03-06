@@ -93,13 +93,19 @@ public class PowerSourceController : NetworkBehaviour
 
         //gameObject.SetActive (false);
         RpcDeactivate();
-	}
+
+        gameObject.SetActive(false);
+        GetComponent<Collider>().enabled = false;
+        gameObject.tag = "Untagged";
+    }
 
     [ClientRpc]
     void RpcDeactivate()
     {
         m_Charged = true;
         gameObject.SetActive(false);
+        GetComponent<Collider>().enabled = false;
+        gameObject.tag = "Untagged";
         CreateDestruction();
     }
 

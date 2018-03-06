@@ -8,7 +8,12 @@ public class HunterMind : MonoBehaviour, ISensible {
 
 
     GameObject playerInSight = null;
-    
+
+    public void Activate()
+    {
+        throw new NotImplementedException();
+    }
+
     public void Hear(GameObject obj)
     {
     }
