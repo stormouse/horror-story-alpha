@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 65916899565638612}
   - component: {fileID: 114309721182642536}
   - component: {fileID: 114704475673516036}
+  - component: {fileID: 114508772444588776}
   m_Layer: 0
   m_Name: Hook_prefab
   m_TagString: Hook
@@ -398,6 +399,27 @@ MonoBehaviour:
     i15: 22
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114508772444588776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1931548332930490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.033333335
+  m_SyncRotationAxis: 2
+  m_RotationSyncCompression: 2
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114704475673516036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,4 +431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41724b886b8a6b14eac17d4781a52f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hookSpeed: 0
+  hookRange: 0
   hunter: {fileID: 0}
