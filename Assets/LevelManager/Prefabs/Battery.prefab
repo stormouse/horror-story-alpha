@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 136208120540395662}
   - component: {fileID: 114792837843505870}
   - component: {fileID: 114783611224299724}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Battery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 95955895739821854}
   - component: {fileID: 65137647660194182}
   - component: {fileID: 54562241314193862}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: battery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 4883795517918570}
   - component: {fileID: 33067624447256144}
   - component: {fileID: 23585279886991100}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Battery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 4806567266932088}
   - component: {fileID: 33341359688008498}
   - component: {fileID: 23150629549139468}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095918437375190}
   m_LocalRotation: {x: 0, y: 0.42261827, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: 7.6, y: 0, z: -33.7}
+  m_LocalPosition: {x: 17.6, y: 0, z: -38.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224982195076637084}
