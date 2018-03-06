@@ -850,7 +850,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &344829945 stripped
 Transform:
@@ -958,7 +958,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4814364212055610, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4814364212055610, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1018,6 +1018,10 @@ Prefab:
       propertyPath: m_NumOfPowerToOpen
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1904916320981106, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
+      propertyPath: m_Name
+      value: Wood Door2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114955653750072138, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
@@ -1043,6 +1047,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905a5451726fd464fbd52e9359b4d461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &461718933 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114083367612551866, guid: 967bc75c1d88c244e8f7aad17c0f2345,
+    type: 2}
+  m_PrefabInternal: {fileID: 461718929}
+  m_Script: {fileID: 11500000, guid: 821d2c73fb1ad454cb4195fa4c041b80, type: 3}
 --- !u!1 &500806676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,7 +1120,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &531640726 stripped
 Transform:
@@ -1284,7 +1294,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 40, y: 60, z: 0}
 --- !u!114 &677372253
 MonoBehaviour:
@@ -1882,6 +1892,10 @@ Prefab:
       propertyPath: m_DoorAnimator
       value: 
       objectReference: {fileID: 914939132}
+    - target: {fileID: 1904916320981106, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
+      propertyPath: m_Name
+      value: Wood Door1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114955653750072138, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
@@ -1927,7 +1941,7 @@ Transform:
   - {fileID: 1720222793}
   - {fileID: 1787930360}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &993640735
 Prefab:
@@ -2929,7 +2943,7 @@ Transform:
   - {fileID: 112234067}
   - {fileID: 1297202645}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1351909902
 GameObject:
@@ -2991,7 +3005,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1391189686
 Prefab:
@@ -4324,7 +4338,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1801184639
 Prefab:
@@ -4654,9 +4668,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c87e8a38ce3274091996ddb433f0ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NumPowerSourceToOpenDoor: 
   m_Doors:
   - {fileID: 914939135}
+  - {fileID: 461718933}
   m_PowerSources:
   - {fileID: 2080610476}
   - {fileID: 1760353661}
@@ -4708,7 +4722,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1848662313
 Prefab:
@@ -5050,7 +5064,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2042138401 stripped
 GameObject:
@@ -5432,7 +5446,7 @@ RectTransform:
   m_Children:
   - {fileID: 2121544715}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
