@@ -8,8 +8,8 @@ public class LevelManager : NetworkBehaviour
 {
 
     protected static LevelManager _singleton = null;
-    public static LevelManager Singleton { get { return _singleton; }}
-    
+    public static LevelManager Singleton { get { return _singleton; } }
+
 
     /* character resources */
     private GameObject hunterPrefab;
@@ -26,10 +26,10 @@ public class LevelManager : NetworkBehaviour
     /* game arguments */
     [Header("Game Settings")]
     // ~ dying animation duration
-    public float timeBeforeDeadBodyDisappear;    
+    public float timeBeforeDeadBodyDisappear;
     // use longer time to prevent 'null reference deletion' caused by early scene switch
-    public float timeBeforeLoadingLobbyAfterGameOver; 
-    
+    public float timeBeforeLoadingLobbyAfterGameOver;
+
 
     /* game flags */
     bool m_GameEnd = false;
@@ -141,7 +141,7 @@ public class LevelManager : NetworkBehaviour
                 if (num >= m_Doors[i].NumberOfPowerToOpen && !m_Doors[i].DoorOpen)
                 {
                     m_PowerEnough = true;
-                    RpcOpenDoor(m_Doors[i]);
+                    RpcOpenDoor(i);
                 }
             }
             m_PowerFull = power;
@@ -154,7 +154,7 @@ public class LevelManager : NetworkBehaviour
 
 
     #region Game_State_Checker
-        
+
     bool SurvivorAllDead()
     {
         return false;
@@ -188,17 +188,17 @@ public class LevelManager : NetworkBehaviour
     #region Game_Control_Interface
 
     [ClientRpc]
-    void RpcOpenDoor(DoorControl door)
+    void RpcOpenDoor(int door)
     {
-        door.OpenDoor();
+        m_Doors[door].OpenDoor();
         //m_PowerEnough = true;
     }
 
-    
+
     public void Observe(Observation observation)
     {
         Debug.Log("Observed: " + observation.subject.name + "'s " + observation.what);
-        if(observation.what == Observation.Death)
+        if (observation.what == Observation.Death)
         {
             KillSurvivor(observation.subject);
         }
@@ -222,7 +222,7 @@ public class LevelManager : NetworkBehaviour
 
     public void DestoryNetworkObject(GameObject obj, float after = 0.0f)
     {
-        if(after < 0.01f)
+        if (after < 0.01f)
         {
             NetworkServer.Destroy(obj);
         }
@@ -243,7 +243,7 @@ public class LevelManager : NetworkBehaviour
     {
         List<NetworkCharacter> survivors = new List<NetworkCharacter>();
         var players = GameObject.FindGameObjectsWithTag("Player");
-        foreach(var player in players)
+        foreach (var player in players)
         {
             var character = player.GetComponent<NetworkCharacter>();
             if (character && character.Team == GameEnum.TeamType.Survivor && character.CurrentState != CharacterState.Dead)
@@ -254,7 +254,7 @@ public class LevelManager : NetworkBehaviour
         return survivors;
     }
 
-    
+
     #endregion Game_Control_Interface
 
 }
