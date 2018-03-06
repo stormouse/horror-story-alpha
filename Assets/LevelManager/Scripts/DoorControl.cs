@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class DoorControl : MonoBehaviour
 {
+    public int m_NumOfPowerToOpen = 3;
 
-    public Animator m_DoorAnimator;
-
+    private Animator m_DoorAnimator;
     private bool m_DoorOpen = false;
 
+    public int NumberOfPowerToOpen
+    {
+        get
+        {
+            return m_NumOfPowerToOpen;
+        }
+    }
     public bool DoorOpen
     {
         get

@@ -15,12 +15,11 @@ public class LevelManager : NetworkBehaviour
     private GameObject hunterPrefab;
     private GameObject survivorPrefab;
     private GameObject spectatorPrefab;
-    
+
 
     /* game scene resources */
     [Header("Game Resources")]
-    public int m_NumPowerSourceToOpenDoor = 3;
-    public DoorControl m_TheDoor;
+    public DoorControl[] m_Doors;
     public PowerSourceController[] m_PowerSources;
 
 
@@ -35,6 +34,7 @@ public class LevelManager : NetworkBehaviour
     /* game flags */
     bool m_GameEnd = false;
     bool m_PowerEnough = false;
+    bool m_PowerFull = false;
     int m_EscapeCount = 0;
 
 
@@ -121,7 +121,7 @@ public class LevelManager : NetworkBehaviour
 
     bool PowerEnough()
     {
-        if (isServer && !m_PowerEnough)
+        if (isServer && !m_PowerFull)
         {
             int num = 0;
             for (int i = 0; i < m_PowerSources.Length; i++)
@@ -131,10 +131,20 @@ public class LevelManager : NetworkBehaviour
                     num++;
                 }
             }
-            if (num >= m_NumPowerSourceToOpenDoor)
+            bool power = true;
+            for (int i = 0; i < m_Doors.Length; i++)
             {
-                RpcOpenDoor();
+                if (num < m_Doors[i].NumberOfPowerToOpen)
+                {
+                    power = false;
+                }
+                if (num >= m_Doors[i].NumberOfPowerToOpen && !m_Doors[i].DoorOpen)
+                {
+                    m_PowerEnough = true;
+                    RpcOpenDoor(m_Doors[i]);
+                }
             }
+            m_PowerFull = power;
         }
 
         return m_PowerEnough;
@@ -178,10 +188,10 @@ public class LevelManager : NetworkBehaviour
     #region Game_Control_Interface
 
     [ClientRpc]
-    void RpcOpenDoor()
+    void RpcOpenDoor(DoorControl door)
     {
-        m_TheDoor.OpenDoor();
-        m_PowerEnough = true;
+        door.OpenDoor();
+        //m_PowerEnough = true;
     }
 
     
