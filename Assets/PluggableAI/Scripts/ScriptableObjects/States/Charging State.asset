@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca8bd514b325254b8d312a1d2eec7b3, type: 3}
+  m_Name: Charging State
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: 5af8685d0b3dd9c4d915c6c299e21d0d, type: 2}
+  transitions:
+  - decision: {fileID: 11400000, guid: d7e8a35759cb1e440bf27593fc783159, type: 2}
+    trueState: {fileID: 11400000, guid: 0f66fba25f866354ab3c783a1bd6c506, type: 2}
+    falseState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}
+  - decision: {fileID: 11400000, guid: 51ca573d3640a5b4792ff78eb193eb7a, type: 2}
+    trueState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}
+    falseState: {fileID: 11400000, guid: eef8f0c2bf115e940b6b8c62d9038045, type: 2}
+  sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

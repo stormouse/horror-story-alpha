@@ -7,6 +7,7 @@ TagManager:
   - Hook
   - LobbyPlayer
   - PowerSource
+  - Hunter
   layers:
   - Default
   - TransparentFX

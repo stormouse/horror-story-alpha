@@ -325,9 +325,20 @@ public class NetworkCharacter : NetworkBehaviour {
 
     private void UpdateAnimatorSpeed()
     {
-        m_animator.SetFloat("Speed", m_rigidbody.velocity.magnitude);
+		/*zx modified for AI*/
+		if (GetComponent<AIStateController> () != null) {
+			if (isServer) {
+				RpcUpdateAIAnimatorSpeed (GetComponent<AIStateController> ().navMeshAgent.velocity.magnitude);
+			}
+		} else {
+        	m_animator.SetFloat("Speed", m_rigidbody.velocity.magnitude);//original script line
+		}
     }
-
+	/*zx modified for AI*/
+	[ClientRpc]
+	void RpcUpdateAIAnimatorSpeed(float speed) {
+		m_animator.SetFloat("Speed", speed);
+	}
     // only server can call this
     public void MoveTo(Vector3 destination, MoveMethod method, float duration = 0.0f)
     {
