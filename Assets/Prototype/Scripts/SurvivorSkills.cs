@@ -19,9 +19,9 @@ public class SurvivorSkills : NetworkBehaviour {
 	private Rigidbody m_rigidbody;
 	private NetworkCharacter character;
 
-	// private
-	bool m_Charging = false;
-	PowerSourceController m_InteractingPowerSource;
+
+	[HideInInspector] public bool m_Charging = false;
+	[HideInInspector] public PowerSourceController m_InteractingPowerSource;
 
 	private GameObject trap;
 
@@ -67,16 +67,24 @@ public class SurvivorSkills : NetworkBehaviour {
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			character.Perform("Deploy", gameObject, null);
+			DeployPerform ();
 		}
-		/*
+
 		if (Input.GetButton (m_InteractionButtonName)) {  //Logic problem!!
-			character.Perform ("Charge", gameObject, null);
+			ChargePerform();
 		} else {
 			m_Charging = false;
 		}
-		*/
+
 	}
+	public void DeployPerform() {
+		character.Perform("Deploy", gameObject, null);
+	}
+	public void ChargePerform() {
+		character.Perform ("Charge", gameObject, null);
+	}
+
+
 	#region DeployTrap
 	void DeployMethod(GameObject sender, ActionArgument args) {
 		CmdDeploy ();
@@ -130,12 +138,14 @@ public class SurvivorSkills : NetworkBehaviour {
 		if (m_Charging && m_InteractingPowerSource != null)
 		{
 			m_InteractingPowerSource.Charge();
-			character.Perform("StopMovement", gameObject, null);
+			//character.Perform("StopMovement", gameObject, null);
 			// TODO: limit transition command from outside!
-			character.Transit(CharacterState.Casting);
+			//character.Transit(CharacterState.Casting);
 			character.Animator.SetTrigger ("Charge");
 
 		}
+		m_Charging = false;
+	
 	}
 	void ChargeMethod(GameObject sender, ActionArgument args) {
 		bool originalCharging = m_Charging;
@@ -152,11 +162,19 @@ public class SurvivorSkills : NetworkBehaviour {
 	void CmdCharge(bool isCharging)
 	{
 		m_Charging = isCharging;
+		RpcCharge (isCharging);
+	}
+	[ClientRpc]
+	void RpcCharge(bool isCharging){
+		if (!isLocalPlayer) {
+			m_Charging = isCharging;
+		}
 	}
 	void OnTriggerEnter(Collider collider)
 	{
 		PowerSourceController psc = collider.GetComponent<PowerSourceController>();
 		if (psc != null)
+			//Debug.Log (psc);
 			m_InteractingPowerSource = psc;
 	}
 

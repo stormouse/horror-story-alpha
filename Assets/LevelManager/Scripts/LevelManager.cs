@@ -36,7 +36,8 @@ public class LevelManager : NetworkBehaviour
     bool m_PowerEnough = false;
     bool m_PowerFull = false;
     int m_EscapeCount = 0;
-
+	/* zx modified for AI*/
+	private List<Transform> targetPoint;
 
     private void Awake()
     {
@@ -46,15 +47,32 @@ public class LevelManager : NetworkBehaviour
 
     private void Start()
     {
-        SetupAiMasterMinds();
+        
         StartCoroutine(GameLoop());
+		SetupAiMasterMinds();
     }
 
     void SetupAiMasterMinds()
     {
         if (isServer)
         {
-            var players = GameObject.FindGameObjectsWithTag("Player");
+			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+			//Debug.Log ("here1!");
+			//Debug.Log (players.Length);
+			foreach (GameObject p in players) {
+				var ai = p.GetComponent<AIStateController> ();
+				//Debug.Log ("here2!");
+				if (ai != null) {
+					targetPoint = new List<Transform> ();
+					foreach (var ps in m_PowerSources) {
+						//Debug.Log(ps.transform.position.x);
+						targetPoint.Add (ps.transform);
+					}
+					ai.SetupAI (true, targetPoint);
+				}
+			}
+			
+			/*
             foreach (var p in players)
             {
                 var ai = p.GetComponent<ISensible>();
@@ -63,6 +81,7 @@ public class LevelManager : NetworkBehaviour
                     ai.Activate();
                 }
             }
+            */
         }
     }
 

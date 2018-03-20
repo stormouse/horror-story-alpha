@@ -48,8 +48,10 @@ GameObject:
   - component: {fileID: 114582064910851632}
   - component: {fileID: 114540364800045428}
   - component: {fileID: 82322077294656374}
+  - component: {fileID: 114100020944193866}
+  - component: {fileID: 195597216343965720}
   m_Layer: 8
-  m_Name: HumanSurvivor
+  m_Name: HumanSurvivorAI
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1141,7 +1143,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029068413829026}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fe340b4c0b3e64747a0a68f542df6145, type: 3}
@@ -1232,6 +1234,36 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114100020944193866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029068413829026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128f51e63fd66d943a93946aeb38e6ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: {fileID: 11400000, guid: eef8f0c2bf115e940b6b8c62d9038045, type: 2}
+  enemyStats: {fileID: 11400000, guid: e590306de9c33d64193eee4655f9eb46, type: 2}
+  eyes: {fileID: 4216293871303764}
+  remainState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
+  navMeshAgent: {fileID: 0}
+  wayPointList: []
+  nextWayPoint: 0
+  visibleTargets: []
+  targetIndx: -1
+  survivorsk: {fileID: 0}
+  timeElapsed: 0
+  aiActive: 0
+  character: {fileID: 0}
 --- !u!114 &114194667155901238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1265,22 +1297,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 230
-    i1: 65
-    i2: 186
-    i3: 32
-    i4: 94
-    i5: 118
-    i6: 183
-    i7: 116
-    i8: 88
-    i9: 30
-    i10: 161
-    i11: 154
-    i12: 122
-    i13: 28
-    i14: 66
-    i15: 95
+    i0: 30
+    i1: 199
+    i2: 63
+    i3: 128
+    i4: 244
+    i5: 149
+    i6: 202
+    i7: 164
+    i8: 107
+    i9: 163
+    i10: 237
+    i11: 95
+    i12: 42
+    i13: 155
+    i14: 81
+    i15: 25
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
 --- !u!114 &114540364800045428
@@ -1367,7 +1399,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 3
+  m_TransformSyncMode: 1
   m_SendInterval: 0.04761905
   m_SyncRotationAxis: 2
   m_RotationSyncCompression: 2
@@ -1409,6 +1441,7 @@ MonoBehaviour:
   hasHook: 1
   trapPrefab: {fileID: 1065511799908946, guid: 2f3a1300ce544c7438e8947424fc7148, type: 2}
   trapSpawn: {fileID: 4682762641597332}
+  m_Charging: 0
   m_InteractingPowerSource: {fileID: 0}
 --- !u!114 &114735115900677960
 MonoBehaviour:
@@ -1416,7 +1449,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029068413829026}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2b5f4ef8cc9bfc44b56b3cc009f695e, type: 3}
   m_Name: 
@@ -1498,3 +1531,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0032334477, y: -0.0012242943, z: 0.43686685}
     m_Extent: {x: 0.41540498, y: 0.49342668, z: 0.97515094}
   m_DirtyAABB: 0
+--- !u!195 &195597216343965720
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029068413829026}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 3
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

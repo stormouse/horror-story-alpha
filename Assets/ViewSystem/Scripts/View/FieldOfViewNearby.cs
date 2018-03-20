@@ -34,7 +34,7 @@ public class FieldOfViewNearby : NetworkBehaviour {
 		if (!isServer) {
 			return;
 		}
-		StartCoroutine ("FindTargetsWithDelay", .2f);
+		//StartCoroutine ("FindTargetsWithDelay", .2f);
 	}
 
 
