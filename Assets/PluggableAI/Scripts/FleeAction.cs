@@ -10,6 +10,9 @@ public class FleeAction : AIAction {
 	private float southBoarder = 65;
 	public float fleeDisMultiplyBy = 10;
 	public override void Act(AIStateController controller) {
+		if (controller.character.CurrentState != CharacterState.Normal) {
+			return;
+		}
 		Flee (controller);
 	}
 
