@@ -47,7 +47,7 @@ public class NetworkCharacter : NetworkBehaviour {
     [SerializeField]
     private CharacterState currentState;
     public CharacterState CurrentState { get { return currentState; }}
-
+    [SerializeField]
     private GameEnum.TeamType team;
     public GameEnum.TeamType Team { get { return team; } }
     
@@ -357,7 +357,9 @@ public class NetworkCharacter : NetworkBehaviour {
     private void _MoveToPosition(Vector3 destination, MoveMethod method, float duration)
     {
         // all because of localPlayerAuthority
-        if (!isLocalPlayer) return;
+        bool ai = (GetComponent<AICharacter>() != null);
+        if (ai && !isServer) return; // only server moves Ai
+        if (!ai && !isLocalPlayer) return; // do not control other's character
 
         if (duration <= 0.01f || method == MoveMethod.Teleport)
         {

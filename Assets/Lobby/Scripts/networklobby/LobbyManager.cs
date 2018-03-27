@@ -284,7 +284,7 @@ public class LobbyManager : NetworkLobbyManager {
         }
         if (allready)
         {
-            var canvas = GameObject.Find("Lobby UI").GetComponent<Canvas>();
+            var canvas = lobbyUIContainer.GetComponent<Canvas>();
             if (canvas) canvas.enabled = false;
             foreach (var p in lobbySlots)
             {
@@ -351,6 +351,7 @@ public class LobbyManager : NetworkLobbyManager {
             {
                 roomUIContainer.SetActive(false);
             }
+            InitializeServerOnlyObjects();
         }
     }
     #endregion Client Callbacks
@@ -368,33 +369,7 @@ public class LobbyManager : NetworkLobbyManager {
     {
         var spawnPoints = FindObjectsOfType<NetworkStartPosition>();
 
-        // Spawn ai players
-        foreach (var ai in hunterAIs)
-        {
-            var newPlayer = Instantiate(hunterAiPrefab);
-            int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
-            newPlayer.transform.position = spawnPoints[i].transform.position;
-            newPlayer.transform.rotation = Quaternion.identity;
-            var character = newPlayer.GetComponent<NetworkCharacter>();
-            character.SetTeam(TeamType.Hunter);
-            lastSpawnpointIndex = i;
-        }
-
-        foreach (var ai in survivorAIs)
-        {
-            var newPlayer = Instantiate(survivorAiPrefab);
-            int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
-            newPlayer.transform.position = spawnPoints[i].transform.position;
-            newPlayer.transform.rotation = Quaternion.identity;
-            var character = newPlayer.GetComponent<NetworkCharacter>();
-            character.SetTeam(TeamType.Survivor);
-            lastSpawnpointIndex = i;
-        }
-
-
-
         // Spawn player object according to team selection
-
         if (lobbyPlayer.GetComponent<LobbyPlayer>().team == TeamType.Hunter)
         {
             var newPlayer = Instantiate(hunterPrefab);
@@ -432,5 +407,38 @@ public class LobbyManager : NetworkLobbyManager {
 
         return false; //lobbyPlayer.GetComponent<LobbyPlayer>().team != TeamType.Spectator;
     }
+
+
+    void InitializeServerOnlyObjects()
+    {
+        var spawnPoints = FindObjectsOfType<NetworkStartPosition>();
+
+        // Spawn ai players
+        foreach (var ai in hunterAIs)
+        {
+            var newPlayer = Instantiate(hunterAiPrefab);
+            int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
+            newPlayer.transform.position = spawnPoints[i].transform.position;
+            newPlayer.transform.rotation = Quaternion.identity;
+            var character = newPlayer.GetComponent<NetworkCharacter>();
+            character.SetTeam(TeamType.Hunter);
+            lastSpawnpointIndex = i;
+            NetworkServer.Spawn(newPlayer);
+        }
+
+        foreach (var ai in survivorAIs)
+        {
+            var newPlayer = Instantiate(survivorAiPrefab);
+            int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
+            newPlayer.transform.position = spawnPoints[i].transform.position;
+            newPlayer.transform.rotation = Quaternion.identity;
+            var character = newPlayer.GetComponent<NetworkCharacter>();
+            character.SetTeam(TeamType.Survivor);
+            lastSpawnpointIndex = i;
+            NetworkServer.Spawn(newPlayer);
+        }
+    }
+
+    
 
 }
