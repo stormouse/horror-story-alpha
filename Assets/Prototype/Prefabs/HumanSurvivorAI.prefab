@@ -1439,7 +1439,7 @@ MonoBehaviour:
   attackAngle: 90
   deployAnimationLength: 1
   hasHook: 1
-  trapPrefab: {fileID: 1065511799908946, guid: 2f3a1300ce544c7438e8947424fc7148, type: 2}
+  trapPrefab: {fileID: 1650290433295440, guid: 0c116cf178e0eff4c8548c4caf3f3745, type: 2}
   trapSpawn: {fileID: 4682762641597332}
   m_Charging: 0
   m_InteractingPowerSource: {fileID: 0}
