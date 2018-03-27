@@ -16,16 +16,23 @@ public class LobbyManager : NetworkLobbyManager {
     public int maxHunterPlayers = 2;
     public int maxSurvivorPlayers = 4;
 
+    /* lobby status */
+    public bool hasConnection = false;
 
     /* lobby data */
     // private LobbyPlayer[] lobbyPlayers; // use NetworkLobbyManager.lobbySlots;
     private List<LobbyPlayer> spectatorPlayers = new List<LobbyPlayer>();
     private List<LobbyPlayer> hunterPlayers = new List<LobbyPlayer>();
+    private List<string> hunterAIs = new List<string>();
     private List<LobbyPlayer> survivorPlayers = new List<LobbyPlayer>();
+    private List<string> survivorAIs = new List<string>();
 
     public GameObject lobbyUIContainer = null;
+    public GameObject roomUIContainer = null;
     public GameObject hunterPrefab = null;
+    public GameObject hunterAiPrefab = null;
     public GameObject survivorPrefab = null;
+    public GameObject survivorAiPrefab = null;
     public GameObject spectatorPrefab = null;
 
     int lastSpawnpointIndex = -1;
@@ -33,6 +40,11 @@ public class LobbyManager : NetworkLobbyManager {
     private void Start()
     {
         s_singleton = this;
+
+        if (roomUIContainer)
+        {
+            RoomUI.singleton = roomUIContainer.GetComponent<RoomUI>();
+        }
 
         if(hunterPrefab != null)
         {
@@ -46,7 +58,16 @@ public class LobbyManager : NetworkLobbyManager {
         {
             ClientScene.RegisterPrefab(spectatorPrefab);
         }
+        if (hunterAiPrefab != null)
+        {
+            ClientScene.RegisterPrefab(hunterAiPrefab);
+        }
+        if (survivorAiPrefab != null)
+        {
+            ClientScene.RegisterPrefab(survivorAiPrefab);
+        }
     }
+
 
     private void OnGUI()
     {
@@ -65,22 +86,58 @@ public class LobbyManager : NetworkLobbyManager {
             GUILayout.Label("Player " + p.netId.ToString());
             i++;
         }
+        foreach(var p in hunterAIs)
+        {
+            GUILayout.Label(p);
+        }
 
         GUILayout.Label("Survivors:");
         foreach(var p in survivorPlayers)
         {
             GUILayout.Label("Player " + p.netId.ToString());
         }
+        foreach (var p in survivorAIs)
+        {
+            GUILayout.Label(p);
+        }
     }
-    
+
+
+    public void AddSurvivorAI()
+    {
+        if (!TeamIsFull(TeamType.Survivor))
+        {
+            TeamAddAI(TeamType.Survivor, "AI_Survivor_" + (survivorAIs.Count + 1).ToString());
+        }
+    }
+
+
+    public void AddHunterAI()
+    {
+        if (!TeamIsFull(TeamType.Hunter))
+        {
+            TeamAddAI(TeamType.Hunter, "AI_Hunter_" + (hunterAIs.Count + 1).ToString());
+        }
+    }
+
+
+
+    #region Team Management
     public bool TeamIsFull(TeamType team)
     {
         if (team == TeamType.Hunter)
-            return hunterPlayers.Count >= maxHunterPlayers;
+        {
+            return hunterPlayers.Count + hunterAIs.Count >= maxHunterPlayers;
+        }
         else if (team == TeamType.Survivor)
-            return survivorPlayers.Count >= maxSurvivorPlayers;
+        {
+            return survivorPlayers.Count + survivorAIs.Count >= maxSurvivorPlayers;
+        }
         else if (team == TeamType.Spectator)
+        {
             return spectatorPlayers.Count >= maxSpectatorPlayers;
+        }
+
         return false;
     }
 
@@ -117,6 +174,25 @@ public class LobbyManager : NetworkLobbyManager {
     }
 
 
+    private void TeamAddAI(TeamType team, string player)
+    {
+        if (team == TeamType.Hunter)
+            hunterAIs.Add(player);
+        else if (team == TeamType.Survivor)
+            survivorAIs.Add(player);
+        UpdateSlots();
+    }
+
+    private void TeamRemoveAI(TeamType team, string player)
+    {
+        if (team == TeamType.Hunter)
+            hunterAIs.Remove(player);
+        else if (team == TeamType.Survivor)
+            survivorAIs.Remove(player);
+        UpdateSlots();
+    }
+
+
     public void UpdateSlots()
     {
         Debug.Log("UpdateSlots Called");
@@ -145,8 +221,30 @@ public class LobbyManager : NetworkLobbyManager {
                     break;
             }
         }
-    }
 
+        for(int i = 0; i < survivorAIs.Count + survivorPlayers.Count; i++)
+        {
+            RoomUI.singleton.survivorImages[i].sprite = RoomUI.singleton.survivorAvatar;
+        }
+        for(int i = survivorAIs.Count + survivorPlayers.Count; i < maxSurvivorPlayers; i++)
+        {
+            RoomUI.singleton.survivorImages[i].sprite = RoomUI.singleton.emptySlotAvatar;
+        }
+
+        for (int i = 0; i < hunterAIs.Count + hunterPlayers.Count; i++)
+        {
+            RoomUI.singleton.hunterImages[i].sprite = RoomUI.singleton.hunterAvatar;
+        }
+        for (int i = hunterAIs.Count + hunterPlayers.Count; i < maxHunterPlayers; i++)
+        {
+            RoomUI.singleton.hunterImages[i].sprite = RoomUI.singleton.emptySlotAvatar;
+        }
+    }
+    #endregion Team Management
+
+
+
+    #region Server Callbacks
     // ---- Server Callbacks
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
@@ -196,10 +294,52 @@ public class LobbyManager : NetworkLobbyManager {
             ServerChangeScene(playScene);
         }
     }
+    #endregion Server Callbacks
+
+
+
+    #region Client Callbacks
+
+    public override void OnLobbyClientConnect(NetworkConnection conn)
+    {
+        base.OnLobbyClientConnect(conn);
+        hasConnection = true;
+        if (lobbyUIContainer)
+        {
+            lobbyUIContainer.SetActive(false);
+        }
+    }
+
+
+    public override void OnLobbyClientDisconnect(NetworkConnection conn)
+    {
+        base.OnLobbyClientDisconnect(conn);
+        hasConnection = false;
+        if (lobbyUIContainer)
+        {
+            lobbyUIContainer.SetActive(true);
+        }
+        if (roomUIContainer)
+        {
+            roomUIContainer.SetActive(false);
+        }
+    }
 
     public override void OnLobbyClientSceneChanged(NetworkConnection conn)
     {
         base.OnLobbyClientSceneChanged(conn);
+
+        if(SceneManager.GetActiveScene().name == lobbyScene)
+        {
+            if (lobbyUIContainer)
+            {
+                lobbyUIContainer.SetActive(!hasConnection);
+            }
+            if (roomUIContainer)
+            {
+                roomUIContainer.SetActive(hasConnection);
+            }
+        }
 
         if (SceneManager.GetActiveScene().name == playScene)
         {
@@ -207,18 +347,54 @@ public class LobbyManager : NetworkLobbyManager {
             {
                 lobbyUIContainer.SetActive(false);
             }
+            if (roomUIContainer)
+            {
+                roomUIContainer.SetActive(false);
+            }
         }
     }
+    #endregion Client Callbacks
 
-    // lobby hook
+
+    // --------- lobby hook -------
+    /// <summary>
+    /// Callback function when the player scene is loaded on server
+    /// also the same time when the networked player object is about to spawned
+    /// </summary>
+    /// <param name="lobbyPlayer"></param>
+    /// <param name="gamePlayer"></param>
+    /// <returns></returns>
     public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobbyPlayer, GameObject gamePlayer)
     {
-        if (lobbyUIContainer)
+        var spawnPoints = FindObjectsOfType<NetworkStartPosition>();
+
+        // Spawn ai players
+        foreach (var ai in hunterAIs)
         {
-            lobbyUIContainer.SetActive(false);
+            var newPlayer = Instantiate(hunterAiPrefab);
+            int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
+            newPlayer.transform.position = spawnPoints[i].transform.position;
+            newPlayer.transform.rotation = Quaternion.identity;
+            var character = newPlayer.GetComponent<NetworkCharacter>();
+            character.SetTeam(TeamType.Hunter);
+            lastSpawnpointIndex = i;
         }
 
-        var spawnPoints = FindObjectsOfType<NetworkStartPosition>();
+        foreach (var ai in survivorAIs)
+        {
+            var newPlayer = Instantiate(survivorAiPrefab);
+            int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
+            newPlayer.transform.position = spawnPoints[i].transform.position;
+            newPlayer.transform.rotation = Quaternion.identity;
+            var character = newPlayer.GetComponent<NetworkCharacter>();
+            character.SetTeam(TeamType.Survivor);
+            lastSpawnpointIndex = i;
+        }
+
+
+
+        // Spawn player object according to team selection
+
         if (lobbyPlayer.GetComponent<LobbyPlayer>().team == TeamType.Hunter)
         {
             var newPlayer = Instantiate(hunterPrefab);

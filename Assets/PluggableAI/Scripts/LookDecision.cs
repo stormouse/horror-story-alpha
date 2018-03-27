@@ -9,6 +9,8 @@ public class LookDecision : AIDecision {
 		bool targetVisible = Look (controller);
 		return targetVisible;
 	}
+
+
 	private bool Look(AIStateController controller) {
 		controller.visibleTargets.Clear ();
 

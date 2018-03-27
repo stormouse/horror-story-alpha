@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 9a6d2037d94a0784189b427d149b626d
+timeCreated: 1522128979
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - nameText: {instanceID: 0}
+  - joinSpectatorBtn: {instanceID: 0}
+  - joinHunterBtn: {instanceID: 0}
+  - joinSurvivorBtn: {instanceID: 0}
+  - addHunterAiBtn: {instanceID: 0}
+  - addSurvivorAiBtn: {instanceID: 0}
+  - readyBtn: {instanceID: 0}
+  - hunterAvatar: {fileID: 21300000, guid: 836886fc2c11b0346ac2b294a358e5cf, type: 3}
+  - survivorAvatar: {fileID: 21300000, guid: 66455d5486255d34fa9d90440ff72f5c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -5,6 +5,10 @@ using GameEnum;
 
 public class LobbyPlayer : NetworkLobbyPlayer
 {
+    /* shortcut to localplayer */
+    private static LobbyPlayer s_localPlayer = null;
+    public static LobbyPlayer localPlayer { get { return s_localPlayer; } }
+
     /* player public properties */
     [SyncVar(hook = "OnSwitchTeam")]
     public TeamType team;
@@ -14,34 +18,129 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     /* player UI */
     public Text nameText;
-    public Button selectSpectatorBtn;
-    public Button selectHunterBtn;
-    public Button selectSurvivorBtn;
+    public Button joinSpectatorBtn;
+    public Button joinHunterBtn;
+    public Button joinSurvivorBtn;
+    public Button addHunterAiBtn;
+    public Button addSurvivorAiBtn;
     public Button readyBtn;
 
 
-    private void OnGUI()
+    public override void OnStartLocalPlayer()
     {
-        if (!isLocalPlayer)
-            return;
+        s_localPlayer = this;
+        SetupUIComponents();
+    }
 
-        if (GUI.Button(new Rect(Screen.width - 200, Screen.height - 80, 150, 60), (readyToBegin ? "Cancel" : "Ready")))
+
+    private void SetupUIComponents()
+    {
+
+        RoomUI.singleton.gameObject.SetActive(true);
+
+        // fetch button references
+        readyBtn = RoomUI.singleton.readyBtn;
+        joinSpectatorBtn = RoomUI.singleton.joinSpectatorBtn;
+        joinHunterBtn = RoomUI.singleton.joinHunterBtn;
+        joinSurvivorBtn = RoomUI.singleton.joinSurvivorBtn;
+        addHunterAiBtn = RoomUI.singleton.addHunterAiBtn;
+        addSurvivorAiBtn = RoomUI.singleton.addSurvivorAiBtn;
+
+        // show/hide add ai button
+        if (isServer)
         {
-            if (readyToBegin)
-                OnClickNotReady();
-            else
-                OnClickReady();
+            addHunterAiBtn.gameObject.SetActive(true);
+            addSurvivorAiBtn.gameObject.SetActive(true);
+            // bind listeners
+            addHunterAiBtn.onClick.AddListener(OnClickAddHunterAiButton);
+            addSurvivorAiBtn.onClick.AddListener(OnClickAddSurvivorAiButton);
         }
-        if (GUI.Button(new Rect(Screen.width - 400, Screen.height - 80, 150, 60), "Hunter"))
+        else
         {
-            CmdSwitchTeam(TeamType.Hunter);
+            addHunterAiBtn.gameObject.SetActive(false);
+            addSurvivorAiBtn.gameObject.SetActive(false);
+            // unbind listeners
+            addHunterAiBtn.onClick.RemoveAllListeners();
+            addSurvivorAiBtn.onClick.RemoveAllListeners();
         }
-        if (GUI.Button(new Rect(Screen.width - 600, Screen.height - 80, 150, 60), "Survivor"))
+
+        // bind other listeners
+        readyBtn.onClick.AddListener(OnClickReadyButton);
+        joinSpectatorBtn.onClick.AddListener(OnClickJoinSpectatorButton);
+        joinHunterBtn.onClick.AddListener(OnClickJoinHunterButton);
+        joinSurvivorBtn.onClick.AddListener(OnClickJoinSurvivorButton);
+        
+    }
+
+
+
+    void OnClickReadyButton()
+    {
+        if (readyToBegin)
+            OnClickNotReady();
+        else
+            OnClickReady();
+    }
+
+
+    void OnClickJoinSpectatorButton()
+    {
+
+    }
+
+    void OnClickJoinHunterButton()
+    {
+        CmdSwitchTeam(TeamType.Hunter);
+    }
+
+    void OnClickJoinSurvivorButton()
+    {
+        CmdSwitchTeam(TeamType.Survivor);
+    }
+
+    void OnClickAddHunterAiButton()
+    {
+        AddHunterAI();
+    }
+
+    void OnClickAddSurvivorAiButton()
+    {
+        AddSurvivorAI();
+    }
+
+
+    //ServerOnly
+    void AddHunterAI()
+    {
+        LobbyManager.Singleton.AddHunterAI();
+        RpcAddHunterAI();
+    }
+
+    [ClientRpc]
+    void RpcAddHunterAI()
+    {
+        if (!isServer)
         {
-            CmdSwitchTeam(TeamType.Survivor);
+            LobbyManager.Singleton.AddHunterAI();
         }
     }
 
+
+    //ServerOnly
+    void AddSurvivorAI()
+    {
+        LobbyManager.Singleton.AddSurvivorAI();
+        RpcAddSurvivorAI();
+    }
+    
+    [ClientRpc]
+    void RpcAddSurvivorAI()
+    {
+        if (!isServer)
+        {
+            LobbyManager.Singleton.AddSurvivorAI();
+        }
+    }
 
     [Command]
     void CmdSwitchTeam(TeamType _team)
@@ -72,6 +171,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
     {
         SendNotReadyToBeginMessage();
     }
+
 
     [ClientRpc]
     public void RpcReadyForPlayScene()
