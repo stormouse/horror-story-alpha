@@ -160,6 +160,11 @@ public class HunterSkills : NetworkBehaviour {
         {
             return;
         }
+		if (args != null) {
+			DirectionArgument dirc = (DirectionArgument)args;
+			CmdHook (dirc.direction.normalized);
+			return;
+		}
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit info;
         if (Physics.Raycast(mouseRay, out info))
