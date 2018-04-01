@@ -1892,7 +1892,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843327644783622}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.507606, y: 11.207516, z: -6.173805}
+  m_LocalPosition: {x: 27.198547, y: 115.46032, z: -103.38979}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4218843630746016}
@@ -3376,7 +3376,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843327644783622}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 560aa8e143532e94f8ff1561e583e866, type: 3}
   m_Name: 
@@ -3406,8 +3406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
-  m_Speed: 5
-  m_TurnSpeed: 45
+  m_Speed: 9
+  m_TurnSpeed: 75
 --- !u!114 &114244322774433520
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3420,6 +3420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  team: 0
 --- !u!114 &114289740518080488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3484,8 +3485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625eb5d1d51bbb246aa69f320c1f61e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraDistance: 16
-  cameraHight: 16
+  cameraDistance: 20
+  cameraHight: 18
 --- !u!114 &114735295300703876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3497,12 +3498,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6297c4d8a1a40140a303d2cb4daee5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
-  hookRange: 18
+  hookRange: 12
   hookSpeed: 80
-  attackRange: 5
-  attackAngle: 90
-  attackAnimationLength: 2
+  attackRange: 1
+  attackAngle: 60
+  attackAnimationLength: 1
   hasHook: 1
   hookPrefab: {fileID: 1931548332930490, guid: aeaeb2ab19d4548a5aac130f6e417a16, type: 2}
 --- !u!114 &114787435481096718

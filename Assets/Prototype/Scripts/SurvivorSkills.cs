@@ -7,11 +7,7 @@ using UnityEngine.Networking;
 public class SurvivorSkills : NetworkBehaviour {
 	// properties
 	public string m_InteractionButtonName = "Interaction";
-	public float moveSpeed = 5f;
-	public float attackRange = 5.0f;
-	public float attackAngle = 90.0f;
 	public float deployAnimationLength = 2f;
-	public bool hasHook = true;
 
 	// components
 	public GameObject trapPrefab;

@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Werewolf_D
-  m_Shader: {fileID: 4800000, guid: 3122ba4be8b567346aec1f764501c45f, type: 3}
+  m_Shader: {fileID: 4800000, guid: f9b8765384f064849b21e0ad0a9b115b, type: 3}
   m_ShaderKeywords: _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

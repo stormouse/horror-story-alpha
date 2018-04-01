@@ -1289,7 +1289,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029068413829026}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 560aa8e143532e94f8ff1561e583e866, type: 3}
   m_Name: 
@@ -1313,7 +1313,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029068413829026}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a723604098bf10546bd20e44e0d15556, type: 3}
   m_Name: 
@@ -1356,6 +1356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  team: 0
 --- !u!114 &114612466669100478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1388,8 +1389,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625eb5d1d51bbb246aa69f320c1f61e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraDistance: 16
-  cameraHight: 16
+  cameraDistance: 20
+  cameraHight: 18
 --- !u!114 &114626708487797220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1402,11 +1403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionButtonName: Interaction
-  moveSpeed: 5
-  attackRange: 5
-  attackAngle: 90
   deployAnimationLength: 1
-  hasHook: 1
   trapPrefab: {fileID: 1650290433295440, guid: 0c116cf178e0eff4c8548c4caf3f3745, type: 2}
   trapSpawn: {fileID: 4682762641597332}
   m_Charging: 0
@@ -1423,8 +1420,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
-  m_Speed: 8
-  m_TurnSpeed: 45
+  m_Speed: 8.75
+  m_TurnSpeed: 80
 --- !u!114 &114866893753242472
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 public class HunterSkills : NetworkBehaviour {
 
     // properties
-    public float moveSpeed = 5f;
     public float hookRange = 5.0f;
     public float hookSpeed = 1.0f;
     public float attackRange = 5.0f;

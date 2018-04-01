@@ -40,6 +40,7 @@ public class AIStateController : MonoBehaviour {
 			navMeshAgent.enabled = false;
 		}
 	}
+
 	void Update() {
 		if (!aiActive) {
 			return;
@@ -53,12 +54,14 @@ public class AIStateController : MonoBehaviour {
 			Gizmos.DrawWireSphere (eyes.position, enemyStats.lookSphereCastRadius);
 		}
 	}
-	public void TransitionToState (AIState nextState) {
+
+    public void TransitionToState (AIState nextState) {
 		if (nextState != remainState) {
 			currentState = nextState;
 			OnExitState ();
 		}
 	}
+
 	public bool CheckIfCountDownElapsed(float duration) {
 		timeElapsed += Time.deltaTime;
 		return (timeElapsed >= duration);

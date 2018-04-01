@@ -730,7 +730,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029068413829026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 27.47982, y: 115.32581, z: -103.428635}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4660290456689714}
@@ -1333,7 +1333,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029068413829026}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 560aa8e143532e94f8ff1561e583e866, type: 3}
   m_Name: 
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029068413829026}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a723604098bf10546bd20e44e0d15556, type: 3}
   m_Name: 
@@ -1447,11 +1447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionButtonName: Interaction
-  moveSpeed: 5
-  attackRange: 5
-  attackAngle: 90
   deployAnimationLength: 1
-  hasHook: 1
   trapPrefab: {fileID: 1065511799908946, guid: 2f3a1300ce544c7438e8947424fc7148, type: 2}
   trapSpawn: {fileID: 4682762641597332}
   m_Charging: 0
@@ -1550,13 +1546,13 @@ NavMeshAgent:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029068413829026}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 8
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 90
   m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

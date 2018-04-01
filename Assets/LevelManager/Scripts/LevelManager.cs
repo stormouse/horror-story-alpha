@@ -47,9 +47,8 @@ public class LevelManager : NetworkBehaviour
 
     private void Start()
     {
-        
         StartCoroutine(GameLoop());
-		SetupAiMasterMinds();
+        SetupAiMasterMinds();
     }
 
     void SetupAiMasterMinds()

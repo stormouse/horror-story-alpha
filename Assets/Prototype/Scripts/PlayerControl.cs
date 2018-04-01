@@ -67,7 +67,8 @@ public class PlayerControl : NetworkBehaviour {
             return;
 
         // Apply movement to the rigidbody's position.
-        m_Rigidbody.velocity = transform.forward * m_MovementInputValue * m_Speed;
+        Vector3 speed2d = transform.forward * m_MovementInputValue * m_Speed;
+        m_Rigidbody.velocity = new Vector3(speed2d.x, m_Rigidbody.velocity.y, speed2d.z);
     }
 
 

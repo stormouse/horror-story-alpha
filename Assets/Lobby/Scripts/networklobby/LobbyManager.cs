@@ -35,7 +35,8 @@ public class LobbyManager : NetworkLobbyManager {
     public GameObject survivorAiPrefab = null;
     public GameObject spectatorPrefab = null;
 
-    int lastSpawnpointIndex = -1;
+    int survivorSpawned = 0;
+    int hunterSpawned = 0;
 
     private void Start()
     {
@@ -294,6 +295,20 @@ public class LobbyManager : NetworkLobbyManager {
             ServerChangeScene(playScene);
         }
     }
+
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        base.OnServerSceneChanged(sceneName);
+        if (sceneName == playScene)
+        {
+            InitializeServerOnlyObjects();
+        }
+        else if(sceneName == lobbyScene)
+        {
+            hunterSpawned = 0;
+            survivorSpawned = 0;
+        }
+    }
     #endregion Server Callbacks
 
 
@@ -351,7 +366,6 @@ public class LobbyManager : NetworkLobbyManager {
             {
                 roomUIContainer.SetActive(false);
             }
-            InitializeServerOnlyObjects();
         }
     }
     #endregion Client Callbacks
@@ -367,38 +381,37 @@ public class LobbyManager : NetworkLobbyManager {
     /// <returns></returns>
     public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobbyPlayer, GameObject gamePlayer)
     {
-        var spawnPoints = FindObjectsOfType<NetworkStartPosition>();
+        var spManager = FindObjectOfType<SpawnpointManager>();
 
         // Spawn player object according to team selection
         if (lobbyPlayer.GetComponent<LobbyPlayer>().team == TeamType.Hunter)
         {
             var newPlayer = Instantiate(hunterPrefab);
-            if (spawnPoints.Length > 0)
+            if (spManager != null)
             {
-                int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
-                newPlayer.transform.position = spawnPoints[i].transform.position;
+                int i = hunterSpawned % spManager.hunterSpawnpoints.Length;
+                newPlayer.transform.position = spManager.hunterSpawnpoints[i].transform.position;
                 newPlayer.transform.rotation = Quaternion.identity;
                 var character = newPlayer.GetComponent<NetworkCharacter>();
-                // assert character!
                 character.SetTeam(TeamType.Hunter);
-                lastSpawnpointIndex = i;
+                hunterSpawned++;
             }
             NetworkServer.Spawn(newPlayer);
             NetworkServer.Destroy(gamePlayer);
             NetworkServer.ReplacePlayerForConnection(lobbyPlayer.GetComponent<NetworkIdentity>().connectionToClient, newPlayer, 0);
         }
+
         else if (lobbyPlayer.GetComponent<LobbyPlayer>().team == TeamType.Survivor)
         {
             var newPlayer = Instantiate(survivorPrefab);
-            if (spawnPoints.Length > 0)
+            if (spManager != null)
             {
-                int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
-                newPlayer.transform.position = spawnPoints[i].transform.position;
+                int i = survivorSpawned % spManager.survivorSpawnpoints.Length;
+                newPlayer.transform.position = spManager.survivorSpawnpoints[i].transform.position;
                 newPlayer.transform.rotation = Quaternion.identity;
                 var character = newPlayer.GetComponent<NetworkCharacter>();
-                // assert character!
                 character.SetTeam(TeamType.Survivor);
-                lastSpawnpointIndex = i;
+                survivorSpawned++;
             }
             NetworkServer.Spawn(newPlayer);
             NetworkServer.Destroy(gamePlayer);
@@ -411,30 +424,29 @@ public class LobbyManager : NetworkLobbyManager {
 
     void InitializeServerOnlyObjects()
     {
-        var spawnPoints = FindObjectsOfType<NetworkStartPosition>();
-
+        var spManager = FindObjectOfType<SpawnpointManager>();
         // Spawn ai players
         foreach (var ai in hunterAIs)
         {
             var newPlayer = Instantiate(hunterAiPrefab);
-            int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
-            newPlayer.transform.position = spawnPoints[i].transform.position;
+            int i = hunterSpawned % spManager.hunterSpawnpoints.Length;
+            newPlayer.transform.position = spManager.hunterSpawnpoints[i].transform.position;
             newPlayer.transform.rotation = Quaternion.identity;
             var character = newPlayer.GetComponent<NetworkCharacter>();
             character.SetTeam(TeamType.Hunter);
-            lastSpawnpointIndex = i;
+            hunterSpawned++;
             NetworkServer.Spawn(newPlayer);
         }
 
         foreach (var ai in survivorAIs)
         {
             var newPlayer = Instantiate(survivorAiPrefab);
-            int i = (lastSpawnpointIndex + 1) % spawnPoints.Length;
-            newPlayer.transform.position = spawnPoints[i].transform.position;
+            int i = survivorSpawned % spManager.survivorSpawnpoints.Length;
+            newPlayer.transform.position = spManager.survivorSpawnpoints[i].transform.position;
             newPlayer.transform.rotation = Quaternion.identity;
             var character = newPlayer.GetComponent<NetworkCharacter>();
             character.SetTeam(TeamType.Survivor);
-            lastSpawnpointIndex = i;
+            survivorSpawned++;
             NetworkServer.Spawn(newPlayer);
         }
     }
