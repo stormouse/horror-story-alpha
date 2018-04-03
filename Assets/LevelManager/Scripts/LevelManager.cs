@@ -258,13 +258,16 @@ public class LevelManager : NetworkBehaviour
     // Destory a survivor and put the player in a spectator
     public void KillSurvivor(GameObject survivorObject)
     {
-        var character = survivorObject.GetComponent<NetworkCharacter>();
-        var identity = survivorObject.GetComponent<NetworkIdentity>();
-        NetworkConnection conn = identity.connectionToClient;
+        if (survivorObject.GetComponent<AICharacter>() == null)
+        {
+            var character = survivorObject.GetComponent<NetworkCharacter>();
+            var identity = survivorObject.GetComponent<NetworkIdentity>();
+            NetworkConnection conn = identity.connectionToClient;
 
-        GameObject spectator = GameObject.Instantiate(spectatorPrefab);
-        NetworkServer.ReplacePlayerForConnection(conn, spectator, 0);
-        NetworkServer.Spawn(spectator);
+            GameObject spectator = GameObject.Instantiate(spectatorPrefab);
+            NetworkServer.ReplacePlayerForConnection(conn, spectator, 0);
+            NetworkServer.Spawn(spectator);
+        }
 
         DestoryNetworkObject(survivorObject, timeBeforeDeadBodyDisappear);
     }

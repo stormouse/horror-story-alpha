@@ -3486,7 +3486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraDistance: 20
-  cameraHight: 18
+  cameraHeight: 16
 --- !u!114 &114735295300703876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3507,7 +3507,7 @@ MonoBehaviour:
   wardCount: 2
   wardAnimationLength: 2
   rageCooldown: 45
-  attackRange: 1
+  attackRange: 2.2
   attackAngle: 60
   attackAnimationLength: 1
   hookPrefab: {fileID: 1931548332930490, guid: aeaeb2ab19d4548a5aac130f6e417a16, type: 2}

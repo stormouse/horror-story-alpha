@@ -2932,6 +2932,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1098783667}
+  - component: {fileID: 1098783668}
   m_Layer: 0
   m_Name: Sps
   m_TagString: Untagged
@@ -2958,6 +2959,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1098783668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1098783666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc90143350672d446842e682433cda93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hunterSpawnpoints:
+  - {fileID: 343516210}
+  - {fileID: 2023259947}
+  survivorSpawnpoints:
+  - {fileID: 1896450190}
+  - {fileID: 1083947176}
+  - {fileID: 1310636172}
+  - {fileID: 1129286393}
 --- !u!1001 &1105468715
 Prefab:
   m_ObjectHideFlags: 0
