@@ -7,7 +7,7 @@ public class PlayerUIManager : MonoBehaviour {
 
     private static PlayerUIManager s_singleton;
     public static PlayerUIManager singleton { get { return s_singleton; } }
-    public GameEnum.TeamType playerTeam;
+    private GameEnum.TeamType playerTeam;
 
     public Sprite[] hunterSkillSprites;
     public Sprite[] survivorSkillSprites;

@@ -3420,7 +3420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  team: 0
+  team: 1
 --- !u!114 &114289740518080488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3498,12 +3498,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6297c4d8a1a40140a303d2cb4daee5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hookCooldown: 10
   hookRange: 12
   hookSpeed: 80
+  hookSpellTime: 0.4
+  hasHook: 1
+  wardCooldown: 5
+  wardCount: 2
+  wardAnimationLength: 2
+  rageCooldown: 45
   attackRange: 1
   attackAngle: 60
   attackAnimationLength: 1
-  hasHook: 1
   hookPrefab: {fileID: 1931548332930490, guid: aeaeb2ab19d4548a5aac130f6e417a16, type: 2}
 --- !u!114 &114787435481096718
 MonoBehaviour:

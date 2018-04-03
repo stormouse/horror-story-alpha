@@ -1356,7 +1356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  team: 0
+  team: 2
 --- !u!114 &114612466669100478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1403,7 +1403,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionButtonName: Interaction
+  flashCooldown: 6
+  flashCount: 3
   deployAnimationLength: 1
+  trapCooldown: 5
+  trapCount: 2
+  camouflageAnimationLength: 1
+  camouflageCooldown: 20
+  camouflageCount: 2
+  toyCarCount: 1
   trapPrefab: {fileID: 1650290433295440, guid: 0c116cf178e0eff4c8548c4caf3f3745, type: 2}
   trapSpawn: {fileID: 4682762641597332}
   m_Charging: 0
