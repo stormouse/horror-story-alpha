@@ -17,7 +17,7 @@ public class _HunterStateController : MonoBehaviour {
 	public LayerMask obstacleMask;
 
 	[HideInInspector] public NavMeshAgent navMeshAgent;
-	[HideInInspector] public List<Transform> wayPointList;
+	[HideInInspector] public List<PowerSourceController> wayPointList;
 	[HideInInspector] public int nextWayPoint;
 	[HideInInspector] public List<NetworkCharacter> chaseTarget;
 	[HideInInspector] public Vector3 wonderPoint;
@@ -37,7 +37,7 @@ public class _HunterStateController : MonoBehaviour {
 		character = GetComponent<NetworkCharacter> ();
 	}
 
-	public void SetupAI(bool aiActivationFromManager, List<Transform> wayPointsFromManager){
+	public void SetupAI(bool aiActivationFromManager, List<PowerSourceController> wayPointsFromManager){
 		wayPointList = wayPointsFromManager;
 		aiActive = aiActivationFromManager;
 		 
