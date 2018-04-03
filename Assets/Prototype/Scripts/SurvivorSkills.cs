@@ -137,10 +137,13 @@ public class SurvivorSkills : NetworkBehaviour {
 
         lastTrapTime = Time.time;
         trapCount -= 1;
-        PlayerUIManager.singleton.UpdateItemCount(1, trapCount);
-        if(trapCount > 0)
+        if (PlayerUIManager.singleton != null)
         {
-            PlayerUIManager.singleton.EnterCooldown(1, trapCooldown);
+            PlayerUIManager.singleton.UpdateItemCount(1, trapCount);
+            if (trapCount > 0)
+            {
+                PlayerUIManager.singleton.EnterCooldown(1, trapCooldown);
+            }
         }
 	}
 	IEnumerator _DeployAnimationDelay() {

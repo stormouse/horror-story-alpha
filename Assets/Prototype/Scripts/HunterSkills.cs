@@ -253,7 +253,8 @@ public class HunterSkills : NetworkBehaviour {
         lastHookTime = Time.time;
         if (isLocalPlayer)
         {
-            PlayerUIManager.singleton.EnterCooldown(1, hookCooldown);
+            if (PlayerUIManager.singleton != null)
+                PlayerUIManager.singleton.EnterCooldown(1, hookCooldown);
         }
     }
     #endregion Hook_Cast
