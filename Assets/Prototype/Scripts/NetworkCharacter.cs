@@ -22,6 +22,7 @@ public enum MoveMethod
 public class ActionArgument { }
 public class StunArgument : ActionArgument { public float time; }
 public class MoveArgument : ActionArgument { public float h, v; }
+public class DirectionArgument : ActionArgument { public Vector3 direction;}
 public delegate void ActionFunction(GameObject sender, ActionArgument args);
 
 

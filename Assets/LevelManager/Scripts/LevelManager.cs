@@ -70,7 +70,19 @@ public class LevelManager : NetworkBehaviour
 					ai.SetupAI (true, targetPoint);
 				}
 			}
-			
+			GameObject[] hunters = GameObject.FindGameObjectsWithTag("Hunter");
+			foreach (GameObject p in hunters) {
+				var ai = p.GetComponent<_HunterStateController> ();
+				//Debug.Log ("here2!");
+				if (ai != null) {
+					targetPoint = new List<Transform> ();
+					foreach (var ps in m_PowerSources) {
+						//Debug.Log(ps.transform.position.x);
+						targetPoint.Add (ps.transform);
+					}
+					ai.SetupAI (true, targetPoint);
+				}
+			}
 			/*
             foreach (var p in players)
             {

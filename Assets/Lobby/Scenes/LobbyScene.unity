@@ -1445,7 +1445,8 @@ MonoBehaviour:
   roomUIContainer: {fileID: 669550457}
   hunterPrefab: {fileID: 1843327644783622, guid: 6db93c167d8616848b520396c5cf7de8,
     type: 2}
-  hunterAiPrefab: {fileID: 0}
+  hunterAiPrefab: {fileID: 1843327644783622, guid: 1b0d02bb131106248a9c438a00c3e04d,
+    type: 2}
   survivorPrefab: {fileID: 1029068413829026, guid: e641ba205e76b774581ea19a7a1c425f,
     type: 2}
   survivorAiPrefab: {fileID: 1029068413829026, guid: 1ec73f80f495caa46ba3ed5f2a9b5119,
