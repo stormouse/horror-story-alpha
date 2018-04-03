@@ -5,13 +5,29 @@ using UnityEngine.Networking;
 [RequireComponent(typeof(Rigidbody), typeof(NetworkCharacter)), NetworkSettings(sendInterval = 0f)]
 public class HunterSkills : NetworkBehaviour {
 
-    // properties
+    // skills
+    public float hookCooldown = 10.0f;
     public float hookRange = 5.0f;
     public float hookSpeed = 1.0f;
+    public float hookSpellTime = 0.4f;
+    public bool hasHook = true;
+    public bool HookReady { get { return Time.time - lastHookTime > hookCooldown; } }
+    private float lastHookTime = 0.0f;
+
+    public float wardCooldown = 5.0f;
+    public float wardCount = 2;
+    public float wardAnimationLength = 2.0f;
+    private float lastWardTime = 0.0f;
+    public bool WardReady { get { return Time.time - lastWardTime > wardCooldown && wardCount > 0; } }
+
+    public float rageCooldown = 45.0f;
+    private float lastRageTime = 0.0f;
+    public bool RageReady { get { return Time.time - lastRageTime > rageCooldown; } }
+
     public float attackRange = 5.0f;
     public float attackAngle = 90.0f;
     public float attackAnimationLength;
-    public bool hasHook = true;
+    public bool AttackReady { get { return true; } }
 
     // components
     public GameObject hookPrefab;
@@ -23,6 +39,8 @@ public class HunterSkills : NetworkBehaviour {
     private float angle = 0f;
     private int freshCounter = 0;
     private float mDiff = 1.5f;
+
+
 
     #region Builtin_Functions
     void Start()
@@ -61,12 +79,18 @@ public class HunterSkills : NetworkBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            character.Perform("Hook", gameObject, null);
+            if (HookReady)
+            {
+                character.Perform("Hook", gameObject, null);
+            }
         }
 
         if (Input.GetButtonDown("Fire1"))
         {
-            character.Perform("Attack", gameObject, null);
+            if (AttackReady)
+            {
+                character.Perform("Attack", gameObject, null);
+            }
         }
     }
 
@@ -193,6 +217,7 @@ public class HunterSkills : NetworkBehaviour {
     [ClientRpc]
     void RpcHook(Vector3 dir)
     {
+        if(!isServer)
         _HookMethod(dir);
     }
 
@@ -200,7 +225,7 @@ public class HunterSkills : NetworkBehaviour {
     void _HookMethodServer(Vector3 dir)
     {
         // TODO: limit switch coroutine from outside
-        character.SwitchCoroutine(StartCoroutine(_ThrowHookDelay(dir, 0.4f)));
+        character.SwitchCoroutine(StartCoroutine(_ThrowHookDelay(dir, hookSpellTime)));
     }
 
 
@@ -224,6 +249,12 @@ public class HunterSkills : NetworkBehaviour {
         character.Transit(CharacterState.Casting);
         character.Animator.SetBool("Throwing", true);
         hasHook = false;
+
+        lastHookTime = Time.time;
+        if (isLocalPlayer)
+        {
+            PlayerUIManager.singleton.EnterCooldown(1, hookCooldown);
+        }
     }
     #endregion Hook_Cast
 

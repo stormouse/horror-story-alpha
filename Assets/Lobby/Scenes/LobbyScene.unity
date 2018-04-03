@@ -1435,7 +1435,7 @@ MonoBehaviour:
   m_GamePlayerPrefab: {fileID: 1475387101693040, guid: 44129e1b4d7f9454894aa0e2a5de6180,
     type: 2}
   m_LobbyScene: LobbyScene
-  m_PlayScene: PlayableLevel
+  m_PlayScene: Level
   lobbySlots: []
   maxSpectatorPlayers: 1
   maxHunterPlayers: 2

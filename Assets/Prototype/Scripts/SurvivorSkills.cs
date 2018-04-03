@@ -5,14 +5,38 @@ using UnityEngine.Networking;
 
 [NetworkSettings(sendInterval = 0)]
 public class SurvivorSkills : NetworkBehaviour {
-	// properties
+	
+    // properties
 	public string m_InteractionButtonName = "Interaction";
-	public float deployAnimationLength = 2f;
 
-	// components
-	public GameObject trapPrefab;
+    // skills
+
+    public float flashCooldown = 6.0f;
+    public int flashCount = 3;
+    private float lastFlashTime;
+    public bool FlashReady { get { return Time.time - lastFlashTime > flashCooldown && flashCount > 0; } }
+
+    public float deployAnimationLength = 2f;
+    public float trapCooldown = 5.0f;
+    public int trapCount = 2;
+    private float lastTrapTime;
+    public bool TrapReady { get { return Time.time - lastTrapTime > trapCooldown && trapCount > 0; } }
+
+    public float camouflageAnimationLength = 1.0f;
+    public float camouflageCooldown = 20.0f;
+    public int camouflageCount = 2;
+    private float lastCamouflageTime;
+    public bool CamouflageReady { get { return Time.time - lastCamouflageTime > camouflageCooldown && camouflageCount > 0; } }
+
+    public int toyCarCount = 1;
+    public bool ToyCarReady { get { return toyCarCount > 0; } }
+
+
+    // components
+    public GameObject trapPrefab;
 	public Transform trapSpawn;
-	private Rigidbody m_rigidbody;
+
+    private Rigidbody m_rigidbody;
 	private NetworkCharacter character;
 
 
@@ -73,8 +97,12 @@ public class SurvivorSkills : NetworkBehaviour {
 		}
 
 	}
+
 	public void DeployPerform() {
-		character.Perform("Deploy", gameObject, null);
+        if (TrapReady)
+        {
+            character.Perform("Deploy", gameObject, null);
+        }
 	}
 	public void ChargePerform() {
 		character.Perform ("Charge", gameObject, null);
@@ -97,19 +125,23 @@ public class SurvivorSkills : NetworkBehaviour {
 		_DeployMethodClient (); 
 	}
 	void _DeployMethodServer() {
-		//character.Perform("StopMovement", gameObject, null);
 		trap = Instantiate (trapPrefab);
 		trap.transform.position = trapSpawn.position;
 		NetworkServer.Spawn (trap);
-		//character.Transit(CharacterState.Casting);
-		//character.SwitchCoroutine (StartCoroutine(_DeployAnimationDelay()));
 	}
 	void _DeployMethodClient() {
 		character.Perform("StopMovement", gameObject, null);
-		// TODO: limit transition command from outside!
 		character.Animator.SetTrigger ("Deploy");
 		character.Transit(CharacterState.Casting);
 		character.SwitchCoroutine (StartCoroutine(_DeployAnimationDelay()));
+
+        lastTrapTime = Time.time;
+        trapCount -= 1;
+        PlayerUIManager.singleton.UpdateItemCount(1, trapCount);
+        if(trapCount > 0)
+        {
+            PlayerUIManager.singleton.EnterCooldown(1, trapCooldown);
+        }
 	}
 	IEnumerator _DeployAnimationDelay() {
 		float startTime = Time.time;
