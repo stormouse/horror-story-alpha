@@ -13,7 +13,12 @@ public class _AttackDecision : _Decision {
 	public bool AttackAble(_HunterStateController controller){
 		if (controller.chaseTarget.Count == 0)
 			return false;
-		float distance = (controller.chaseTarget [0].position - controller.transform.position).magnitude;
+		//is died
+		if (controller.chaseTarget[0].CurrentState == CharacterState.Dead) {
+			controller.chaseTarget.Remove (controller.chaseTarget [0]);
+			return false;
+		}
+		float distance = (controller.chaseTarget [0].transform.position - controller.transform.position).magnitude;
 		if (distance <= controller.attackRange)
 			return true;
 		else

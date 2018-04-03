@@ -19,7 +19,7 @@ public class _HunterStateController : MonoBehaviour {
 	[HideInInspector] public NavMeshAgent navMeshAgent;
 	[HideInInspector] public List<Transform> wayPointList;
 	[HideInInspector] public int nextWayPoint;
-	[HideInInspector] public List<Transform> chaseTarget;
+	[HideInInspector] public List<NetworkCharacter> chaseTarget;
 	[HideInInspector] public Vector3 wonderPoint;
 	[HideInInspector] public List<Transform> underInvokeList;
 	[HideInInspector] public HunterSkills hskills;

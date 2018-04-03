@@ -14,7 +14,7 @@ public class _HookAction : _Action {
 
 		//lunch hook here
 		DirectionArgument dir = new DirectionArgument();
-		dir.direction = controller.chaseTarget [0].position - controller.transform.position;
+		dir.direction = controller.chaseTarget [0].transform.position - controller.transform.position;
 		dir.direction.y = 0;
 		controller.character.Perform ("Hook", controller.gameObject, dir);
 	}

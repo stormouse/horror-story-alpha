@@ -13,7 +13,11 @@ public class _HookDecision : _Decision {
 	public bool HookAble(_HunterStateController controller){
 		if (controller.chaseTarget.Count == 0)
 			return false;
-		float distance = (controller.chaseTarget [0].position - controller.transform.position).magnitude;
+		if (controller.chaseTarget [0] == null) {
+			controller.chaseTarget.Remove (controller.chaseTarget [0]);
+			return false;
+		}
+		float distance = (controller.chaseTarget [0].transform.position - controller.transform.position).magnitude;
 		if (distance <= controller.hookRange && controller.character.CurrentState == CharacterState.Normal) {
 			return true;
 		}
