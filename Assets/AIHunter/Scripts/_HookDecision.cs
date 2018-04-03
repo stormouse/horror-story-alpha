@@ -18,7 +18,8 @@ public class _HookDecision : _Decision {
 			return false;
 		}
 		float distance = (controller.chaseTarget [0].transform.position - controller.transform.position).magnitude;
-		if (distance <= controller.hookRange && controller.character.CurrentState == CharacterState.Normal) {
+		if (distance <= controller.hookRange && controller.character.CurrentState == CharacterState.Normal
+			&& controller.hskills.HookReady) {
 			return true;
 		}
 		else

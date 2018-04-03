@@ -331,6 +331,10 @@ public class NetworkCharacter : NetworkBehaviour {
 			if (isServer) {
 				RpcUpdateAIAnimatorSpeed (GetComponent<AIStateController> ().navMeshAgent.velocity.magnitude);
 			}
+		} else if (GetComponent<_HunterStateController>() != null){
+			if (isServer) {
+				RpcUpdateAIAnimatorSpeed (GetComponent<_HunterStateController> ().navMeshAgent.velocity.magnitude);
+			}
 		} else {
         	m_animator.SetFloat("Speed", m_rigidbody.velocity.magnitude);//original script line
 		}
