@@ -9,7 +9,6 @@ public class _HunterStateController : MonoBehaviour {
 	private bool aiActive;
 	public Transform eye;
 	public _EnemyStats enemyStats;
-	public _State remainState;
 	public int visionRange;
 	public int attackRange;
 	public int hookRange;
@@ -58,8 +57,6 @@ public class _HunterStateController : MonoBehaviour {
 	}
 
 	public void TransitionToState (_State nextState) {
-		if (nextState != remainState) {
-			currentState = nextState;
-		}
+		currentState = nextState;
 	}
 }
