@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62cb9ed9382eb194f95b9728ad636ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTeam: 2
+  UIContainer: {fileID: 1893452020415340}
   hunterSkillSprites:
   - {fileID: 21300000, guid: f7de365216ab23a44aadce49b7c49351, type: 3}
   - {fileID: 21300000, guid: a89599598c5b1c540b3938332ee9ac0b, type: 3}

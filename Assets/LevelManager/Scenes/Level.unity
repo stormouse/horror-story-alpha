@@ -1581,11 +1581,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114872299275210636, guid: d96ec70893d1fae4ab757c57e4a7f8ba,
-        type: 2}
-      propertyPath: playerTeam
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d96ec70893d1fae4ab757c57e4a7f8ba, type: 2}
   m_IsPrefabParent: 0

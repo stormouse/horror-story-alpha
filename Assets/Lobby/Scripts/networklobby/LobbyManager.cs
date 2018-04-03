@@ -12,7 +12,7 @@ public class LobbyManager : NetworkLobbyManager {
 
 
     /* lobby settings */
-    public int maxSpectatorPlayers = 1;
+    public int maxSpectatorPlayers = 2;
     public int maxHunterPlayers = 2;
     public int maxSurvivorPlayers = 4;
 
@@ -240,6 +240,16 @@ public class LobbyManager : NetworkLobbyManager {
         {
             RoomUI.singleton.hunterImages[i].sprite = RoomUI.singleton.emptySlotAvatar;
         }
+
+        for(int i = 0; i < spectatorPlayers.Count; i++)
+        {
+            RoomUI.singleton.spectatorImages[i].color = Color.white;
+        }
+        for(int i=spectatorPlayers.Count; i < maxSpectatorPlayers; i++)
+        {
+            RoomUI.singleton.spectatorImages[i].color = new Color(0.55f, 0.55f, 0.55f);
+        }
+        
     }
     #endregion Team Management
 
@@ -417,8 +427,15 @@ public class LobbyManager : NetworkLobbyManager {
             NetworkServer.Destroy(gamePlayer);
             NetworkServer.ReplacePlayerForConnection(lobbyPlayer.GetComponent<NetworkIdentity>().connectionToClient, newPlayer, 0);
         }
-
-        return false; //lobbyPlayer.GetComponent<LobbyPlayer>().team != TeamType.Spectator;
+        else if (lobbyPlayer.GetComponent<LobbyPlayer>().team == TeamType.Spectator)
+        {
+            var newPlayer = Instantiate(spectatorPrefab);
+            newPlayer.transform.position = Vector3.zero;
+            NetworkServer.Spawn(newPlayer);
+            NetworkServer.Destroy(gamePlayer);
+            NetworkServer.ReplacePlayerForConnection(lobbyPlayer.GetComponent<NetworkIdentity>().connectionToClient, newPlayer, 0);
+        }
+        return false;
     }
 
 

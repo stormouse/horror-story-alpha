@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 public class CameraFollow : NetworkBehaviour {
     
     public float cameraDistance = 16f;
-    public float cameraHight = 16f;
+    public float cameraHeight = 16f;
 
     private Transform mainCamera;
     private Vector3 cameraOffset;
@@ -17,8 +17,7 @@ public class CameraFollow : NetworkBehaviour {
             Destroy(this);
             return;
         }
-
-        cameraOffset = new Vector3(0f, cameraHight, -cameraDistance);
+        
         mainCamera = Camera.main.transform;
         CameraMove();
     }
@@ -32,6 +31,7 @@ public class CameraFollow : NetworkBehaviour {
     {
         mainCamera.position = transform.position;
         mainCamera.rotation = transform.rotation;
+        cameraOffset = new Vector3(0f, cameraHeight, -cameraDistance);
         mainCamera.Translate(cameraOffset);
         mainCamera.LookAt(transform);
     }

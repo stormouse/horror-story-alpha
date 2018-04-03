@@ -14,6 +14,7 @@ public class RoomUI : MonoBehaviour {
 
     public Image[] hunterImages = new Image[2];
     public Image[] survivorImages = new Image[4];
+    public Image[] spectatorImages = new Image[2];
 
     public Sprite hunterAvatar;
     public Sprite survivorAvatar;

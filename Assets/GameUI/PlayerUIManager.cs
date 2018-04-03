@@ -9,6 +9,8 @@ public class PlayerUIManager : MonoBehaviour {
     public static PlayerUIManager singleton { get { return s_singleton; } }
     private GameEnum.TeamType playerTeam;
 
+    public GameObject UIContainer;
+
     public Sprite[] hunterSkillSprites;
     public Sprite[] survivorSkillSprites;
     public Sprite skillExhaustedSprite;
@@ -126,6 +128,11 @@ public class PlayerUIManager : MonoBehaviour {
             {
                 skillImage[i].sprite = survivorSkillSprites[i];
             }
+        }
+        else
+        {
+            if(UIContainer)
+                UIContainer.SetActive(false);
         }
         foreach (var img in cooldownImage)
         {

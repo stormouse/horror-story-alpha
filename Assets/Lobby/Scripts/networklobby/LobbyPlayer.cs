@@ -85,7 +85,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     void OnClickJoinSpectatorButton()
     {
-
+        CmdSwitchTeam(TeamType.Spectator);
     }
 
     void OnClickJoinHunterButton()
