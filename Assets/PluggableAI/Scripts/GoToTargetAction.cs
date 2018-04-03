@@ -14,12 +14,13 @@ public class GoToTargetAction : AIAction{
 	}
 
 	private void GoToTarget(AIStateController controller) {	
+		
 		if (controller.targetIndx == -1 || !controller.wayPointList [controller.targetIndx].gameObject.activeSelf) {
+			/*
 			float minDis = float.MaxValue;
 			for (int i = 0; i < controller.wayPointList.Count; i++) {
-				//Debug.Log (i);
-				//Debug.Log (controller.wayPointList [i].gameObject.activeSelf);
-				if (controller.wayPointList [i].gameObject.activeSelf) {
+				
+				if (IsSuitableWayPoint(controller, i)) {
 					float tempDis = Vector3.Distance(controller.wayPointList [i].position, controller.transform.position);
 					if (tempDis < minDis) {
 						minDis = tempDis;
@@ -27,16 +28,68 @@ public class GoToTargetAction : AIAction{
 					}
 				}
 			}
-			//Debug.Log (controller.targetIndx);
+			*/
+			AssignTargets (controller);
+
 		}
 
 		controller.navMeshAgent.destination = controller.wayPointList [controller.targetIndx].position;
 		controller.navMeshAgent.isStopped = false;
 		if (controller.navMeshAgent.remainingDistance <= controller.navMeshAgent.stoppingDistance && !controller.navMeshAgent.pathPending) {
-			//Debug.Log (controller.navMeshAgent.remainingDistance);
+			
 			controller.navMeshAgent.isStopped = true;
 			
 		}
 
 	}
+	private void AssignTargets(AIStateController controller) {
+		
+		for (int i = 0; i < controller.predictTargets.Length; i++) {
+			controller.predictTargets [i] = -1;
+		}
+		for (int i = 0; i < controller.wayPointList.Count; i++) {
+			float min = float.MaxValue;
+			if (controller.wayPointList [i].gameObject.activeSelf) {
+				int tempindx = -1;
+				for (int k = 0; k < controller.players.Length; k++) {
+					if (controller.players[k].activeSelf && controller.predictTargets[k] == -1) {
+						float dis = Vector3.Distance(controller.players [k].transform.position, controller.wayPointList [i].position);
+						if (dis < min) {
+							tempindx = k;
+						}
+					}
+				}
+				if (tempindx != -1) {
+					controller.predictTargets [tempindx] = i;
+				}
+			}
+		}
+		if (controller.predictTargets [controller.playerIndex] == -1) {
+			for (int i = 0; i < controller.players.Length; i++) {
+				if (controller.players [i].activeSelf && controller.predictTargets [i] != -1) {
+					controller.predictTargets [controller.playerIndex] = controller.predictTargets [i];
+					break;
+				}
+			}
+		}
+		controller.targetIndx = controller.predictTargets [controller.playerIndex];
+	}
+	/*
+	private bool IsSuitableWayPoint(AIStateController controller, int i) {
+		float min = (controller.transform.position - controller.wayPointList [i].position).magnitude;
+		if (controller.wayPointList [i].gameObject.activeSelf) {
+			for (int k = 0; k < controller.players.Length; k++) {
+				if (controller.players[k].activeSelf && controller.players[k] != controller.gameObject) {
+					float dis = (controller.players [k].transform.position - controller.wayPointList [i].position).magnitude;
+					if (dis < min) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	*/
+
 }

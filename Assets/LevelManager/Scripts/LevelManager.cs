@@ -39,6 +39,7 @@ public class LevelManager : NetworkBehaviour
 	/* zx modified for AI*/
 	private List<Transform> targetPoint;
 
+
     private void Awake()
     {
         SetSingleton();
@@ -50,7 +51,8 @@ public class LevelManager : NetworkBehaviour
         StartCoroutine(GameLoop());
         SetupAiMasterMinds();
     }
-
+	/* zx added for AI */
+	/*zx added for AI */
     void SetupAiMasterMinds()
     {
         if (isServer)
@@ -67,7 +69,7 @@ public class LevelManager : NetworkBehaviour
 						//Debug.Log(ps.transform.position.x);
 						targetPoint.Add (ps.transform);
 					}
-					ai.SetupAI (true, targetPoint);
+					ai.SetupAI (true, targetPoint, players);
 				}
 			}
 			GameObject[] hunters = GameObject.FindGameObjectsWithTag("Hunter");
@@ -75,12 +77,12 @@ public class LevelManager : NetworkBehaviour
 				var ai = p.GetComponent<_HunterStateController> ();
 				//Debug.Log ("here2!");
 				if (ai != null) {
-					targetPoint = new List<Transform> ();
-					foreach (var ps in m_PowerSources) {
+					List<PowerSourceController> targetps = new List<PowerSourceController> ();
+					foreach (PowerSourceController ps in m_PowerSources) {
 						//Debug.Log(ps.transform.position.x);
-						targetPoint.Add (ps.transform);
+						targetps.Add (ps);
 					}
-					ai.SetupAI (true, targetPoint);
+					ai.SetupAI (true, targetps);
 				}
 			}
 			/*

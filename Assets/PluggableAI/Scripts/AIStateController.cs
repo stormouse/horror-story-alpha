@@ -23,17 +23,26 @@ public class AIStateController : MonoBehaviour {
 
 	[HideInInspector] public bool aiActive;
 	[HideInInspector] public NetworkCharacter character;
-
+	[HideInInspector] public GameObject[] players;
+	[HideInInspector] public int[] predictTargets;
+	[HideInInspector] public int playerIndex; //this index of this AI in players array
 	void Awake() {
 		navMeshAgent = GetComponent<NavMeshAgent> ();
 		survivorsk = GetComponent<SurvivorSkills> ();
 		character = GetComponent<NetworkCharacter> ();
 	}
 
-	public void SetupAI(bool aiActivationFromLevelManager, List<Transform> wayPointFromLevelManager) {
+	public void SetupAI(bool aiActivationFromLevelManager, List<Transform> wayPointFromLevelManager, GameObject[] playersFromLevelManager) {
 		wayPointList = wayPointFromLevelManager;
 		aiActive = aiActivationFromLevelManager;
-
+		players = playersFromLevelManager;
+		predictTargets = new int[players.Length];
+		for (int i = 0; i < players.Length; i++) {
+			if (players [i] == this.gameObject) {
+				playerIndex = i;
+				break;
+			}
+		}
 		if (aiActive) {
 			navMeshAgent.enabled = true;
 		} else {
