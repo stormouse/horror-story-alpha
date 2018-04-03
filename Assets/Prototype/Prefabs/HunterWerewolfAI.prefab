@@ -2879,7 +2879,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1795935122489068}
-  m_LocalRotation: {x: -0.0042794496, y: 0.0012829053, z: -0.69728935, w: 0.71677595}
+  m_LocalRotation: {x: -0.004279449, y: 0.0012829052, z: -0.6972893, w: 0.7167759}
   m_LocalPosition: {x: 0.2685833, y: 0.00000036954881, z: 0.14528123}
   m_LocalScale: {x: 0.9999996, y: 0.9999991, z: 1.0000001}
   m_Children:
@@ -3062,7 +3062,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1950331076467280}
-  m_LocalRotation: {x: -0.57200545, y: 0.8072907, z: 0.1221323, w: 0.07858192}
+  m_LocalRotation: {x: -0.5720055, y: 0.80729073, z: 0.12213231, w: 0.07858193}
   m_LocalPosition: {x: 0.2507708, y: 0.04408062, z: 0.38963628}
   m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000005}
   m_Children:
@@ -3506,7 +3506,6 @@ MonoBehaviour:
   currentState: {fileID: 11400000, guid: 13e36e964d1cd4091be63cb38951da11, type: 2}
   eye: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: dc347ba3a473240e6a6aed7fac56db26, type: 2}
-  remainState: {fileID: 0}
   visionRange: 20
   attackRange: 5
   hookRange: 10

@@ -13,5 +13,6 @@ public class _AttackAction : _Action {
 	public void Attack(_HunterStateController controller){
 		//attack kill here
 		controller.character.Perform ("Attack", controller.gameObject, null);
+		controller.chaseTarget [0].Perform ("Die", controller.chaseTarget[0].gameObject, null);
 	}
 }

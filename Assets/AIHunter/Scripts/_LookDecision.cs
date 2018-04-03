@@ -28,11 +28,12 @@ public class _LookDecision : _Decision {
 
 		for (int i = 0; i < targetsInViewRadius.Length; i++) {
 			if (targetsInViewRadius [i].tag.Equals ("Player")) {
-				Transform target = targetsInViewRadius [i].transform;
-				Vector3 dirToTarget = (target.position - controller.transform.position).normalized;
+				NetworkCharacter target = targetsInViewRadius [i].GetComponent<NetworkCharacter>();
+			//	Vector3 dirToTarget = (target.position - controller.transform.position).normalized;
 				//if (Vector3.Angle (controller.transform.forward, dirToTarget) < controller.enemyStats.fov.viewAngle / 2) {
-				float dstToTarget = Vector3.Distance (controller.transform.position, target.position);
+			//	float dstToTarget = Vector3.Distance (controller.transform.position, target.position);
 			//	if (!Physics.Raycast (controller.transform.position, dirToTarget, dstToTarget, controller.obstacleMask)) 
+				if (target.CurrentState != CharacterState.Dead)
 					controller.chaseTarget.Add (target);
 				}
 				//}

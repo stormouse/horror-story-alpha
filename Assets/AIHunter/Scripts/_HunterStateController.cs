@@ -9,7 +9,6 @@ public class _HunterStateController : MonoBehaviour {
 	private bool aiActive;
 	public Transform eye;
 	public _EnemyStats enemyStats;
-	public _State remainState;
 	public int visionRange;
 	public int attackRange;
 	public int hookRange;
@@ -18,9 +17,9 @@ public class _HunterStateController : MonoBehaviour {
 	public LayerMask obstacleMask;
 
 	[HideInInspector] public NavMeshAgent navMeshAgent;
-	[HideInInspector] public List<Transform> wayPointList;
+	[HideInInspector] public List<PowerSourceController> wayPointList;
 	[HideInInspector] public int nextWayPoint;
-	[HideInInspector] public List<Transform> chaseTarget;
+	[HideInInspector] public List<NetworkCharacter> chaseTarget;
 	[HideInInspector] public Vector3 wonderPoint;
 	[HideInInspector] public List<Transform> underInvokeList;
 	[HideInInspector] public HunterSkills hskills;
@@ -38,7 +37,7 @@ public class _HunterStateController : MonoBehaviour {
 		character = GetComponent<NetworkCharacter> ();
 	}
 
-	public void SetupAI(bool aiActivationFromManager, List<Transform> wayPointsFromManager){
+	public void SetupAI(bool aiActivationFromManager, List<PowerSourceController> wayPointsFromManager){
 		wayPointList = wayPointsFromManager;
 		aiActive = aiActivationFromManager;
 		 
@@ -58,8 +57,6 @@ public class _HunterStateController : MonoBehaviour {
 	}
 
 	public void TransitionToState (_State nextState) {
-		if (nextState != remainState) {
-			currentState = nextState;
-		}
+		currentState = nextState;
 	}
 }
