@@ -40,7 +40,7 @@ public class _HunterStateController : MonoBehaviour {
 	public void SetupAI(bool aiActivationFromManager, List<PowerSourceController> wayPointsFromManager){
 		wayPointList = wayPointsFromManager;
 		aiActive = aiActivationFromManager;
-		 
+		nextWayPoint = Random.Range (0, wayPointList.Count);
 		if (aiActive) {
 			navMeshAgent.enabled = true;
 		} else {
