@@ -40,9 +40,9 @@ public class SpectatorControl : MonoBehaviour {
         float zoom = Input.GetAxis("Mouse ScrollWheel");
         if (cameraFollow)
         {
-            float height = cameraFollow.cameraHeight - zoom * zoomSpeed;
+            float height = cameraFollow.cameraOffset.y - zoom * zoomSpeed;
             height = Mathf.Clamp(height, 10.0f, 100.0f);
-            cameraFollow.cameraHeight = height;
+            cameraFollow.cameraOffset.y = height;
         }
     }
 }
