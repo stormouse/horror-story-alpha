@@ -6,12 +6,19 @@ using UnityEngine.Networking;
 public class PowerSourceController : NetworkBehaviour
 {
 	public float m_MaxPower = 100f;
-	public float m_StartingPower = 50f; 
-	public float m_PowerLeakingSpead = 3f;
-	public float m_PowerLeakingDelay = 5f;
-    public float m_PowerSpeed = 20f;
+	public float m_StartingPower = 0f; 
+	public float m_PowerLeakingSpead = 1f;
+	public float m_PowerLeakingDelay = 30f;
+    public float m_PowerSpeed = 2f;
+    public float m_PowerAlertTurnOnDelay = 10f;
+    public float m_PowerAlertTurnOffDelay = 5f;
 
-    public GameObject destructableVersion;
+    public GameObject m_DestructableVersion;
+    public Renderer m_PowersourceMeshRenderer;
+
+    public Material m_PowersourceSeenThroughWallsMaterial;
+    public Material m_PowersourceChargingSeenThroughWallsMaterial;
+    public Material m_PowersourceNormalMaterial;
 
     public CanvasGroup canvasGroup;
 	public Slider m_Slider;                            
@@ -20,14 +27,24 @@ public class PowerSourceController : NetworkBehaviour
 	public Color m_ZeroPowerColor = Color.red;    
 	[SyncVar]
 	private float m_CurrentPower;
-	[SyncVar]
+    [SyncVar]
+    public float m_chargingAge = 0f;
+    [SyncVar]
 	private float m_age = 0;
+
     public bool Charged
     {
         get { return m_Charged; }
     }
     private bool m_Charged = false;
     private bool m_Charging = false;
+
+
+
+    public bool IsInView(Vector3 WordPos)
+    {
+        return false;
+    }
 
     private void Start()
 	{
@@ -39,13 +56,19 @@ public class PowerSourceController : NetworkBehaviour
 		SetPowerUI();
 	}
 
+    private void changeMaterial()
+    {
+            
+    }
+
+
 	void Update() {
         if (m_Charged) {
             return;
         }
         if (m_Charging) {
-            m_Charging = false;
-
+            
+           
             if (m_CurrentPower < m_MaxPower)
             {
                 m_CurrentPower += Time.deltaTime * m_PowerSpeed;
@@ -57,8 +80,28 @@ public class PowerSourceController : NetworkBehaviour
                 m_CurrentPower = m_MaxPower;
                 OnCharged();
             }
+
         }
 		m_age += Time.deltaTime;
+        if (m_age >0.2f)
+        {
+            m_Charging = false;
+        }
+
+        if (m_age < m_PowerAlertTurnOnDelay)
+        {
+            m_chargingAge += Time.deltaTime;
+        } else
+        {
+            m_chargingAge = 0;
+        }
+
+        if (m_age > m_PowerAlertTurnOffDelay && !m_Charged)
+        {
+            // only wolf
+            m_PowersourceMeshRenderer.material = m_PowersourceSeenThroughWallsMaterial;
+        }
+
 		if (m_CurrentPower > 0f && m_age > m_PowerLeakingDelay && !m_Charged) {
 			m_CurrentPower -= m_PowerLeakingSpead * Time.deltaTime;
 			if (m_CurrentPower < 0f) {
@@ -86,6 +129,7 @@ public class PowerSourceController : NetworkBehaviour
         }
 	}
 
+
     [ServerCallback]
 	private void OnCharged ()
 	{
@@ -111,16 +155,22 @@ public class PowerSourceController : NetworkBehaviour
 
     void CreateDestruction()
     {
-        Instantiate(destructableVersion, transform.position, transform.rotation);
+        Instantiate(m_DestructableVersion, transform.position, transform.rotation);
     }
 
 
 
 	public void Charge ()
 	{
-		m_age = 0f;
-
+        m_age = 0f;
         m_Charging = true;
+
+        if (m_Charging && m_chargingAge > m_PowerAlertTurnOnDelay)
+        {
+            // wolf only
+            m_PowersourceMeshRenderer.material = m_PowersourceChargingSeenThroughWallsMaterial;
+        }
+		
 
 		SetPowerUI ();
 	}

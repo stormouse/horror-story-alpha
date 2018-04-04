@@ -1404,7 +1404,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
-  m_Speed: 9
+  m_Speed: 6
+  m_RunSpead: 9
+  m_BackSpead: 3
   m_TurnSpeed: 75
 --- !u!114 &114155897678925674
 MonoBehaviour:
@@ -1449,8 +1451,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625eb5d1d51bbb246aa69f320c1f61e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraDistance: 20
-  cameraHeight: 16
+  cameraOffset: {x: 2, y: 4, z: -4.5}
+  targetHeight: 1
+  smoothFactor: 0.1
+  focalDistance: 12
 --- !u!114 &114420518481062742
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -10,6 +10,8 @@ public class PlayerControl : NetworkBehaviour {
     public int m_PlayerNumber = 1;
     [Header("Movement Variables")]
     public float m_Speed = 5.0f;
+    public float m_RunSpead = 9.0f;
+    public float m_BackSpead = 3.0f;
     public float m_TurnSpeed = 45.0f;
 
     private Rigidbody m_Rigidbody;              // Reference used to move the tank.
@@ -68,6 +70,8 @@ public class PlayerControl : NetworkBehaviour {
 
         // Apply movement to the rigidbody's position.
         Vector3 speed2d = transform.forward * m_MovementInputValue * m_Speed;
+        if (m_MovementInputValue < .0f)
+            speed2d = transform.forward * m_MovementInputValue * m_BackSpead;
         m_Rigidbody.velocity = new Vector3(speed2d.x, m_Rigidbody.velocity.y, speed2d.z);
     }
 
