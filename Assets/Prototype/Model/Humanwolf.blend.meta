@@ -1,55 +1,120 @@
 fileFormatVersion: 2
-guid: 118893ed0cad4be4eaf51a020f16e60e
-timeCreated: 1522787046
+guid: fd4bb17006c81a741b52f90faa8de3d8
+timeCreated: 1522802273
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Armature
-    100002: backfood_L
-    100004: backfoot_R
-    100006: backleg_L
-    100008: backleg_R
-    100010: body
-    100012: Cube
-    100014: //RootNode
-    100016: frontfoot_L
-    100018: frontfoot_R
-    100020: frontleg_L
-    100022: frontleg_R
-    100024: head
-    100026: hip_L
-    100028: hip_R
-    100030: tail1
-    100032: tail2
-    400000: Armature
-    400002: backfood_L
-    400004: backfoot_R
-    400006: backleg_L
-    400008: backleg_R
-    400010: body
-    400012: Cube
-    400014: //RootNode
-    400016: frontfoot_L
-    400018: frontfoot_R
-    400020: frontleg_L
-    400022: frontleg_R
-    400024: head
-    400026: hip_L
-    400028: hip_R
-    400030: tail1
-    400032: tail2
-    2100000: Material_004
-    2100002: Material_003
-    4300000: Cube
+    100000: //RootNode
+    100002: Head
+    100004: HeadTop_End
+    100006: Hips
+    100008: Human_Armature
+    100010: Human_Mesh
+    100012: LeftArm
+    100014: LeftFoot
+    100016: LeftForeArm
+    100018: LeftHand
+    100020: LeftHandIndex1
+    100022: LeftHandIndex2
+    100024: LeftHandIndex3
+    100026: LeftHandIndex4
+    100028: LeftHandThumb1
+    100030: LeftHandThumb2
+    100032: LeftHandThumb3
+    100034: LeftHandThumb4
+    100036: LeftLeg
+    100038: LeftShoulder
+    100040: LeftToe_End
+    100042: LeftToeBase
+    100044: LeftUpLeg
+    100046: Neck
+    100048: RightArm
+    100050: RightFoot
+    100052: RightForeArm
+    100054: RightHand
+    100056: RightHandIndex1
+    100058: RightHandIndex2
+    100060: RightHandIndex3
+    100062: RightHandIndex4
+    100064: RightHandThumb1
+    100066: RightHandThumb2
+    100068: RightHandThumb3
+    100070: RightHandThumb4
+    100072: RightLeg
+    100074: RightShoulder
+    100076: RightToe_End
+    100078: RightToeBase
+    100080: RightUpLeg
+    100082: Spine
+    100084: Spine1
+    100086: Spine2
+    100088: Wolf
+    100090: Wolf_001
+    400000: //RootNode
+    400002: Head
+    400004: HeadTop_End
+    400006: Hips
+    400008: Human_Armature
+    400010: Human_Mesh
+    400012: LeftArm
+    400014: LeftFoot
+    400016: LeftForeArm
+    400018: LeftHand
+    400020: LeftHandIndex1
+    400022: LeftHandIndex2
+    400024: LeftHandIndex3
+    400026: LeftHandIndex4
+    400028: LeftHandThumb1
+    400030: LeftHandThumb2
+    400032: LeftHandThumb3
+    400034: LeftHandThumb4
+    400036: LeftLeg
+    400038: LeftShoulder
+    400040: LeftToe_End
+    400042: LeftToeBase
+    400044: LeftUpLeg
+    400046: Neck
+    400048: RightArm
+    400050: RightFoot
+    400052: RightForeArm
+    400054: RightHand
+    400056: RightHandIndex1
+    400058: RightHandIndex2
+    400060: RightHandIndex3
+    400062: RightHandIndex4
+    400064: RightHandThumb1
+    400066: RightHandThumb2
+    400068: RightHandThumb3
+    400070: RightHandThumb4
+    400072: RightLeg
+    400074: RightShoulder
+    400076: RightToe_End
+    400078: RightToeBase
+    400080: RightUpLeg
+    400082: Spine
+    400084: Spine1
+    400086: Spine2
+    400088: Wolf
+    400090: Wolf_001
+    2100000: fur
+    2100002: white_fur
+    4300000: Human_Mesh
+    4300002: Wolf
+    4300004: Wolf_001
     7400000: Default Take
-    7400002: attack
-    7400004: die
-    7400006: fart
-    7400008: idle
-    7400010: walk
+    7400002: ArmatureAction_002
+    7400004: Death
+    7400006: Idle
+    7400008: Jump
+    7400010: Punch
+    7400012: Run
+    7400014: Walk
+    7400016: Working
     9500000: //RootNode
-    13700000: Cube
+    13700000: Human_Mesh
+    13700002: Wolf
+    13700004: Wolf_001
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -80,8 +145,92 @@ ModelImporter:
     - serializedVersion: 16
       name: Default Take
       takeName: Default Take
+      firstFrame: 0
+      lastFrame: 108
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ArmatureAction_002
+      takeName: ArmatureAction_002
       firstFrame: -1
-      lastFrame: 79
+      lastFrame: 14
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Death
+      takeName: Death
+      firstFrame: -1
+      lastFrame: 83
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle
+      takeName: Idle
+      firstFrame: -1
+      lastFrame: 239
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -106,10 +255,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: attack
-      takeName: attack
+      name: Jump
+      takeName: Jump
       firstFrame: -1
-      lastFrame: 104
+      lastFrame: 23
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -134,10 +283,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: die
-      takeName: die
+      name: Punch
+      takeName: Punch
       firstFrame: -1
-      lastFrame: 39
+      lastFrame: 23
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -162,38 +311,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: fart
-      takeName: fart
+      name: Run
+      takeName: Run
       firstFrame: -1
-      lastFrame: 39
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: idle
-      takeName: idle
-      firstFrame: -1
-      lastFrame: 39
+      lastFrame: 14
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -218,10 +339,38 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: walk
-      takeName: walk
+      name: Walk
+      takeName: Walk
       firstFrame: -1
-      lastFrame: 39
+      lastFrame: 23
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Working
+      takeName: Working
+      firstFrame: -1
+      lastFrame: 153
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

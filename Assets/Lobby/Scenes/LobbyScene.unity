@@ -1506,7 +1506,7 @@ MonoBehaviour:
   m_GamePlayerPrefab: {fileID: 1475387101693040, guid: 44129e1b4d7f9454894aa0e2a5de6180,
     type: 2}
   m_LobbyScene: LobbyScene
-  m_PlayScene: Level
+  m_PlayScene: PlayableLevel
   lobbySlots: []
   maxSpectatorPlayers: 1
   maxHunterPlayers: 2
@@ -1514,11 +1514,11 @@ MonoBehaviour:
   hasConnection: 0
   lobbyUIContainer: {fileID: 1669691104}
   roomUIContainer: {fileID: 669550457}
-  hunterPrefab: {fileID: 1843327644783622, guid: 6db93c167d8616848b520396c5cf7de8,
+  hunterPrefab: {fileID: 1211623507865418, guid: 6a96f882c6492954297a190e2b56322b,
     type: 2}
   hunterAiPrefab: {fileID: 1843327644783622, guid: 1b0d02bb131106248a9c438a00c3e04d,
     type: 2}
-  survivorPrefab: {fileID: 1029068413829026, guid: e641ba205e76b774581ea19a7a1c425f,
+  survivorPrefab: {fileID: 1383009021975990, guid: 207b255c973dfdf4c8777ed40fdd935d,
     type: 2}
   survivorAiPrefab: {fileID: 1029068413829026, guid: 1ec73f80f495caa46ba3ed5f2a9b5119,
     type: 2}
