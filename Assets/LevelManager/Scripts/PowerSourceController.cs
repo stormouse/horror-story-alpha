@@ -41,8 +41,14 @@ public class PowerSourceController : NetworkBehaviour
 
 
 
-    public bool IsInView(Vector3 WordPos)
+    private bool IsInWolfView()
     {
+        foreach (var p in FindObjectsOfType<NetworkCharacter>())
+            if (p.isLocalPlayer)
+                if (p.Team == GameEnum.TeamType.Hunter)
+                    return true;
+                else
+                    return false;
         return false;
     }
 
@@ -53,14 +59,10 @@ public class PowerSourceController : NetworkBehaviour
         m_Charging = false;
 		m_age = 0f;
 
-		SetPowerUI();
+        m_PowersourceMeshRenderer.material = IsInWolfView() ? m_PowersourceSeenThroughWallsMaterial : m_PowersourceNormalMaterial;
+
+        SetPowerUI();
 	}
-
-    private void changeMaterial()
-    {
-            
-    }
-
 
 	void Update() {
         if (m_Charged) {
@@ -99,7 +101,7 @@ public class PowerSourceController : NetworkBehaviour
         if (m_age > m_PowerAlertTurnOffDelay && !m_Charged)
         {
             // only wolf
-            m_PowersourceMeshRenderer.material = m_PowersourceSeenThroughWallsMaterial;
+            m_PowersourceMeshRenderer.material = IsInWolfView() ? m_PowersourceSeenThroughWallsMaterial : m_PowersourceNormalMaterial;
         }
 
 		if (m_CurrentPower > 0f && m_age > m_PowerLeakingDelay && !m_Charged) {
@@ -168,7 +170,7 @@ public class PowerSourceController : NetworkBehaviour
         if (m_Charging && m_chargingAge > m_PowerAlertTurnOnDelay)
         {
             // wolf only
-            m_PowersourceMeshRenderer.material = m_PowersourceChargingSeenThroughWallsMaterial;
+            m_PowersourceMeshRenderer.material = IsInWolfView() ? m_PowersourceChargingSeenThroughWallsMaterial : m_PowersourceNormalMaterial;
         }
 		
 
