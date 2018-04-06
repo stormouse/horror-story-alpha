@@ -1514,7 +1514,7 @@ MonoBehaviour:
   hasConnection: 0
   lobbyUIContainer: {fileID: 1669691104}
   roomUIContainer: {fileID: 669550457}
-  hunterPrefab: {fileID: 1211623507865418, guid: 6a96f882c6492954297a190e2b56322b,
+  hunterPrefab: {fileID: 1401743979559124, guid: 73b1892d9fd28ad45a0a489a59bb627a,
     type: 2}
   hunterAiPrefab: {fileID: 1843327644783622, guid: 1b0d02bb131106248a9c438a00c3e04d,
     type: 2}

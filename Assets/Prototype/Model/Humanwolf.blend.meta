@@ -99,6 +99,12 @@ ModelImporter:
     400090: Wolf_001
     2100000: fur
     2100002: white_fur
+    2100004: fur__humanwolfuv
+    2100006: white_fur__humanwolfuv
+    2100008: None__humanwolfuv
+    2100010: unnamed
+    2100012: wholefur_001__humanwolfuv_png
+    2100014: wholefur_001
     4300000: Human_Mesh
     4300002: Wolf
     4300004: Wolf_001
@@ -115,7 +121,27 @@ ModelImporter:
     13700000: Human_Mesh
     13700002: Wolf
     13700004: Wolf_001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: None__humanwolfuv
+    second: {fileID: 2100000, guid: 513a2344db4f6a048b76d74ede24bd3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: unnamed
+    second: {fileID: 2100000, guid: 513a2344db4f6a048b76d74ede24bd3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wholefur_001
+    second: {fileID: 2100000, guid: 513a2344db4f6a048b76d74ede24bd3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wholefur_001__humanwolfuv_png
+    second: {fileID: 2100000, guid: 513a2344db4f6a048b76d74ede24bd3e, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
