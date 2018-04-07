@@ -3524,6 +3524,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  remainStats: {fileID: 11400000, guid: 3a6753cb038ab4eea8d148b4aa76f352, type: 2}
   navMeshAgent: {fileID: 0}
   wayPointList: []
   nextWayPoint: 0

@@ -1,11 +1,18 @@
 fileFormatVersion: 2
 guid: 527fe2ff2118f452d82374f7d7415ae5
-timeCreated: 1522110875
+timeCreated: 1523141700
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - currentState: {instanceID: 0}
+  - eye: {instanceID: 0}
+  - enemyStats: {instanceID: 0}
+  - remainStats: {fileID: 11400000, guid: 3a6753cb038ab4eea8d148b4aa76f352, type: 2}
+  - navMeshAgent: {instanceID: 0}
+  - hskills: {instanceID: 0}
+  - character: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
