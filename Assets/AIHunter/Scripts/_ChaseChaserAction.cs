@@ -12,8 +12,12 @@ public class _ChaseChaserAction : _Action {
 
 	public void chase(_HunterStateController controller){
 		if (controller.character.CurrentState == CharacterState.Normal) {
+			if (!controller.navMeshAgent.enabled)
+				controller.navMeshAgent.enabled = true;
 			controller.navMeshAgent.destination = controller.chaseTarget [0].transform.position;
 			controller.navMeshAgent.isStopped = false;
+		} else {
+			controller.navMeshAgent.enabled = false;
 		}
 	}
 }
