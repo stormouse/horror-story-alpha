@@ -30,7 +30,7 @@ public class _PatrolAction : _Action {
 		float distance = System.Math.Abs((controller.wayPointList [controller.nextWayPoint].transform.position.x - controller.transform.position.x))
 			+ System.Math.Abs ((controller.wayPointList [controller.nextWayPoint].transform.position.z - controller.transform.position.z));
 
-		if (distance <= controller.navMeshAgent.stoppingDistance) {
+		if (distance <= controller.pSStopDistance) {
 			int ran = Random.Range (0, controller.wayPointList.Count);
 			controller.nextWayPoint = ran;
 		}

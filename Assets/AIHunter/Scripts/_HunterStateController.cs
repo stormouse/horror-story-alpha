@@ -9,10 +9,11 @@ public class _HunterStateController : MonoBehaviour {
 	private bool aiActive;
 	public Transform eye;
 	public _EnemyStats enemyStats;
-	public int visionRange;
-	public int attackRange;
-	public int hookRange;
-	public int navStopDistance;
+	public float visionRange;
+	public float attackRange;
+	public float hookRange;
+	public float navStopDistance;
+	public float pSStopDistance;
 	public LayerMask targetMask;
 	public LayerMask obstacleMask;
 	public _State remainStats;
