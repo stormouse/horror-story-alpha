@@ -23,6 +23,7 @@ public class ActionArgument { }
 public class StunArgument : ActionArgument { public float time; }
 public class MoveArgument : ActionArgument { public float h, v; }
 public class DirectionArgument : ActionArgument { public Vector3 direction;}
+public class BrakeArgument : ActionArgument { public float reduceFactor; }
 public delegate void ActionFunction(GameObject sender, ActionArgument args);
 
 
@@ -36,6 +37,7 @@ public class NetworkCharacter : NetworkBehaviour {
     public static readonly string Stun     = "Stun";
     public static readonly string EndCasting = "EndCasting";
     public static readonly string StopMovement = "StopMovement";
+    public static readonly string Brake = "Brake";
 
 
     /* Private Components */
@@ -161,15 +163,25 @@ public class NetworkCharacter : NetworkBehaviour {
 
     private void SetupActionMethods()
     {
+        // everything you can do at normal by default
         Register(CharacterState.Normal, Stun, StunMethod);
+        Register(CharacterState.Normal, Die, DieMethod);
+        Register(CharacterState.Normal, Brake, BrakeMethod);
         Register(CharacterState.Normal, StopMovement, StopMovementMethod);
+
+        // everything you can do when casting by default
         Register(CharacterState.Casting, EndCasting, EndCastingMethod);
         Register(CharacterState.Casting, Stun, StunMethod);
-        Register(CharacterState.Stunned, Stun, StunMethod);
-        Register(CharacterState.Stunned, Wake, WakeMethod);
-        Register(CharacterState.Normal, Die, DieMethod);
-        Register(CharacterState.Stunned, Die, DieMethod);
+        Register(CharacterState.Casting, Brake, BrakeMethod);
         Register(CharacterState.Casting, Die, DieMethod);
+        Register(CharacterState.Casting, StopMovement, StopMovementMethod);
+
+        // everything you can do when being stunned by default
+        Register(CharacterState.Stunned, Wake, WakeMethod);
+        Register(CharacterState.Stunned, Stun, StunMethod);
+        Register(CharacterState.Stunned, Die, DieMethod);
+        Register(CharacterState.Stunned, Brake, BrakeMethod);
+        Register(CharacterState.Stunned, StopMovement, StopMovementMethod);
     }
 
     public void SetTeam(GameEnum.TeamType _team)
@@ -201,7 +213,7 @@ public class NetworkCharacter : NetworkBehaviour {
     private void _StunMethod(float time)
     {
         Transit(CharacterState.Stunned);
-
+        Debug.Log("Current state of the survivor just caught: " + currentState.ToString());
         m_animator.SetBool("Stunned", true);
         currentCoroutine = StartCoroutine(StunCoroutine(time));
     }
@@ -292,9 +304,6 @@ public class NetworkCharacter : NetworkBehaviour {
 
     void _DieServer()
     {
-        m_animator.SetTrigger("Die");
-        Transit(CharacterState.Dead);
-
         Observation ob = new Observation();
         ob.subject = gameObject;
         ob.what = Observation.Death;
@@ -304,11 +313,13 @@ public class NetworkCharacter : NetworkBehaviour {
 
     void _Die()
     {
-        // for host, same thing has been done on server
-        if (isClient && isServer)
-            return;
-
+        StopAllCoroutines();
+        BrakeArgument args = new BrakeArgument();
+        args.reduceFactor = 0.02f;
+        BrakeMethod(null, args);
+        m_rigidbody.isKinematic = true;
         m_animator.SetTrigger("Die");
+        
         Transit(CharacterState.Dead);
     }
 
@@ -432,6 +443,7 @@ public class NetworkCharacter : NetworkBehaviour {
                 yield break; // if we lose target
             }
             m_rigidbody.MovePosition(Vector3.Lerp(original, target.position + offset, p));
+            //transform.position = Vector3.Lerp(original, target.position + offset, p);
             yield return new WaitForEndOfFrame();
         }
         currentCoroutine = null;
@@ -440,6 +452,12 @@ public class NetworkCharacter : NetworkBehaviour {
     private void StopMovementMethod(GameObject sender, ActionArgument args)
     {
         m_rigidbody.velocity = Vector3.zero;
+    }
+
+    private void BrakeMethod(GameObject sender, ActionArgument args)
+    {
+        BrakeArgument brakeArgs = args as BrakeArgument;
+        m_rigidbody.velocity = m_rigidbody.velocity * brakeArgs.reduceFactor;
     }
 
     #endregion Move_Logic

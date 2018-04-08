@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 114636605234931882}
   - component: {fileID: 82384409811068874}
   - component: {fileID: 136371618597268834}
+  - component: {fileID: 114969914428070832}
   m_Layer: 8
   m_Name: CubeSurvivor
   m_TagString: Player
@@ -951,7 +952,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1383009021975990}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -43.69, y: 0, z: 21.99}
+  m_LocalPosition: {x: -43.289635, y: -2.1344051, z: 26.256203}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children:
   - {fileID: 4232478915469810}
@@ -1882,6 +1883,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionButtonName: Interaction
+--- !u!114 &114969914428070832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1383009021975990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7505b370f8753294688a538627f939a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136371618597268834
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1892,9 +1904,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.96
-  m_Height: 3.28
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.92, z: 0}
+  m_Height: 2.9652646
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.4808757, z: 0}
 --- !u!137 &137445467454107468
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -25,14 +25,14 @@ public class MeshController : MonoBehaviour {
         {
             isRender = currentTime != lastTime ? true : false;
             lastTime = currentTime;
-            if (isRender)
-            {
-                Debug.Log("在摄像机范围内");
-            }
-            else
-            {
-                Debug.Log("在摄像机范围外");
-            }
+            //if (isRender)
+            //{
+            //    Debug.Log("在摄像机范围内");
+            //}
+            //else
+            //{
+            //    Debug.Log("在摄像机范围外");
+            //}
         }
     }
 

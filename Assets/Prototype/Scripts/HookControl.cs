@@ -13,6 +13,8 @@ public class HookControl : NetworkBehaviour {
     [HideInInspector]
     public float hookRange;
 
+    public float additionalStunTime = 0.8f;
+
     //public hunter
     public GameObject hunter;
     
@@ -44,16 +46,15 @@ public class HookControl : NetworkBehaviour {
     void OnTriggerEnter(Collider other)
     {
         if (!isServer) return;
-
         var otherCharacter = other.GetComponent<NetworkCharacter>();
         if (otherCharacter && otherCharacter.Team == GameEnum.TeamType.Survivor)
         {
             var dir = (transform.position - origin).normalized;
-            var offset = dir * 3.5f;
+            var offset = dir * 1.5f;
             var duration = Vector3.Distance(transform.position, origin) / hookSpeed;
 
             var args = new StunArgument();
-            args.time = duration + 0.3f;
+            args.time = duration + additionalStunTime;
             otherCharacter.Perform("Stun", gameObject, args);
             otherCharacter.MoveTo(hunter.transform.position + offset, MoveMethod.Tween, duration);
         }

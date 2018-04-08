@@ -26,6 +26,7 @@ public class HunterSkills : NetworkBehaviour {
 
     public float attackRange = 5.0f;
     public float attackAngle = 90.0f;
+    public float attackSpellTime = 0.17f;
     public float attackAnimationLength;
     public bool AttackReady { get { return true; } }
 
@@ -33,14 +34,16 @@ public class HunterSkills : NetworkBehaviour {
     public GameObject hookPrefab;
     private Rigidbody m_rigidbody;
     private NetworkCharacter character;
+    private CameraFollow cameraFx;
 
     // private
     private GameObject hook;
     private float angle = 0f;
     private int freshCounter = 0;
-    private float mDiff = 1.5f;
+    private float mDiff = 2.0f;
 
-
+    private bool aiming = false;
+    
 
     #region Builtin_Functions
     void Start()
@@ -64,6 +67,7 @@ public class HunterSkills : NetworkBehaviour {
     void SetupComponents()
     {
         m_rigidbody = GetComponent<Rigidbody>();
+        cameraFx = GetComponent<CameraFollow>();
         character = GetComponent<NetworkCharacter>();
     }
 
@@ -90,6 +94,26 @@ public class HunterSkills : NetworkBehaviour {
             if (AttackReady)
             {
                 character.Perform("Attack", gameObject, null);
+            }
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            if (!aiming)
+            {
+                if (character.CurrentState == CharacterState.Normal)
+                {
+                    cameraFx.ActivateAimingPerspective();
+                    aiming = true;
+                }
+            }
+        }
+        else
+        {
+            if (aiming)
+            {
+                cameraFx.Deactivate();
+                aiming = false;
             }
         }
     }
@@ -120,8 +144,13 @@ public class HunterSkills : NetworkBehaviour {
 
     private void ServerAttack()
     {
+        Invoke("_DoDamage", attackSpellTime);
+    }
+
+    private void _DoDamage()
+    {
         var survivors = LevelManager.Singleton.GetAllSurvivorCharacters();
-        foreach(var survivor in survivors)
+        foreach (var survivor in survivors)
         {
             if (Reachable(survivor.transform.position))
             {
@@ -133,8 +162,6 @@ public class HunterSkills : NetworkBehaviour {
 
     private void _AttackMethod()
     {
-        m_rigidbody.velocity = Vector3.zero;
-        character.Animator.SetTrigger("Attack");
         character.Transit(CharacterState.Casting);
         character.SwitchCoroutine(StartCoroutine(AttackCoroutine()));
     }
@@ -143,9 +170,28 @@ public class HunterSkills : NetworkBehaviour {
     private IEnumerator AttackCoroutine()
     {
         float startTime = Time.time;
+        bool punched = false;
+        character.Animator.SetTrigger("Attack");
+        m_rigidbody.velocity = m_rigidbody.velocity * 0.85f;
+        var originalVelocity = m_rigidbody.velocity;
         while (true)
         {
             float now = Time.time;
+            float r = (now - startTime - attackSpellTime) / (attackAnimationLength - attackSpellTime);
+
+            if (!punched)
+            {
+                if(now - startTime > attackSpellTime)
+                {
+                    m_rigidbody.MovePosition(transform.position + transform.forward * Vector3.Dot(m_rigidbody.velocity, transform.forward) * 0.15f);
+                    punched = true;
+                }
+            }
+            else
+            {
+                m_rigidbody.velocity = Vector3.zero;//Vector3.Lerp(originalVelocity, new Vector3(0, m_rigidbody.velocity.y, 0), (1.0f - r) * (1.0f - r) * (1.0f - r));
+            }
+
             if (now - startTime < attackAnimationLength)
             {
                 yield return new WaitForEndOfFrame();
@@ -197,6 +243,7 @@ public class HunterSkills : NetworkBehaviour {
             Vector3 origin = Vector3.Scale(transform.position, new Vector3(1, 0, 1));
             Vector3 dir = dest - origin;
             CmdHook(dir.normalized);
+            character.SwitchCoroutine(StartCoroutine(_ThrowHookDelay(dir, hookSpellTime)));
         }
     }
 
@@ -208,7 +255,7 @@ public class HunterSkills : NetworkBehaviour {
         {
             return;
         }
-        _HookMethodServer(dir);
+        //_HookMethodServer(dir);
         _HookMethod(dir);
         RpcHook(dir);
     }
@@ -221,6 +268,13 @@ public class HunterSkills : NetworkBehaviour {
         _HookMethod(dir);
     }
 
+    [Command]
+    void CmdSpawnHook(Vector3 dir)
+    {
+        if(character.CurrentState == CharacterState.Normal || character.CurrentState == CharacterState.Casting)
+            _ThrowHook(dir);
+    }
+
 
     void _HookMethodServer(Vector3 dir)
     {
@@ -229,9 +283,8 @@ public class HunterSkills : NetworkBehaviour {
     }
 
 
-    IEnumerator _ThrowHookDelay(Vector3 dir, float delay)
+    void _ThrowHook(Vector3 dir)
     {
-        yield return new WaitForSeconds(delay);
         hook = Instantiate(hookPrefab, transform.position + mDiff * dir, Quaternion.LookRotation(dir));
         var hc = hook.GetComponent<HookControl>();
         hc.hunter = gameObject;
@@ -239,6 +292,32 @@ public class HunterSkills : NetworkBehaviour {
         hc.hookRange = hookRange;
         hc.Throw();
         NetworkServer.Spawn(hook);
+    }
+
+    IEnumerator _ThrowHookDelay(Vector3 original_dir, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit info;
+        if (Physics.Raycast(mouseRay, out info))
+        {
+            Vector3 dest = Vector3.Scale(info.point, new Vector3(1, 0, 1));
+            Vector3 origin = Vector3.Scale(transform.position, new Vector3(1, 0, 1));
+            Vector3 dir = (dest - origin).normalized;
+            CmdSpawnHook(dir);
+        }
+        else
+        {
+            CmdSpawnHook(original_dir);
+        }
+        //hook = Instantiate(hookPrefab, transform.position + mDiff * dir, Quaternion.LookRotation(dir));
+        //var hc = hook.GetComponent<HookControl>();
+        //hc.hunter = gameObject;
+        //hc.hookSpeed = hookSpeed;
+        //hc.hookRange = hookRange;
+        //hc.Throw();
+        //NetworkServer.Spawn(hook);
     }
 
 

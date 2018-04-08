@@ -1,9 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
+
+public struct CameraFollowParameters
+{
+    public Vector3 cameraOffset;
+    public float targetHeight;
+    public float smoothFactor;
+    public float focalDistance;
+}
+
+
 [NetworkSettings(sendInterval = 0f)]
 public class CameraFollow : NetworkBehaviour {
-
+    
     public Vector3 cameraOffset;
     public float targetHeight = 1.0f;
     [Range(0.01f, 1.0f)]
@@ -13,8 +23,15 @@ public class CameraFollow : NetworkBehaviour {
 
     private LayerMask playerLayer;
     private Transform mainCamera;
-    
 
+    private CameraFollowParameters originalParameters;
+    private CameraFollowParameters defaultParameters;
+    private CameraFollowParameters aimingParameters;
+    private CameraFollowParameters overviewParameters;
+    private CameraFollowParameters frenzyParameters;
+
+
+    #region builtin functions
     private void Start()
     {
         if(!isLocalPlayer)
@@ -22,7 +39,8 @@ public class CameraFollow : NetworkBehaviour {
             Destroy(this);
             return;
         }
-
+        InitCameraParameters();
+        originalParameters = StoreCameraParameters();
         playerLayer = LayerMask.NameToLayer("Player");
         mainCamera = Camera.main.transform;
         mainCamera.position = transform.position + cameraOffset;
@@ -34,6 +52,51 @@ public class CameraFollow : NetworkBehaviour {
     {
         CameraMove();
     }
+    #endregion Builtin functions
+
+
+
+
+    #region publics
+    
+    public void ActivateAimingPerspective()
+    {
+        ApplyCameraParameters(aimingParameters);
+    }
+
+
+    public void ActivateOverviewPerspective()
+    {
+        ApplyCameraParameters(overviewParameters);
+    }
+
+
+    public void Deactivate()
+    {
+        ApplyCameraParameters(originalParameters);
+    }
+
+    #endregion publics
+
+
+
+
+    #region privates
+
+    void InitCameraParameters()
+    {
+        defaultParameters = StoreCameraParameters();
+
+        // aiming
+        aimingParameters.cameraOffset = new Vector3(0.6f, 2.0f, -0.5f);
+        aimingParameters.focalDistance = 20.0f;
+        aimingParameters.targetHeight = 1.0f;
+        aimingParameters.smoothFactor = 0.1f;
+
+        //overviewParameters
+        //frenzyParameters;
+    }
+
 
     void CameraMove()
     {
@@ -71,5 +134,26 @@ public class CameraFollow : NetworkBehaviour {
         }
         return targetPosition;
     }
+
+
+    CameraFollowParameters StoreCameraParameters()
+    {
+        var previousParameters = new CameraFollowParameters();
+        previousParameters.cameraOffset = cameraOffset;
+        previousParameters.focalDistance = focalDistance;
+        previousParameters.smoothFactor = smoothFactor;
+        previousParameters.targetHeight = targetHeight;
+        return previousParameters;
+    }
+
+
+    void ApplyCameraParameters(CameraFollowParameters parameters)
+    {
+        cameraOffset = parameters.cameraOffset;
+        focalDistance = parameters.focalDistance;
+        smoothFactor = parameters.smoothFactor;
+        targetHeight = parameters.targetHeight;
+    }
+    #endregion privates
 
 }
