@@ -15,6 +15,7 @@ public class _HunterStateController : MonoBehaviour {
 	public int navStopDistance;
 	public LayerMask targetMask;
 	public LayerMask obstacleMask;
+	public _State remainStats;
 
 	[HideInInspector] public NavMeshAgent navMeshAgent;
 	[HideInInspector] public List<PowerSourceController> wayPointList;
@@ -57,6 +58,10 @@ public class _HunterStateController : MonoBehaviour {
 	}
 
 	public void TransitionToState (_State nextState) {
+
+		if (nextState == remainStats) {
+			return;
+		}
 		currentState = nextState;
 	}
 }

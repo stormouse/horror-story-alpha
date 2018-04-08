@@ -13,12 +13,19 @@ public class _PatrolAction : _Action {
 
 		//check valid
 		foreach (PowerSourceController psc in controller.wayPointList) {
-			if (psc.Charged)
+			if (null == psc || psc.Charged) {
 				controller.wayPointList.Remove (psc);
+			}
 		}
 
-		controller.navMeshAgent.destination = controller.wayPointList [controller.nextWayPoint].transform.position;
-		controller.navMeshAgent.isStopped = false;
+		if (controller.nextWayPoint >= controller.wayPointList.Count) {
+			return;
+		}
+
+		if (controller.character.CurrentState == CharacterState.Normal) {
+			controller.navMeshAgent.destination = controller.wayPointList [controller.nextWayPoint].transform.position;
+			controller.navMeshAgent.isStopped = false;
+		}
 
 		float distance = System.Math.Abs((controller.wayPointList [controller.nextWayPoint].transform.position.x - controller.transform.position.x))
 			+ System.Math.Abs ((controller.wayPointList [controller.nextWayPoint].transform.position.z - controller.transform.position.z));

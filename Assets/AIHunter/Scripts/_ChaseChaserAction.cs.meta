@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: 0babb9045fcb64178a4fa73ba039f4a6
-timeCreated: 1522528154
+timeCreated: 1523141013
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - PatrolState: {fileID: 11400000, guid: 13e36e964d1cd4091be63cb38951da11, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

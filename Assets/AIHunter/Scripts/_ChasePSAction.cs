@@ -10,7 +10,9 @@ public class _ChasePSAction : _Action {
 	}
 
 	public void CatchTo(_HunterStateController controller){
-		if (controller.underInvokeList.Count > 0)
+		if (controller.character.CurrentState == CharacterState.Normal) {
 			controller.navMeshAgent.destination = controller.underInvokeList [0].position;
+			controller.navMeshAgent.isStopped = false;
+		}
 	}
 }

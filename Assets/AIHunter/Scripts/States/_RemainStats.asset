@@ -9,12 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b52208788bc89469c8da51305fa7f24d, type: 3}
-  m_Name: _AttackStats
+  m_Name: _RemainStats
   m_EditorClassIdentifier: 
-  actions:
-  - {fileID: 11400000, guid: 6e6f97e2c132d467c92d163a22f1ec9a, type: 2}
-  transitions:
-  - decision: {fileID: 11400000, guid: 2f56b6236ac0f4c0cb7365dd98836e79, type: 2}
-    trueState: {fileID: 11400000, guid: 30195fd5a440f46bab6cba6c4bb5f31a, type: 2}
-    falseState: {fileID: 11400000, guid: 13e36e964d1cd4091be63cb38951da11, type: 2}
+  actions: []
+  transitions: []
   sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

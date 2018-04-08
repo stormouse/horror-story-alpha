@@ -7,11 +7,10 @@ public class _HookAction : _Action {
 
 	public override void Act (_HunterStateController controller)
 	{
-		lunchHook (controller);
+			lunchHook (controller);
 	}
 
 	public void lunchHook(_HunterStateController controller){
-
 		//lunch hook here
 		DirectionArgument dir = new DirectionArgument();
 		dir.direction = controller.chaseTarget [0].transform.position - controller.transform.position;
