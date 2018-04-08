@@ -230,20 +230,28 @@ public class HunterSkills : NetworkBehaviour {
         {
             return;
         }
-		if (args != null) {
-			DirectionArgument dirc = (DirectionArgument)args;
-			CmdHook (dirc.direction.normalized);
-			return;
-		}
-        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit info;
-        if (Physics.Raycast(mouseRay, out info))
+
+        if (GetComponent<AICharacter>() != null)
         {
-            Vector3 dest = Vector3.Scale(info.point, new Vector3(1, 0, 1));
-            Vector3 origin = Vector3.Scale(transform.position, new Vector3(1, 0, 1));
-            Vector3 dir = dest - origin;
-            CmdHook(dir.normalized);
-            character.SwitchCoroutine(StartCoroutine(_ThrowHookDelay(dir, hookSpellTime)));
+            DirectionArgument dirc = (DirectionArgument)args;
+            CmdHook(dirc.direction.normalized);
+            return;
+        }
+
+        else
+        {
+            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit info;
+            if (Physics.Raycast(mouseRay, out info))
+            {
+                Vector3 dest = Vector3.Scale(info.point, new Vector3(1, 0, 1));
+                Vector3 origin = Vector3.Scale(transform.position, new Vector3(1, 0, 1));
+                Vector3 dir = dest - origin;
+                CmdHook(dir.normalized);
+
+                // flicking support for human players
+                character.SwitchCoroutine(StartCoroutine(_ThrowHookDelayPlayer(dir, hookSpellTime)));
+            }
         }
     }
 
@@ -255,7 +263,11 @@ public class HunterSkills : NetworkBehaviour {
         {
             return;
         }
-        //_HookMethodServer(dir);
+        // help AI players sync the animation
+        if (GetComponent<AICharacter>() != null)
+        {
+            _HookMethodAIServer(dir);
+        }
         _HookMethod(dir);
         RpcHook(dir);
     }
@@ -271,15 +283,17 @@ public class HunterSkills : NetworkBehaviour {
     [Command]
     void CmdSpawnHook(Vector3 dir)
     {
-        if(character.CurrentState == CharacterState.Normal || character.CurrentState == CharacterState.Casting)
+        if (character.CurrentState == CharacterState.Normal || character.CurrentState == CharacterState.Casting)
+        {
             _ThrowHook(dir);
+        }
     }
 
 
-    void _HookMethodServer(Vector3 dir)
+    void _HookMethodAIServer(Vector3 dir)
     {
         // TODO: limit switch coroutine from outside
-        character.SwitchCoroutine(StartCoroutine(_ThrowHookDelay(dir, hookSpellTime)));
+        character.SwitchCoroutine(StartCoroutine(_ThrowHookDelayAI(dir, hookSpellTime)));
     }
 
 
@@ -292,9 +306,11 @@ public class HunterSkills : NetworkBehaviour {
         hc.hookRange = hookRange;
         hc.Throw();
         NetworkServer.Spawn(hook);
+        Debug.Log(hook);
     }
 
-    IEnumerator _ThrowHookDelay(Vector3 original_dir, float delay)
+    // flicking support
+    IEnumerator _ThrowHookDelayPlayer(Vector3 original_dir, float delay)
     {
         yield return new WaitForSeconds(delay);
 
@@ -311,13 +327,14 @@ public class HunterSkills : NetworkBehaviour {
         {
             CmdSpawnHook(original_dir);
         }
-        //hook = Instantiate(hookPrefab, transform.position + mDiff * dir, Quaternion.LookRotation(dir));
-        //var hc = hook.GetComponent<HookControl>();
-        //hc.hunter = gameObject;
-        //hc.hookSpeed = hookSpeed;
-        //hc.hookRange = hookRange;
-        //hc.Throw();
-        //NetworkServer.Spawn(hook);
+    }
+
+    // original hook delay method
+    IEnumerator _ThrowHookDelayAI(Vector3 dir, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Debug.Log("Throwing Hook");
+        _ThrowHook(dir);
     }
 
 

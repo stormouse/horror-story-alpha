@@ -54,10 +54,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e8b52aa738fd8418e602bbc103fbe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
-  zoomSpeed: 8
-  rotateSpeed: 60
-  cameraFollow: {fileID: 0}
+  moveSpeed: 35
+  zoomSpeed: 15
+  rotateSpeed: 75
+  cameraFollow: {fileID: 114937054491111710}
 --- !u!114 &114716572952800632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,5 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625eb5d1d51bbb246aa69f320c1f61e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraDistance: 8
-  cameraHeight: 50
+  cameraOffset: {x: 0, y: 20, z: 0}
+  targetHeight: 1
+  smoothFactor: 0.01
+  focalDistance: 1

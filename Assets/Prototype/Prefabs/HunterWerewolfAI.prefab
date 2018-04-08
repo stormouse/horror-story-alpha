@@ -1520,6 +1520,7 @@ GameObject:
   - component: {fileID: 114075397077935978}
   - component: {fileID: 114755268767692974}
   - component: {fileID: 195799664509924988}
+  - component: {fileID: 114266717180239754}
   m_Layer: 8
   m_Name: HunterWerewolfAI
   m_TagString: Hunter
@@ -3408,6 +3409,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   team: 0
+--- !u!114 &114266717180239754
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1843327644783622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7505b370f8753294688a538627f939a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114289740518080488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3498,6 +3510,7 @@ MonoBehaviour:
   rageCooldown: 45
   attackRange: 2.2
   attackAngle: 60
+  attackSpellTime: 0.17
   attackAnimationLength: 1
   hookPrefab: {fileID: 1931548332930490, guid: aeaeb2ab19d4548a5aac130f6e417a16, type: 2}
 --- !u!114 &114755268767692974
@@ -3515,7 +3528,7 @@ MonoBehaviour:
   eye: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: dc347ba3a473240e6a6aed7fac56db26, type: 2}
   visionRange: 20
-  attackRange: 10
+  attackRange: 2
   hookRange: 10
   navStopDistance: 10
   targetMask:

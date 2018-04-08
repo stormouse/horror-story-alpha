@@ -430,7 +430,7 @@ public class LobbyManager : NetworkLobbyManager {
         else if (lobbyPlayer.GetComponent<LobbyPlayer>().team == TeamType.Spectator)
         {
             var newPlayer = Instantiate(spectatorPrefab);
-            newPlayer.transform.position = Vector3.zero;
+            newPlayer.transform.position = Vector3.up * 5.0f;
             NetworkServer.Spawn(newPlayer);
             NetworkServer.Destroy(gamePlayer);
             NetworkServer.ReplacePlayerForConnection(lobbyPlayer.GetComponent<NetworkIdentity>().connectionToClient, newPlayer, 0);
