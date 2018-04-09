@@ -213,7 +213,6 @@ public class NetworkCharacter : NetworkBehaviour {
     private void _StunMethod(float time)
     {
         Transit(CharacterState.Stunned);
-        Debug.Log("Current state of the survivor just caught: " + currentState.ToString());
         m_animator.SetBool("Stunned", true);
         currentCoroutine = StartCoroutine(StunCoroutine(time));
     }

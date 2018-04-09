@@ -38,6 +38,8 @@ public class SurvivorSkills : NetworkBehaviour {
 
     private Rigidbody m_rigidbody;
 	private NetworkCharacter character;
+    private CameraFollow cameraFx;
+    
 
 
 	[HideInInspector] public bool m_Charging = false;
@@ -47,10 +49,11 @@ public class SurvivorSkills : NetworkBehaviour {
 
 	private float angle = 0f;
 	private int freshCounter = 0;
+    private bool lookingback = false;
 
 
-	#region Builtin_Functions
-	void Start()
+    #region Builtin_Functions
+    void Start()
 	{
 		SetupComponents();
 		AttachSkillsToCharacter();
@@ -73,6 +76,7 @@ public class SurvivorSkills : NetworkBehaviour {
 	{
 		m_rigidbody = GetComponent<Rigidbody>();
 		character = GetComponent<NetworkCharacter>();
+        cameraFx = GetComponent<CameraFollow>();
 	}
 
 	void AttachSkillsToCharacter()
@@ -95,6 +99,28 @@ public class SurvivorSkills : NetworkBehaviour {
 		} else {
 			m_Charging = false;
 		}
+
+        // look back
+        if (Input.GetMouseButton(1))
+        {
+            if (!lookingback)
+            {
+                if (cameraFx != null)
+                {
+                    cameraFx.ActiveLookbackPerspective();
+                }
+                lookingback = true;
+            }
+        }
+        else
+        {
+            if (lookingback)
+            {
+                cameraFx.Deactivate();
+                lookingback = false;
+            }
+        }
+            
 
 	}
 

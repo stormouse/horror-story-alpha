@@ -196,8 +196,6 @@ public class LobbyManager : NetworkLobbyManager {
 
     public void UpdateSlots()
     {
-        Debug.Log("UpdateSlots Called");
-
         spectatorPlayers.Clear();
         hunterPlayers.Clear();
         survivorPlayers.Clear();

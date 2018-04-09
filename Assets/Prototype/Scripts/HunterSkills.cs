@@ -20,9 +20,12 @@ public class HunterSkills : NetworkBehaviour {
     private float lastWardTime = 0.0f;
     public bool WardReady { get { return Time.time - lastWardTime > wardCooldown && wardCount > 0; } }
 
-    public float rageCooldown = 45.0f;
-    private float lastRageTime = 0.0f;
-    public bool RageReady { get { return Time.time - lastRageTime > rageCooldown; } }
+    public float warSenseCooldown = 45.0f;
+    public float warSenseTimeLength = 6.0f;
+    public int warSenseScanPass = 3;
+    public float warSenseRadius = 10.0f;
+    private float lastWarSenseTime = -45.0f;
+    public bool WarSenseReady { get { return Time.time - lastWarSenseTime > warSenseCooldown; } }
 
     public float attackRange = 5.0f;
     public float attackAngle = 90.0f;
@@ -75,6 +78,7 @@ public class HunterSkills : NetworkBehaviour {
     {
         character.Register(CharacterState.Normal, "Hook", HookMethod);
         character.Register(CharacterState.Normal, "Attack", AttackMethod);
+        character.Register(CharacterState.Normal, "WarSense", WarSenseMethod);
     }
     #endregion Setup_Skills
 
@@ -94,6 +98,14 @@ public class HunterSkills : NetworkBehaviour {
             if (AttackReady)
             {
                 character.Perform("Attack", gameObject, null);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (WarSenseReady)
+            {
+                character.Perform("WarSense", gameObject, null);
             }
         }
 
@@ -220,9 +232,6 @@ public class HunterSkills : NetworkBehaviour {
     #endregion Attack_Logic
 
 
-
-
-
     #region Hook_Cast
     void HookMethod(GameObject sender, ActionArgument args)
     {
@@ -306,7 +315,6 @@ public class HunterSkills : NetworkBehaviour {
         hc.hookRange = hookRange;
         hc.Throw();
         NetworkServer.Spawn(hook);
-        Debug.Log(hook);
     }
 
     // flicking support
@@ -355,7 +363,7 @@ public class HunterSkills : NetworkBehaviour {
     }
     #endregion Hook_Cast
 
-
+    
     #region Hook_Return
     public void ReturnHook()
     {
@@ -373,5 +381,103 @@ public class HunterSkills : NetworkBehaviour {
         character.Perform("EndCasting", gameObject, null);
     }
     #endregion Hook_Return
+
+
+
+    #region WarSense Logic
+
+    private void WarSenseMethod(GameObject sender, ActionArgument args)
+    {
+        // cmd activate war sense
+        CmdWarSense();
+    }
+
+
+    [Command]
+    private void CmdWarSense()
+    {
+        if (WarSenseReady)
+        {
+            RpcWarSense();
+            _WarSenseMethod();
+        }
+    }
+
+    [ClientRpc]
+    private void RpcWarSense()
+    {
+        if (isServer)
+            return;
+        _WarSenseMethod();
+    }
+
+
+    private void _WarSenseMethod()
+    {
+        lastWarSenseTime = Time.time;
+
+        if (isLocalPlayer)
+        {
+            // apply image effects
+            var warsense = gameObject.AddComponent<WarSenseEffect>();
+            warsense.Scan(warSenseTimeLength, warSenseRadius, warSenseScanPass);
+            var survivors = LevelManager.Singleton.GetAllSurvivorCharacters();
+            for(int i = 0; i < survivors.Count; i++)
+            {
+                survivors[i].gameObject.AddComponent<OutlineHighlight>();
+            }
+            StartCoroutine(ScanCoroutine(warSenseTimeLength, warSenseRadius, warSenseScanPass));
+            // play audio
+        }
+    }
+
+    IEnumerator ScanCoroutine(float timeLength, float scanRadius, int scanPassCount)
+    {
+        float startTime = Time.time;
+        float now = Time.time;
+        float timeOnePass = timeLength / scanPassCount;
+        float timeCurrentPass = 0.0f;
+        var survivors = LevelManager.Singleton.GetAllSurvivorCharacters();
+        while (now - startTime < timeLength)
+        {
+            timeCurrentPass += Time.time - now;
+            if (timeCurrentPass > timeOnePass)
+                timeCurrentPass -= timeOnePass;
+            float targetRadius = Mathf.Lerp(0.1f, scanRadius, timeCurrentPass / timeOnePass);
+            for(int i=0; i < survivors.Count; i++)
+            {
+                if(Vector3.Distance(survivors[i].transform.position, this.transform.position) < targetRadius && !InLineOfSight(survivors[i].transform))
+                {
+                    survivors[i].GetComponent<OutlineHighlight>().Activate();
+                }
+                else
+                {
+                    survivors[i].GetComponent<OutlineHighlight>().Deactivate();
+                }
+            }
+            now = Time.time;
+            yield return new WaitForEndOfFrame();
+        }
+
+        for (int i = 0; i < survivors.Count; i++)
+        {
+            var highlight = survivors[i].GetComponent<OutlineHighlight>();
+            highlight.Deactivate();
+            Destroy(highlight);
+        }
+    }
+
+    private bool InLineOfSight(Transform t)
+    {
+        if(Physics.Raycast(transform.position, t.position, Vector3.Distance(transform.position, t.position), ~(1 << LayerMask.NameToLayer("Player"))))
+        { 
+            return false;
+        }
+        return true;
+    }
+
+    #endregion WarSense Logic
+
+
 
 }

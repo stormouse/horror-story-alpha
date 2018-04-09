@@ -29,6 +29,7 @@ public class CameraFollow : NetworkBehaviour {
     private CameraFollowParameters aimingParameters;
     private CameraFollowParameters overviewParameters;
     private CameraFollowParameters frenzyParameters;
+    private CameraFollowParameters lookbackParameters;
 
 
     #region builtin functions
@@ -71,6 +72,12 @@ public class CameraFollow : NetworkBehaviour {
     }
 
 
+    public void ActiveLookbackPerspective()
+    {
+        ApplyCameraParameters(lookbackParameters);
+    }
+
+
     public void Deactivate()
     {
         ApplyCameraParameters(originalParameters);
@@ -92,6 +99,13 @@ public class CameraFollow : NetworkBehaviour {
         aimingParameters.focalDistance = 20.0f;
         aimingParameters.targetHeight = 1.0f;
         aimingParameters.smoothFactor = 0.1f;
+
+        // lookback
+        lookbackParameters.cameraOffset = new Vector3(0.2f, 2.0f, 4.0f);
+        lookbackParameters.focalDistance = -10.0f;
+        lookbackParameters.targetHeight = 1.0f;
+        lookbackParameters.smoothFactor = 0.2f;
+
 
         //overviewParameters
         //frenzyParameters;

@@ -1482,9 +1482,13 @@ MonoBehaviour:
   wardCooldown: 5
   wardCount: 2
   wardAnimationLength: 2
-  rageCooldown: 45
+  warSenseCooldown: 15
+  warSenseTimeLength: 5
+  warSenseScanPass: 3
+  warSenseRadius: 40
   attackRange: 1
   attackAngle: 60
+  attackSpellTime: 0.17
   attackAnimationLength: 1
   hookPrefab: {fileID: 1931548332930490, guid: aeaeb2ab19d4548a5aac130f6e417a16, type: 2}
 --- !u!114 &114257754782945516

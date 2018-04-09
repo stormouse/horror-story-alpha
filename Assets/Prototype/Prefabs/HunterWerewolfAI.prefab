@@ -3507,7 +3507,10 @@ MonoBehaviour:
   wardCooldown: 5
   wardCount: 2
   wardAnimationLength: 2
-  rageCooldown: 45
+  warSenseCooldown: 45
+  warSenseTimeLength: 6
+  warSenseScanPass: 3
+  warSenseRadius: 10
   attackRange: 2.2
   attackAngle: 60
   attackSpellTime: 0.17
@@ -3531,7 +3534,7 @@ MonoBehaviour:
   attackRange: 2
   hookRange: 10
   navStopDistance: 2
-  pSStopDistance: 10
+  pSStopDistance: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 256
@@ -3674,7 +3677,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 8.3
+  m_Speed: 7.5
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 70
