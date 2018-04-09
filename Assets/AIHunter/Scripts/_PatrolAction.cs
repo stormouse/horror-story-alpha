@@ -23,8 +23,12 @@ public class _PatrolAction : _Action {
 		}
 
 		if (controller.character.CurrentState == CharacterState.Normal) {
+			if (!controller.navMeshAgent.enabled)
+				controller.navMeshAgent.enabled = true;
 			controller.navMeshAgent.destination = controller.wayPointList [controller.nextWayPoint].transform.position;
 			controller.navMeshAgent.isStopped = false;
+		} else {
+			controller.navMeshAgent.enabled = false;
 		}
 
 		float distance = System.Math.Abs((controller.wayPointList [controller.nextWayPoint].transform.position.x - controller.transform.position.x))
