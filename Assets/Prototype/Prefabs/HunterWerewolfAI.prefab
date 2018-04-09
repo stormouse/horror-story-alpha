@@ -3534,7 +3534,7 @@ MonoBehaviour:
   attackRange: 2
   hookRange: 10
   navStopDistance: 2
-  pSStopDistance: 0
+  pSStopDistance: 10
   targetMask:
     serializedVersion: 2
     m_Bits: 256
