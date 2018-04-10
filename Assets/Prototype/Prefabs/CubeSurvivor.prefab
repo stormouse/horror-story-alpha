@@ -246,7 +246,6 @@ GameObject:
   - component: {fileID: 114636605234931882}
   - component: {fileID: 82384409811068874}
   - component: {fileID: 136371618597268834}
-  - component: {fileID: 114969914428070832}
   m_Layer: 8
   m_Name: CubeSurvivor
   m_TagString: Player
@@ -1714,6 +1713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9c35929c331d349b5794e1c9c46f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_animator: {fileID: 95610365107364320}
   currentState: 0
   team: 2
 --- !u!114 &114218929642116120
@@ -1883,17 +1883,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionButtonName: Interaction
---- !u!114 &114969914428070832
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1383009021975990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7505b370f8753294688a538627f939a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &136371618597268834
 CapsuleCollider:
   m_ObjectHideFlags: 1

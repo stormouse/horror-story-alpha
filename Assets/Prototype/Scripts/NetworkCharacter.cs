@@ -346,7 +346,7 @@ public class NetworkCharacter : NetworkBehaviour {
 				RpcUpdateAIAnimatorSpeed (GetComponent<_HunterStateController> ().navMeshAgent.velocity.magnitude);
 			}
 		} else {
-        	m_animator.SetFloat("Speed", m_rigidbody.velocity.magnitude);//original script line
+        	m_animator.SetFloat("Speed", m_rigidbody.velocity.magnitude); //original script line
 		}
     }
 	/*zx modified for AI*/

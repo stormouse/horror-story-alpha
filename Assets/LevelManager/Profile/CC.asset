@@ -25,7 +25,7 @@ MonoBehaviour:
         motionVectorsResolution: 24
         motionVectorsAmplitude: 64
   fog:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       excludeSkybox: 1
   antialiasing:
@@ -40,7 +40,7 @@ MonoBehaviour:
         stationaryBlending: 0.95
         motionBlending: 0.85
   ambientOcclusion:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       intensity: 1.37
       radius: 0.5
@@ -71,9 +71,9 @@ MonoBehaviour:
   depthOfField:
     m_Enabled: 0
     m_Settings:
-      focusDistance: 10
-      aperture: 5.6
-      focalLength: 50
+      focusDistance: 30
+      aperture: 0.1
+      focalLength: 35
       useCameraFov: 0
       kernelSize: 1
   motionBlur:
@@ -81,9 +81,9 @@ MonoBehaviour:
     m_Settings:
       shutterAngle: 270
       sampleCount: 10
-      frameBlending: 0
+      frameBlending: 0.5
   eyeAdaptation:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       lowPercent: 45
       highPercent: 95
@@ -109,7 +109,7 @@ MonoBehaviour:
         texture: {fileID: 0}
         intensity: 3
   colorGrading:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       tonemapping:
         tonemapper: 1
@@ -134,9 +134,9 @@ MonoBehaviour:
       colorWheels:
         mode: 1
         log:
-          slope: {r: 1, g: 0.81182134, b: 0.99024206, a: 0}
-          power: {r: 0.4758407, g: 0.6346597, b: 1, a: 0}
-          offset: {r: 1, g: 0.820149, b: 0.76729846, a: 0}
+          slope: {r: 0.4397683, g: 0, b: 1, a: 0}
+          power: {r: 1, g: 0, b: 0.072882175, a: 0}
+          offset: {r: 0.6762248, g: 1, b: 0, a: 0}
         linear:
           lift: {r: 0, g: 0, b: 0, a: 0}
           gamma: {r: 0, g: 0, b: 0, a: 0}
@@ -293,17 +293,17 @@ MonoBehaviour:
       size: 1
       luminanceContribution: 0.8
   vignette:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       mode: 0
-      color: {r: 0.066176474, g: 0.023842994, b: 0.023842994, a: 1}
+      color: {r: 0.6838235, g: 0.060337387, b: 0.060337387, a: 1}
       center: {x: 0.5, y: 0.5}
-      intensity: 0.55
-      smoothness: 0.2
-      roundness: 1
-      mask: {fileID: 0}
+      intensity: 1
+      smoothness: 1
+      roundness: 0.9
+      mask: {fileID: 2800000, guid: 95ef4804fe0be4c999ddaa383536cde8, type: 3}
       opacity: 1
-      rounded: 0
+      rounded: 1
   dithering:
     m_Enabled: 0
   monitors:

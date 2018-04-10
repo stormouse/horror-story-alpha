@@ -14,7 +14,7 @@ public class MinimapController : MonoBehaviour {
 
     private void LateUpdate()
     {
-        if (player.GetComponent<NetworkIdentity>().isLocalPlayer)
+        if (player && player.GetComponent<NetworkIdentity>().isLocalPlayer)
         {
             Vector3 newPos = player.position;
             newPos.y = transform.position.y;

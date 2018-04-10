@@ -1522,6 +1522,8 @@ MonoBehaviour:
     type: 2}
   survivorAiPrefab: {fileID: 1029068413829026, guid: 1ec73f80f495caa46ba3ed5f2a9b5119,
     type: 2}
+  survivorSpiritPrefab: {fileID: 1195158416431466, guid: fa03cbb61ee19914b896e6c3febb5f93,
+    type: 2}
   spectatorPrefab: {fileID: 1787868669199264, guid: bcf33c8506891c34eb2b6d2f4f0eb154,
     type: 2}
 --- !u!1 &1143796227

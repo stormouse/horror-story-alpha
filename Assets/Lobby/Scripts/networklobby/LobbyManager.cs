@@ -33,6 +33,7 @@ public class LobbyManager : NetworkLobbyManager {
     public GameObject hunterAiPrefab = null;
     public GameObject survivorPrefab = null;
     public GameObject survivorAiPrefab = null;
+    public GameObject survivorSpiritPrefab = null;
     public GameObject spectatorPrefab = null;
 
     int survivorSpawned = 0;
@@ -58,6 +59,10 @@ public class LobbyManager : NetworkLobbyManager {
         if(spectatorPrefab != null)
         {
             ClientScene.RegisterPrefab(spectatorPrefab);
+        }
+        if(survivorSpiritPrefab != null)
+        {
+            ClientScene.RegisterPrefab(survivorSpiritPrefab);
         }
         if (hunterAiPrefab != null)
         {

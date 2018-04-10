@@ -15,13 +15,14 @@ public class LevelManager : NetworkBehaviour
     private GameObject hunterPrefab;
     private GameObject survivorPrefab;
     private GameObject spectatorPrefab;
+    private GameObject survivorSpiritPrefab;
 
 
     /* game scene resources */
     [Header("Game Resources")]
     public DoorControl[] m_Doors;
     public PowerSourceController[] m_PowerSources;
-
+    public TreeControl[] m_Trees;
 
     /* game arguments */
     [Header("Game Settings")]
@@ -111,7 +112,8 @@ public class LevelManager : NetworkBehaviour
         {
             hunterPrefab = LobbyManager.Singleton.hunterPrefab;
             survivorPrefab = LobbyManager.Singleton.survivorPrefab;
-            spectatorPrefab = LobbyManager.Singleton.spectatorPrefab;
+            spectatorPrefab = LobbyManager.Singleton.spectatorPrefab; // of no use here
+            survivorSpiritPrefab = LobbyManager.Singleton.survivorSpiritPrefab;
         }
     }
 
@@ -258,15 +260,16 @@ public class LevelManager : NetworkBehaviour
     // Destory a survivor and put the player in a spectator
     public void KillSurvivor(GameObject survivorObject)
     {
+        Debug.Log("Kill survivor and free the spirit");
         if (survivorObject.GetComponent<AICharacter>() == null)
         {
             var character = survivorObject.GetComponent<NetworkCharacter>();
             var identity = survivorObject.GetComponent<NetworkIdentity>();
             NetworkConnection conn = identity.connectionToClient;
 
-            GameObject spectator = GameObject.Instantiate(spectatorPrefab);
-            NetworkServer.ReplacePlayerForConnection(conn, spectator, 0);
-            NetworkServer.Spawn(spectator);
+            GameObject spirit = GameObject.Instantiate(survivorSpiritPrefab);
+            NetworkServer.ReplacePlayerForConnection(conn, spirit, 0);
+            NetworkServer.Spawn(spirit);
         }
 
         DestoryNetworkObject(survivorObject, timeBeforeDeadBodyDisappear);
@@ -275,7 +278,7 @@ public class LevelManager : NetworkBehaviour
 
     public void DestoryNetworkObject(GameObject obj, float after = 0.0f)
     {
-        if (after < 0.01f)
+        if (after < 0.001f)
         {
             NetworkServer.Destroy(obj);
         }
@@ -292,7 +295,7 @@ public class LevelManager : NetworkBehaviour
     }
 
 
-    public List<NetworkCharacter> GetAllSurvivorCharacters()
+    public List<NetworkCharacter> GetAllSurvivorsAlive()
     {
         List<NetworkCharacter> survivors = new List<NetworkCharacter>();
         var players = GameObject.FindGameObjectsWithTag("Player");
@@ -307,6 +310,11 @@ public class LevelManager : NetworkBehaviour
         return survivors;
     }
 
+
+    public TreeControl[] GetTrees()
+    {
+        return m_Trees;
+    }
 
     #endregion Game_Control_Interface
 

@@ -161,7 +161,7 @@ public class HunterSkills : NetworkBehaviour {
 
     private void _DoDamage()
     {
-        var survivors = LevelManager.Singleton.GetAllSurvivorCharacters();
+        var survivors = LevelManager.Singleton.GetAllSurvivorsAlive();
         foreach (var survivor in survivors)
         {
             if (Reachable(survivor.transform.position))
@@ -421,7 +421,7 @@ public class HunterSkills : NetworkBehaviour {
             // apply image effects
             var warsense = gameObject.AddComponent<WarSenseEffect>();
             warsense.Scan(warSenseTimeLength, warSenseRadius, warSenseScanPass);
-            var survivors = LevelManager.Singleton.GetAllSurvivorCharacters();
+            var survivors = LevelManager.Singleton.GetAllSurvivorsAlive();
             for(int i = 0; i < survivors.Count; i++)
             {
                 survivors[i].gameObject.AddComponent<OutlineHighlight>();
@@ -437,7 +437,7 @@ public class HunterSkills : NetworkBehaviour {
         float now = Time.time;
         float timeOnePass = timeLength / scanPassCount;
         float timeCurrentPass = 0.0f;
-        var survivors = LevelManager.Singleton.GetAllSurvivorCharacters();
+        var survivors = LevelManager.Singleton.GetAllSurvivorsAlive();
         while (now - startTime < timeLength)
         {
             timeCurrentPass += Time.time - now;

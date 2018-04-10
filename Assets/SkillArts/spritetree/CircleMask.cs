@@ -4,22 +4,13 @@ using UnityEngine;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
-[AddComponentMenu("Effects/RadarScanRing")]
-public class RadarScanRing : SceneViewFilter {
+[AddComponentMenu("Effects/CircleMask")]
+public class CircleMask : SceneViewFilter
+{
 
     public static Shader shader = null;
 
-    [SerializeField]
-    public Color ringColor;
-
-    [SerializeField]
-    public Transform sourceTransform;
-
-    [SerializeField]
-    public float radius;
-
-    [SerializeField]
-    public float thickness;
+    public Texture2D mask;
 
 
     private Material effectMaterial;
@@ -41,7 +32,7 @@ public class RadarScanRing : SceneViewFilter {
     {
         get
         {
-            if(mainCamera == null)
+            if (mainCamera == null)
             {
                 mainCamera = GetComponent<Camera>();
             }
@@ -54,7 +45,7 @@ public class RadarScanRing : SceneViewFilter {
     {
         if (shader == null)
         {
-            shader = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/SkillArts/warsense/RadarScanRing.shader", typeof(Shader)) as Shader;
+            shader = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/SkillArts/spritetree/CircleMask.shader", typeof(Shader)) as Shader;
         }
     }
 
@@ -67,46 +58,10 @@ public class RadarScanRing : SceneViewFilter {
             return;
         }
 
-        EffectMaterial.SetColor("_ringColor", ringColor);
-        EffectMaterial.SetFloat("radius", radius);
-        EffectMaterial.SetFloat("thickness", thickness);
-        EffectMaterial.SetVector("ringCenter", sourceTransform.position);
-        EffectMaterial.SetVector("cameraPositionWS", MainCamera.transform.position);
-        EffectMaterial.SetMatrix("cameraToWorldMatrix", MainCamera.cameraToWorldMatrix);
-        EffectMaterial.SetMatrix("_FrustumCornersES", GetFrustumCorners(MainCamera));
+        EffectMaterial.SetTexture("_Mask", mask);
 
         CustomGraphicsBlit(source, destination, EffectMaterial, 0);
     }
-
-
-
-    private Matrix4x4 GetFrustumCorners(Camera cam)
-    {
-        float camFov = cam.fieldOfView;
-        float camAspect = cam.aspect;
-
-        Matrix4x4 frustumCorners = Matrix4x4.identity;
-
-        float fovWHalf = camFov * 0.5f;
-
-        float tan_fov = Mathf.Tan(fovWHalf * Mathf.Deg2Rad);
-
-        Vector3 toRight = Vector3.right * tan_fov * camAspect;
-        Vector3 toTop = Vector3.up * tan_fov;
-
-        Vector3 topLeft = (-Vector3.forward - toRight + toTop);
-        Vector3 topRight = (-Vector3.forward + toRight + toTop);
-        Vector3 bottomRight = (-Vector3.forward + toRight - toTop);
-        Vector3 bottomLeft = (-Vector3.forward - toRight - toTop);
-
-        frustumCorners.SetRow(0, topLeft);
-        frustumCorners.SetRow(1, topRight);
-        frustumCorners.SetRow(2, bottomRight);
-        frustumCorners.SetRow(3, bottomLeft);
-
-        return frustumCorners;
-    }
-
 
     static void CustomGraphicsBlit(RenderTexture source, RenderTexture dest, Material fxMaterial, int passNr)
     {
@@ -125,16 +80,16 @@ public class RadarScanRing : SceneViewFilter {
         // GL.Vertex3(x,y,z) queues up a vertex at position (x, y, z) to be drawn.  Note that we are storing
         // our own custom frustum information in the z coordinate.
         GL.MultiTexCoord2(0, 0.0f, 0.0f);
-        GL.Vertex3(0.0f, 0.0f, 3.0f); // BL
+        GL.Vertex3(0.0f, 0.0f, 0.1f); // BL
 
         GL.MultiTexCoord2(0, 1.0f, 0.0f);
-        GL.Vertex3(1.0f, 0.0f, 2.0f); // BR
+        GL.Vertex3(1.0f, 0.0f, 0.1f); // BR
 
         GL.MultiTexCoord2(0, 1.0f, 1.0f);
-        GL.Vertex3(1.0f, 1.0f, 1.0f); // TR
+        GL.Vertex3(1.0f, 1.0f, 0.1f); // TR
 
         GL.MultiTexCoord2(0, 0.0f, 1.0f);
-        GL.Vertex3(0.0f, 1.0f, 0.0f); // TL
+        GL.Vertex3(0.0f, 1.0f, 0.1f); // TL
 
         GL.End();
         GL.PopMatrix();
