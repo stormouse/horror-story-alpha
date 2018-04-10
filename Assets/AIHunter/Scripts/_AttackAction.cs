@@ -7,7 +7,13 @@ public class _AttackAction : _Action {
 
 	public override void Act (_HunterStateController controller)
 	{
-		Attack (controller);
+		if (controller.character.CurrentState == CharacterState.Normal) {
+			if (!controller.navMeshAgent.enabled)
+				controller.navMeshAgent.enabled = true;
+			Attack (controller);
+		} else {
+			controller.navMeshAgent.enabled = false;
+		}
 	}
 
 	public void Attack(_HunterStateController controller){

@@ -6,7 +6,13 @@ using UnityEngine;
 public class _ChasePSAction : _Action {
 	public override void Act (_HunterStateController controller)
 	{
-		CatchTo (controller);
+		if (controller.character.CurrentState == CharacterState.Normal) {
+			if (!controller.navMeshAgent.enabled)
+				controller.navMeshAgent.enabled = true;
+			CatchTo (controller);
+		} else {
+			controller.navMeshAgent.enabled = false;
+		}
 	}
 
 	public void CatchTo(_HunterStateController controller){
