@@ -7,7 +7,13 @@ public class _WonderAction : _Action {
 
 	public override void Act (_HunterStateController controller)
 	{
-		Wonder (controller);
+		if (controller.character.CurrentState == CharacterState.Normal) {
+			if (!controller.navMeshAgent.enabled)
+				controller.navMeshAgent.enabled = true;
+			Wonder (controller);
+		} else {
+			controller.navMeshAgent.enabled = false;
+		}
 	}
 
 	public void Wonder(_HunterStateController controller){

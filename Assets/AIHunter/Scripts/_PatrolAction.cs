@@ -6,7 +6,13 @@ using UnityEngine;
 public class _PatrolAction : _Action {
 	public override void Act (_HunterStateController controller)
 	{
-		Patrol (controller);
+		if (controller.character.CurrentState == CharacterState.Normal) {
+			if (!controller.navMeshAgent.enabled)
+				controller.navMeshAgent.enabled = true;
+			Patrol (controller);
+		} else {
+			controller.navMeshAgent.enabled = false;
+		}
 	}
 
 	public void Patrol(_HunterStateController controller){
