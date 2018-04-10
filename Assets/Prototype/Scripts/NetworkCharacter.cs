@@ -195,23 +195,31 @@ public class NetworkCharacter : NetworkBehaviour {
     #region Stun_Logic
     // we don't need [Command] for Stun
     // because stun can only be triggered on server
-    // on server
     private void StunMethod(GameObject sender, ActionArgument args)
     {
         float stunTime = (args as StunArgument).time;
         RpcStun(stunTime);
+        _StunMethod(stunTime);
     }
 
     // downward
 	[ClientRpc]
     private void RpcStun(float time)
     {
-        _StunMethod(time);
+        if (!isServer)
+        {
+            _StunMethod(time);
+        }
     }
 
     // local implementation
     private void _StunMethod(float time)
     {
+        Debug.Log("Stunned " + this.gameObject.name);
+
+        var ai = GetComponent<AIStateController>();
+        if (ai) ai.DisableAI();
+
         Transit(CharacterState.Stunned);
         m_animator.SetBool("Stunned", true);
         currentCoroutine = StartCoroutine(StunCoroutine(time));
@@ -244,16 +252,23 @@ public class NetworkCharacter : NetworkBehaviour {
     private void WakeMethod(GameObject sender, ActionArgument args)
     {
         RpcWake();
+        _WakeMethod();
     }
 
     [ClientRpc]
     private void RpcWake()
     {
-        _WakeMethod();
+        if(!isServer)
+            _WakeMethod();
     }
 
     private void _WakeMethod()
     {
+        Debug.Log("Wake up " + this.gameObject.name);
+
+        var ai = GetComponent<AIStateController>();
+        if (ai) ai.ResumeAI();
+
         m_animator.SetBool("Stunned", false);
         Transit(CharacterState.Normal);
     }
@@ -383,11 +398,8 @@ public class NetworkCharacter : NetworkBehaviour {
         }
         else if (method == MoveMethod.Tween && duration > 0.01f)
         {
-            if (currentCoroutine != null)
-            {
-                StopCoroutine(currentCoroutine);
-            }
-            currentCoroutine = StartCoroutine(MoveTweenCoroutine(destination, duration));
+            //currentCoroutine = 
+            StartCoroutine(MoveTweenCoroutine(destination, duration));
         }
     }
 
@@ -424,7 +436,7 @@ public class NetworkCharacter : NetworkBehaviour {
             m_rigidbody.velocity = new Vector3(0, m_rigidbody.velocity.y, 0);
             yield return new WaitForEndOfFrame();
         }
-        currentCoroutine = null;
+        //currentCoroutine = null;
     }
 
 
@@ -445,7 +457,7 @@ public class NetworkCharacter : NetworkBehaviour {
             //transform.position = Vector3.Lerp(original, target.position + offset, p);
             yield return new WaitForEndOfFrame();
         }
-        currentCoroutine = null;
+        //currentCoroutine = null;
     }
 
     private void StopMovementMethod(GameObject sender, ActionArgument args)

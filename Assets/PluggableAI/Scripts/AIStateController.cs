@@ -50,6 +50,20 @@ public class AIStateController : MonoBehaviour {
 		}
 	}
 
+    
+    public void DisableAI()
+    {
+        aiActive = false;
+        navMeshAgent.enabled = false;
+    }
+
+    public void ResumeAI()
+    {
+        aiActive = true;
+        navMeshAgent.enabled = true;
+    }
+
+
 	void Update() {
 		if (!aiActive) {
 			return;

@@ -27,11 +27,13 @@ public class HunterSkills : NetworkBehaviour {
     private float lastWarSenseTime = -45.0f;
     public bool WarSenseReady { get { return Time.time - lastWarSenseTime > warSenseCooldown; } }
 
+    public float attackCooldown = 1.0f;
     public float attackRange = 5.0f;
     public float attackAngle = 90.0f;
     public float attackSpellTime = 0.17f;
     public float attackAnimationLength;
-    public bool AttackReady { get { return true; } }
+    public float lastAttackTime = -1.0f;
+    public bool AttackReady { get { return Time.time - lastAttackTime > attackCooldown; } }
 
     // components
     public GameObject hookPrefab;
@@ -174,6 +176,7 @@ public class HunterSkills : NetworkBehaviour {
 
     private void _AttackMethod()
     {
+        lastAttackTime = Time.time;
         character.Transit(CharacterState.Casting);
         character.SwitchCoroutine(StartCoroutine(AttackCoroutine()));
     }

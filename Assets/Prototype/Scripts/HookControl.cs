@@ -12,6 +12,7 @@ public class HookControl : NetworkBehaviour {
     public float hookSpeed;
     [HideInInspector]
     public float hookRange;
+    
 
     public float additionalStunTime = 0.8f;
 
@@ -45,7 +46,12 @@ public class HookControl : NetworkBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (!isServer) return;
+        if (!isServer)
+            return;
+
+        if (other.gameObject.tag == "PowerSource")
+            return;
+
         var otherCharacter = other.GetComponent<NetworkCharacter>();
         if (otherCharacter && otherCharacter.Team == GameEnum.TeamType.Survivor)
         {
