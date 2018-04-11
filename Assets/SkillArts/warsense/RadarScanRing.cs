@@ -55,7 +55,7 @@ public class RadarScanRing : SceneViewFilter {
         if (shader == null)
         {
             //[debug] shader = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/SkillArts/warsense/RadarScanRing.shader", typeof(Shader)) as Shader;
-            shader = Resources.Load<Shader>("SkillArts/warsense/RadayScanRing.shader");
+            shader = Resources.Load<Shader>("SkillArts/warsense/RadarScanRing");
         }
     }
 

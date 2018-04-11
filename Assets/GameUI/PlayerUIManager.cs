@@ -40,6 +40,8 @@ public class PlayerUIManager : MonoBehaviour {
 
     private void OnGUI()
     {
+        return;
+
         // debug use
         GUILayout.Label("Skill Index");
         indexStr = GUILayout.TextField(indexStr);
