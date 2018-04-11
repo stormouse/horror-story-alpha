@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using GameEnum;
 
+
 public class LobbyPlayer : NetworkLobbyPlayer
 {
     /* shortcut to localplayer */
@@ -12,7 +13,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
     /* player public properties */
     [SyncVar(hook = "OnSwitchTeam")]
     public TeamType team;
-    public new string name;
+    public string playerName;
 
     [Space]
 
@@ -23,13 +24,17 @@ public class LobbyPlayer : NetworkLobbyPlayer
     public Button joinSurvivorBtn;
     public Button addHunterAiBtn;
     public Button addSurvivorAiBtn;
+    public Button removeHunterAiBtn;
+    public Button removeSurvivorAiBtn;
     public Button readyBtn;
+    public Image readyIndicator;
 
 
     public override void OnStartLocalPlayer()
     {
         s_localPlayer = this;
         SetupUIComponents();
+        CmdGivePlayerName(LocalPlayerInfo.playerName);
     }
 
 
@@ -45,23 +50,34 @@ public class LobbyPlayer : NetworkLobbyPlayer
         joinSurvivorBtn = RoomUI.singleton.joinSurvivorBtn;
         addHunterAiBtn = RoomUI.singleton.addHunterAiBtn;
         addSurvivorAiBtn = RoomUI.singleton.addSurvivorAiBtn;
+        removeHunterAiBtn = RoomUI.singleton.removeHunterAiBtn;
+        removeSurvivorAiBtn = RoomUI.singleton.removeSurvivorAiBtn;
 
         // show/hide add ai button
         if (isServer)
         {
             addHunterAiBtn.gameObject.SetActive(true);
             addSurvivorAiBtn.gameObject.SetActive(true);
+            removeHunterAiBtn.gameObject.SetActive(true);
+            removeSurvivorAiBtn.gameObject.SetActive(true);
             // bind listeners
             addHunterAiBtn.onClick.AddListener(OnClickAddHunterAiButton);
             addSurvivorAiBtn.onClick.AddListener(OnClickAddSurvivorAiButton);
+            removeHunterAiBtn.onClick.AddListener(OnClickRemoveHunterAiButton);
+            removeSurvivorAiBtn.onClick.AddListener(OnClickRemoveSurvivorAiButton);
+
         }
         else
         {
             addHunterAiBtn.gameObject.SetActive(false);
             addSurvivorAiBtn.gameObject.SetActive(false);
+            removeHunterAiBtn.gameObject.SetActive(false);
+            removeSurvivorAiBtn.gameObject.SetActive(false);
             // unbind listeners
             addHunterAiBtn.onClick.RemoveAllListeners();
             addSurvivorAiBtn.onClick.RemoveAllListeners();
+            removeHunterAiBtn.onClick.RemoveAllListeners();
+            removeSurvivorAiBtn.onClick.RemoveAllListeners();
         }
 
         // bind other listeners
@@ -71,7 +87,6 @@ public class LobbyPlayer : NetworkLobbyPlayer
         joinSurvivorBtn.onClick.AddListener(OnClickJoinSurvivorButton);
         
     }
-
 
 
     void OnClickReadyButton()
@@ -100,47 +115,24 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     void OnClickAddHunterAiButton()
     {
-        AddHunterAI();
+        LobbyManager.Singleton.AddHunterAI();
     }
 
     void OnClickAddSurvivorAiButton()
     {
-        AddSurvivorAI();
-    }
-
-
-    //ServerOnly
-    void AddHunterAI()
-    {
-        LobbyManager.Singleton.AddHunterAI();
-        RpcAddHunterAI();
-    }
-
-    [ClientRpc]
-    void RpcAddHunterAI()
-    {
-        if (!isServer)
-        {
-            LobbyManager.Singleton.AddHunterAI();
-        }
-    }
-
-
-    //ServerOnly
-    void AddSurvivorAI()
-    {
         LobbyManager.Singleton.AddSurvivorAI();
-        RpcAddSurvivorAI();
     }
-    
-    [ClientRpc]
-    void RpcAddSurvivorAI()
+
+    void OnClickRemoveHunterAiButton()
     {
-        if (!isServer)
-        {
-            LobbyManager.Singleton.AddSurvivorAI();
-        }
+        LobbyManager.Singleton.RemoveHunterAI();
     }
+
+    void OnClickRemoveSurvivorAiButton()
+    {
+        LobbyManager.Singleton.RemoveSurvivorAI();
+    }
+
 
     [Command]
     void CmdSwitchTeam(TeamType _team)
@@ -157,72 +149,51 @@ public class LobbyPlayer : NetworkLobbyPlayer
     void OnSwitchTeam(TeamType _team)
     {
         team = _team;
-        LobbyManager.Singleton.UpdateSlots();
     }
 
 
     void OnClickReady()
     {
+        CmdSetReady(true);
         SendReadyToBeginMessage();
     }
 
 
     void OnClickNotReady()
     {
+        CmdSetReady(false);
         SendNotReadyToBeginMessage();
     }
 
+    [Command]
+    void CmdSetReady(bool ready)
+    {
+        readyToBegin = ready;
+        RpcSetReady(ready);
+        LobbyManager.Singleton.PushLobbyStateToClient();
+    }
 
     [ClientRpc]
-    public void RpcReadyForPlayScene()
+    void RpcSetReady(bool ready)
     {
-        var canvas = GameObject.Find("Lobby UI").GetComponent<Canvas>();
-        if (canvas) canvas.enabled = false;
+        readyToBegin = ready;
     }
 
 
-    // Client
-    public override void OnClientReady(bool ready)
+
+    [Command]
+    void CmdGivePlayerName(string name)
     {
-        if (ready)
-        {
-            // ChangeReadyButtonColor(Gray);
-            // readyButton.interactable = false;
-            // nameInput.interactable = false;
-        }
-        else
-        {
-            // ChangeReadyButtonColor(isLocalPlayer ? Red : Blue);
-            if (isLocalPlayer)
-            {
-                // readyButton.interactable = true;
-                // nameInput.interactable = true;
-            }
-        }
+        playerName = name;
+        RpcGivePlayerName(name);
+
         LobbyManager.Singleton.UpdateSlots();
     }
 
-
-    public override void OnClientEnterLobby()
+    [ClientRpc]
+    void RpcGivePlayerName(string name)
     {
-        if (isLocalPlayer)
-        {
-            readyToBegin = false;
-            LobbyManager.Singleton.UpdateSlots();
-            // readyBtn.interactable = true;
-            // ChangeReadyButtonColor(Red);
-        }
-        else
-        {
-            readyToBegin = false;
-            // ChangeReadyButtonColor(Blue);
-        }
+        playerName = name;
     }
 
-
-    public override void OnClientExitLobby()
-    {
-        LobbyManager.Singleton.UpdateSlots();
-    }
-    
 }

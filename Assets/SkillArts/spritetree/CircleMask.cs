@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
@@ -45,7 +43,8 @@ public class CircleMask : SceneViewFilter
     {
         if (shader == null)
         {
-            shader = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/SkillArts/spritetree/CircleMask.shader", typeof(Shader)) as Shader;
+            //[debug] shader = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/SkillArts/spritetree/CircleMask.shader", typeof(Shader)) as Shader;
+            shader = Resources.Load<Shader>("SkillArts/spritetree/CircleMask.shader");
         }
     }
 

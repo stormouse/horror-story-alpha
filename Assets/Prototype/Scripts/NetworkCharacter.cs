@@ -39,6 +39,7 @@ public class NetworkCharacter : NetworkBehaviour {
     public static readonly string StopMovement = "StopMovement";
     public static readonly string Brake = "Brake";
 
+    public string playerName;
 
     /* Private Components */
     private Rigidbody m_rigidbody;

@@ -10,7 +10,8 @@ public class OutlineHighlight : MonoBehaviour {
         {
             if(outlineMaterial == null)
             {
-                outlineMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Assets/SkillArts/warsense/Outline.mat");
+                // [editor only] outlineMaterial = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>("Assets/SkillArts/warsense/Outline.mat");
+                outlineMaterial = Resources.Load<Material>("SkillArts/warsense/Outline.mat");
             }
             return outlineMaterial;
         }
