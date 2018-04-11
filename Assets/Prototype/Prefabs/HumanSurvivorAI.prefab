@@ -46,11 +46,10 @@ GameObject:
   - component: {fileID: 114626708487797220}
   - component: {fileID: 114599495511389962}
   - component: {fileID: 114735115900677960}
-  - component: {fileID: 114582064910851632}
-  - component: {fileID: 114540364800045428}
   - component: {fileID: 82322077294656374}
   - component: {fileID: 114100020944193866}
   - component: {fileID: 195597216343965720}
+  - component: {fileID: 114684137378114400}
   m_Layer: 8
   m_Name: HumanSurvivorAI
   m_TagString: Player
@@ -1330,55 +1329,6 @@ MonoBehaviour:
     i15: 25
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114540364800045428
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1029068413829026}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 560aa8e143532e94f8ff1561e583e866, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 5
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 512
-  visibleTargets: []
-  meshResolution: 1
-  edgeResolveIterations: 4
-  edgeDstThreshold: 0.5
-  viewMeshFilter: {fileID: 33757330559266712}
-  maskOffset: 0.1
---- !u!114 &114582064910851632
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1029068413829026}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a723604098bf10546bd20e44e0d15556, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 20
-  viewAngle: 120
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 512
-  visibleTargets: []
-  meshResolution: 1
-  edgeResolveIterations: 4
-  edgeDstThreshold: 0.5
-  viewMeshFilter: {fileID: 33041407860015694}
-  maskOffset: 0.1
 --- !u!114 &114590753969840710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1402,6 +1352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9c35929c331d349b5794e1c9c46f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: 
   currentState: 0
   team: 2
 --- !u!114 &114612466669100478
@@ -1465,6 +1416,17 @@ MonoBehaviour:
   trapSpawn: {fileID: 4682762641597332}
   m_Charging: 0
   m_InteractingPowerSource: {fileID: 0}
+--- !u!114 &114684137378114400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029068413829026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b0084d3b5c867544a4ae5c32ff7acfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114735115900677960
 MonoBehaviour:
   m_ObjectHideFlags: 1

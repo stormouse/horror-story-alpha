@@ -380,6 +380,7 @@ public class LevelManager : NetworkBehaviour
         }
     }
 
+
     private IEnumerator DelayDestroy(GameObject obj, float after)
     {
         yield return new WaitForSeconds(after);

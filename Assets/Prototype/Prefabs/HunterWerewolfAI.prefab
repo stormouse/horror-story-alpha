@@ -1517,13 +1517,13 @@ GameObject:
   - component: {fileID: 114668808419412122}
   - component: {fileID: 114244322774433520}
   - component: {fileID: 114735295300703876}
-  - component: {fileID: 114075397077935978}
   - component: {fileID: 114755268767692974}
   - component: {fileID: 195799664509924988}
   - component: {fileID: 114266717180239754}
+  - component: {fileID: 114736424616667242}
   m_Layer: 8
   m_Name: HunterWerewolfAI
-  m_TagString: Hunter
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3372,30 +3372,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114075397077935978
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1843327644783622}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 560aa8e143532e94f8ff1561e583e866, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 20
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 512
-  visibleTargets: []
-  meshResolution: 1
-  edgeResolveIterations: 4
-  edgeDstThreshold: 0.5
-  viewMeshFilter: {fileID: 33445265974692586}
-  maskOffset: 0.1
 --- !u!114 &114244322774433520
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3407,6 +3383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9c35929c331d349b5794e1c9c46f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: 
   currentState: 0
   team: 0
 --- !u!114 &114266717180239754
@@ -3511,11 +3488,24 @@ MonoBehaviour:
   warSenseTimeLength: 6
   warSenseScanPass: 3
   warSenseRadius: 10
+  attackCooldown: 1
   attackRange: 2.2
   attackAngle: 60
   attackSpellTime: 0.17
   attackAnimationLength: 1
+  lastAttackTime: -1
   hookPrefab: {fileID: 1931548332930490, guid: aeaeb2ab19d4548a5aac130f6e417a16, type: 2}
+--- !u!114 &114736424616667242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1843327644783622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b0084d3b5c867544a4ae5c32ff7acfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114755268767692974
 MonoBehaviour:
   m_ObjectHideFlags: 1

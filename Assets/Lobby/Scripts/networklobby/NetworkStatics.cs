@@ -9,5 +9,9 @@ public static class GameNetworkMsg
 
 public static class LocalPlayerInfo
 {
-    public static string playerName = "UNKNOWN";
+    public static string playerName = "UNKNOWN";  // this is used before playerObject is even spawned, 
+                                                  // therefore not redundant
+    public static GameObject playerObject;
+    public static NetworkCharacter playerCharacter;
 }
+

@@ -242,10 +242,9 @@ GameObject:
   - component: {fileID: 114962211239140426}
   - component: {fileID: 114201952324667336}
   - component: {fileID: 114692886818948156}
-  - component: {fileID: 114353370005765730}
-  - component: {fileID: 114636605234931882}
   - component: {fileID: 82384409811068874}
   - component: {fileID: 136371618597268834}
+  - component: {fileID: 114594352793433624}
   m_Layer: 8
   m_Name: CubeSurvivor
   m_TagString: Player
@@ -1713,7 +1712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9c35929c331d349b5794e1c9c46f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_animator: {fileID: 95610365107364320}
+  playerName: 
   currentState: 0
   team: 2
 --- !u!114 &114218929642116120
@@ -1769,31 +1768,6 @@ MonoBehaviour:
     i15: 93
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114353370005765730
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1383009021975990}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a723604098bf10546bd20e44e0d15556, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 20
-  viewAngle: 120
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 512
-  visibleTargets: []
-  meshResolution: 1
-  edgeResolveIterations: 4
-  edgeDstThreshold: 0.5
-  viewMeshFilter: {fileID: 33178994269786552}
-  maskOffset: 0.1
 --- !u!114 &114431786347543210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1806,30 +1780,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4317191946753906}
---- !u!114 &114636605234931882
+--- !u!114 &114594352793433624
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1383009021975990}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 560aa8e143532e94f8ff1561e583e866, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b0084d3b5c867544a4ae5c32ff7acfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 5
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 512
-  visibleTargets: []
-  meshResolution: 1
-  edgeResolveIterations: 4
-  edgeDstThreshold: 0.5
-  viewMeshFilter: {fileID: 33583135450918456}
-  maskOffset: 0.1
 --- !u!114 &114692886818948156
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1842,7 +1803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
-  m_Speed: 6
+  m_Speed: 10
   m_RunSpead: 9
   m_BackSpead: 5
   m_TurnSpeed: 100
@@ -1858,8 +1819,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionButtonName: Interaction
-  flashCooldown: 6
-  flashCount: 3
+  smokePrefab: {fileID: 1071767384830490, guid: 7d8f34fe77f2df84eb11e981ff5f25e4,
+    type: 2}
+  smokeCooldown: 6
+  smokeCount: 3
+  smokeEffectiveTime: 15
+  smokeFlySpeed: 6
+  smokeTimeInTheAir: 0.5
+  smokeDecelerationFactor: 0.45
   deployAnimationLength: 2
   trapCooldown: 5
   trapCount: 2

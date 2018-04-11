@@ -10,22 +10,26 @@ public class SurvivorSkills : NetworkBehaviour {
 	public string m_InteractionButtonName = "Interaction";
 
     // skills
-
-    public float flashCooldown = 6.0f;
-    public int flashCount = 3;
-    private float lastFlashTime;
-    public bool FlashReady { get { return Time.time - lastFlashTime > flashCooldown && flashCount > 0; } }
+    public GameObject smokePrefab;
+    public float smokeCooldown = 6.0f;
+    public int smokeCount = 3;
+    public float smokeEffectiveTime = 12.0f;
+    public float smokeFlySpeed = 5.0f;
+    public float smokeTimeInTheAir = 0.5f;
+    public float smokeDecelerationFactor = 0.8f;
+    private float lastSmokeTime = -100.0f;
+    public bool SmokeReady { get { return Time.time - lastSmokeTime > smokeCooldown && smokeCount > 0; } }
 
     public float deployAnimationLength = 2f;
     public float trapCooldown = 5.0f;
     public int trapCount = 2;
-    private float lastTrapTime;
+    private float lastTrapTime = -100.0f;
     public bool TrapReady { get { return Time.time - lastTrapTime > trapCooldown && trapCount > 0; } }
 
     public float camouflageAnimationLength = 1.0f;
     public float camouflageCooldown = 20.0f;
     public int camouflageCount = 2;
-    private float lastCamouflageTime;
+    private float lastCamouflageTime = -100.0f;
     public bool CamouflageReady { get { return Time.time - lastCamouflageTime > camouflageCooldown && camouflageCount > 0; } }
 
     public int toyCarCount = 1;
@@ -77,12 +81,15 @@ public class SurvivorSkills : NetworkBehaviour {
 		m_rigidbody = GetComponent<Rigidbody>();
 		character = GetComponent<NetworkCharacter>();
         cameraFx = GetComponent<CameraFollow>();
-	}
+
+        ClientScene.RegisterPrefab(smokePrefab); // TODO: move it into a level manager
+    }
 
 	void AttachSkillsToCharacter()
 	{
 		character.Register(CharacterState.Normal, "Deploy", DeployMethod);
 		character.Register(CharacterState.Normal, "Charge", ChargeMethod);
+        character.Register(CharacterState.Normal, "Smoke", SmokeMethod);
 	}
 	#endregion
 
@@ -120,9 +127,17 @@ public class SurvivorSkills : NetworkBehaviour {
                 lookingback = false;
             }
         }
-            
 
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (SmokeReady)
+            {
+                character.Perform("Smoke", this.gameObject, null);
+            }
+        }
+        
 	}
+
 
 	public void DeployPerform() {
         if (TrapReady)
@@ -130,6 +145,7 @@ public class SurvivorSkills : NetworkBehaviour {
             character.Perform("Deploy", gameObject, null);
         }
 	}
+
 	public void ChargePerform() {
 		character.Perform ("Charge", gameObject, null);
 	}
@@ -241,5 +257,50 @@ public class SurvivorSkills : NetworkBehaviour {
 		if (psc != null)
 			m_InteractingPowerSource = null;
 	}
-	#endregion
+    #endregion
+
+
+    #region Smoke Grenade
+
+    void SmokeMethod(GameObject sender, ActionArgument args)
+    {
+        CmdThrowSmoke();
+    }
+
+
+    [Command]
+    void CmdThrowSmoke()
+    {
+        if (!SmokeReady) return;
+
+        var smoke = GameObject.Instantiate(smokePrefab, transform.position, Quaternion.identity) as GameObject;
+        var control = smoke.GetComponent<SmokeControl>();
+        control.origin = transform.position + transform.forward * -1.0f;
+        control.destination = transform.position + transform.forward * -3.0f;
+        control.smokeEffectiveTime = smokeEffectiveTime;
+        control.maxTimeInAir = smokeTimeInTheAir;
+        control.decelerationFactor = smokeDecelerationFactor;
+        control.flySpeed = smokeFlySpeed;
+
+        //control.Throw();
+
+        NetworkServer.Spawn(smoke);
+
+        RpcThrowSmoke();
+        lastSmokeTime = Time.time;
+        smokeCount -= 1;
+    }
+
+
+    [ClientRpc]
+    void RpcThrowSmoke()
+    {
+        if (!isServer)
+        {
+            lastSmokeTime = Time.time;
+            smokeCount -= 1;
+        }
+    }
+
+    #endregion Smoke Grenade
 }

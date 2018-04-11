@@ -16,6 +16,7 @@ public class PlayerControl : NetworkBehaviour {
 
     private Rigidbody m_Rigidbody;              // Reference used to move the tank.
     private NetworkCharacter character;
+    private SpeedMultiplier speedMultiplier;
 
     private string m_MovementAxisName;          // The name of the input axis for moving forward and back.
     private string m_TurnAxisName;              // The name of the input axis for turning.
@@ -38,6 +39,7 @@ public class PlayerControl : NetworkBehaviour {
     void SetupComponents()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        speedMultiplier = GetComponent<SpeedMultiplier>();
         character = GetComponent<NetworkCharacter>();
         m_MovementAxisName = "Vertical";
         m_TurnAxisName = "Horizontal";
@@ -69,9 +71,9 @@ public class PlayerControl : NetworkBehaviour {
             return;
 
         // Apply movement to the rigidbody's position.
-        Vector3 speed2d = transform.forward * m_MovementInputValue * m_Speed;
+        Vector3 speed2d = transform.forward * m_MovementInputValue * m_Speed * speedMultiplier.value;
         if (m_MovementInputValue < .0f)
-            speed2d = transform.forward * m_MovementInputValue * m_BackSpead;
+            speed2d = transform.forward * m_MovementInputValue * m_BackSpead * speedMultiplier.value;
         m_Rigidbody.velocity = new Vector3(speed2d.x, m_Rigidbody.velocity.y, speed2d.z);
     }
 
