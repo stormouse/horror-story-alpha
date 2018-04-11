@@ -97,7 +97,7 @@ public class SmokeControl : NetworkBehaviour, ISpeedEffectSource {
         
         var character = other.GetComponent<NetworkCharacter>();
         if (character == null) return;
-        //if (character.Team == GameEnum.TeamType.Hunter)
+        if (character.Team == GameEnum.TeamType.Hunter)
         {
             if (!affectedCharacters.Contains(character))
             {
@@ -119,7 +119,7 @@ public class SmokeControl : NetworkBehaviour, ISpeedEffectSource {
         
         var character = other.GetComponent<NetworkCharacter>();
         if (character == null) return;
-        //if (character.Team == GameEnum.TeamType.Hunter)
+        if (character.Team == GameEnum.TeamType.Hunter)
         {
             if (affectedCharacters.Contains(character))
             {
