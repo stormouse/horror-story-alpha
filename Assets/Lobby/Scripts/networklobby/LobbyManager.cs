@@ -51,6 +51,7 @@ public class LobbyManager : NetworkLobbyManager {
     /* lobby data */
     // private LobbyPlayer[] lobbyPlayers; // use NetworkLobbyManager.lobbySlots;
     // server only!
+    private HashSet<NetworkConnection> connections = new HashSet<NetworkConnection>();
     private List<LobbyPlayer> spectatorPlayers = new List<LobbyPlayer>();
     private List<LobbyPlayer> hunterPlayers = new List<LobbyPlayer>();
     private List<string> hunterAIs = new List<string>();
@@ -412,6 +413,8 @@ public class LobbyManager : NetworkLobbyManager {
     // Auto assign a team for the new lobby player
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
+        if (connections.Contains(conn)) return;
+
         GameObject player = Instantiate(lobbyPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
         if (!TeamIsFull(TeamType.Hunter))
         {
@@ -424,6 +427,7 @@ public class LobbyManager : NetworkLobbyManager {
             survivorPlayers.Add(player.GetComponent<LobbyPlayer>());
         }
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
+        connections.Add(conn);
         PushLobbyStateToClient();
     }
 
@@ -432,6 +436,7 @@ public class LobbyManager : NetworkLobbyManager {
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
     {
         base.OnServerRemovePlayer(conn, player);
+        connections.Remove(conn);
         PushLobbyStateToClient();
     }
 

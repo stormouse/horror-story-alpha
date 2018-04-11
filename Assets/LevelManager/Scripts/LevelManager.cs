@@ -52,7 +52,6 @@ public class LevelManager : NetworkBehaviour
 
 
     /* game flags */
-    
     public GameState gameState = GameState.Waiting;  // default value should be 'Waiting', currently for debug use
     GameOverReason gameOverReason = GameOverReason.None;
 
@@ -82,7 +81,6 @@ public class LevelManager : NetworkBehaviour
 
     private void Update()
     {
-        Debug.Log("isServer: " + isServer);
         if (isServer)
         {
             GameLoop();
@@ -186,9 +184,11 @@ public class LevelManager : NetworkBehaviour
         // check if game is over
         if(GameOver(out gameOverReason))
         {
-            gameState = GameState.Over;
             Debug.Log("Game over, reason = " + gameOverReason.ToString());
+        
+            gameState = GameState.Over;
             RpcChangeGameState(GameState.Over, gameOverReason);
+            RoundEnding();
             return;
         }
 
@@ -226,7 +226,7 @@ public class LevelManager : NetworkBehaviour
     }
     
     [ClientRpc]
-    private void RpcChangeGameState(GameState newState, GameOverReason reason = GameOverReason.None)
+    private void RpcChangeGameState(GameState newState, GameOverReason reason)
     {
         if (isServer) return;
 
