@@ -4,6 +4,23 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 
+public enum GameOverReason
+{
+    None = 0,
+    TimeOut,
+    Elimination,
+    Breakout,
+    Error
+}
+
+
+public enum GameState
+{
+    Waiting = 0,
+    Playing,
+    Over
+}
+
 public class LevelManager : NetworkBehaviour
 {
 
@@ -30,13 +47,20 @@ public class LevelManager : NetworkBehaviour
     public float timeBeforeDeadBodyDisappear;
     // use longer time to prevent 'null reference deletion' caused by early scene switch
     public float timeBeforeLoadingLobbyAfterGameOver;
+    // round time
+    public float roundTimeInMinute = 0.3f;
 
 
     /* game flags */
-    bool m_GameEnd = false;
+    
+    public GameState gameState = GameState.Waiting;  // default value should be 'Waiting', currently for debug use
+    GameOverReason gameOverReason = GameOverReason.None;
+
+    float roundStartTime;
     bool m_PowerEnough = false;
     bool m_PowerFull = false;
     int m_EscapeCount = 0;
+
 	/* zx modified for AI*/
 	private List<Transform> targetPoint;
 
@@ -49,11 +73,23 @@ public class LevelManager : NetworkBehaviour
 
     private void Start()
     {
-        StartCoroutine(GameLoop());
         SetupAiMasterMinds();
+
+        // TODO: move this out of Start function after finishing Waiting logic
+        RoundStarting();
     }
+
+
+    private void Update()
+    {
+        Debug.Log("isServer: " + isServer);
+        if (isServer)
+        {
+            GameLoop();
+        }
+    }
+
 	/* zx added for AI */
-	/*zx added for AI */
     void SetupAiMasterMinds()
     {
         if (isServer)
@@ -123,53 +159,86 @@ public class LevelManager : NetworkBehaviour
 
     #region Game_Progress_Control
 
-    private IEnumerator GameLoop()
+    private void GameLoop()
     {
-        //yield return StartCoroutine(RoundStarting());
-        yield return StartCoroutine(RoundPlaying());
-        //yield return StartCoroutine(RoundEnding());
-
-        if (!m_GameEnd)
+        if(gameState == GameState.Waiting)
         {
-            StartCoroutine(GameLoop());
+            // FreezeTime here;
         }
-        else
+        else if(gameState == GameState.Playing)
         {
-
+            RoundPlaying();
         }
     }
 
-    private IEnumerator RoundStarting()
+    // server only
+    private void RoundStarting()
     {
         //reset power source
         //disable player motion
-        yield return null;
+        roundStartTime = Time.time;
+        gameState = GameState.Playing;
     }
 
-
-    private IEnumerator RoundPlaying()
+    // server only
+    private void RoundPlaying()
     {
-        //enable player motion
-
-        while (!SurvivorAllDead() || !TimesUp() || !SurvivorAllEscaped())
+        // check if game is over
+        if(GameOver(out gameOverReason))
         {
-            if (PowerEnough())
-            {
+            gameState = GameState.Over;
+            Debug.Log("Game over, reason = " + gameOverReason.ToString());
+            RpcChangeGameState(GameState.Over, gameOverReason);
+            return;
+        }
 
-            }
-            // ... return on the next frame.
-            yield return null;
+        // check if we should open doors
+        if (!m_PowerEnough && PowerEnough()) { }
+    }
+
+    // server only
+    private void RoundEnding()
+    {
+        // disable player control
+        if(gameOverReason == GameOverReason.Elimination)
+        {
+            Debug.Log("All humans are eliminated.");
+        }
+        else if(gameOverReason == GameOverReason.Breakout)
+        {
+            Debug.Log("VIP escaped from the island.");
+        }
+        else if(gameOverReason == GameOverReason.TimeOut)
+        {
+            Debug.Log("It's too late for humans to go.");
+        }
+
+        if (isServer)
+        {
+            Invoke("ChangeToRoomScene", 3.0f);
+        }
+    }
+
+    // server only
+    private void ChangeToRoomScene()
+    {
+        LobbyManager.Singleton.ServerChangeScene(LobbyManager.Singleton.lobbyScene);
+    }
+    
+    [ClientRpc]
+    private void RpcChangeGameState(GameState newState, GameOverReason reason = GameOverReason.None)
+    {
+        if (isServer) return;
+
+        gameState = newState;
+        if (gameState == GameState.Over)
+        {
+            gameOverReason = reason;
+            RoundEnding();
         }
     }
 
 
-    private IEnumerator RoundEnding()
-    {
-        // disable player
-
-
-        yield return null;
-    }
 
     bool PowerEnough()
     {
@@ -214,7 +283,7 @@ public class LevelManager : NetworkBehaviour
 
     bool TimesUp()
     {
-        return false;
+        return Time.time - roundStartTime > roundTimeInMinute * 60.0f;
     }
 
     public void PlayerEscape()
@@ -232,6 +301,29 @@ public class LevelManager : NetworkBehaviour
     {
         return false;
     }
+
+
+    bool GameOver(out GameOverReason reason)
+    {
+        if (SurvivorAllDead())
+        {
+            reason = GameOverReason.Elimination;
+            return true;
+        }
+        if (SurvivorAllEscaped())
+        {
+            reason = GameOverReason.Breakout;
+            return true;
+        }
+        if (TimesUp())
+        {
+            reason = GameOverReason.TimeOut;
+            return true;
+        }
+        reason = GameOverReason.None;
+        return false;
+    }
+
 
     #endregion Game_State_Checker
 
