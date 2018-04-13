@@ -8,11 +8,13 @@ public static class EscapeGraph
     public static bool Initialized;
     public static HashSet<string> Areas;
     public static Dictionary<string, List<Vector3>> Exits;
+    public static List<Vector3> AllExits;
 
-    public static void InitializeEscapeGraph()
+    public static void InitializeDoorGraph()
     {
         Areas = new HashSet<string>();
         Exits = new Dictionary<string, List<Vector3>>();
+        AllExits = new List<Vector3>();
 
         var areaVolumes = GameObject.FindObjectsOfType<AreaVolume>();
         for (int i = 0; i < areaVolumes.Length; i++)
@@ -29,43 +31,41 @@ public static class EscapeGraph
         {
             Exits[doors[i].areasJoined[0]].Add(doors[i].transform.position + doors[i].exitOffset[0]);
             Exits[doors[i].areasJoined[1]].Add(doors[i].transform.position + doors[i].exitOffset[1]);
+            AllExits.Add(doors[i].transform.position);
         }
 
         Initialized = true;
     }
-}
 
 
-public class EscapePlanner : MonoBehaviour {
-
-    public string areaName;
-
-    public Transform enemy;
-    public NavMeshAgent agent;
-
-
-    private void Start()
+    public static void InitializeExitGraph()
     {
-        if (!EscapeGraph.Initialized)
-        {
-            EscapeGraph.InitializeEscapeGraph();
-        }
-    }
+        Areas = new HashSet<string>();
+        Exits = new Dictionary<string, List<Vector3>>();
+        AllExits = new List<Vector3>();
 
-    private void Update()
-    {
-        if (EscapeGraph.Initialized)
+        var areaVolumes = GameObject.FindObjectsOfType<AreaVolume>();
+        for (int i = 0; i < areaVolumes.Length; i++)
         {
-            if(Vector3.Distance(transform.position, enemy.position) < 3.0f 
-                || !Physics.Raycast(transform.position, enemy.position, Vector3.Distance(transform.position, enemy.position), ~(1<<LayerMask.NameToLayer("Player"))))
+            if (!Areas.Contains(areaVolumes[i].areaName))
             {
-                agent.SetDestination(RecommendExit(transform.position, enemy.position, areaName));
-                agent.stoppingDistance = 0;
+                Areas.Add(areaVolumes[i].areaName);
+                Exits.Add(areaVolumes[i].areaName, new List<Vector3>());
             }
         }
+
+        var exits = GameObject.FindObjectsOfType<ExitMarker>();
+        for(int i = 0; i < exits.Length; i++)
+        {
+            Exits[exits[i].areaName].Add(exits[i].transform.position);
+            AllExits.Add(exits[i].transform.position);
+        }
+
+        Initialized = true;
     }
 
-    public Vector3 RecommendExit(Vector3 myPos, Vector3 enemyPos, string areaName)
+
+    public static Vector3 GetDestination(Vector3 myPos, Vector3 enemyPos, string areaName)
     {
         if (EscapeGraph.Areas.Contains(areaName))
         {
@@ -84,17 +84,114 @@ public class EscapePlanner : MonoBehaviour {
             return bestExitPos;
         }
 
-        return myPos;
+        return (myPos - enemyPos).normalized * 3.0f;
     }
 
 
+    public static Vector3 GetDestination(Vector3 myPos, List<Transform> enemies, string areaName)
+    {
+        Vector3 bestExit = myPos;
+
+        if (areaName == "")
+        {
+            int n = AllExits.Count;
+            float bestScore = -2000.0f;
+            for(int i = 0; i < n; i++)
+            {
+                // waypoint too far away, move it out of consideration
+                if(Vector3.Distance(myPos, AllExits[i]) > 100.0f)
+                {
+                    if(bestScore < -1000.0f)
+                    {
+                        bestScore = -1000.0f;
+                        bestExit = AllExits[i];
+                    }
+                    continue;
+                }
+
+                float convenience = (1000.0f - Vector3.Distance(myPos, AllExits[i]));
+                float danger = 0.0f;
+                for (int j = 0; j < enemies.Count; j++)
+                {
+                    danger -= Vector3.Distance(enemies[j].position, AllExits[i]);
+                }
+
+                float score = convenience - danger;
+                if(score > bestScore)
+                {
+                    bestScore = score;
+                    bestExit = AllExits[i];
+                }
+            }
+        }
+        
+        else
+        {
+            int n = Exits[areaName].Count;
+            float bestScore = -2000.0f;
+            for (int i = 0; i < n; i++)
+            {
+                // waypoint too far away, move it out of consideration
+                if (Vector3.Distance(myPos, Exits[areaName][i]) > 30.0f)
+                {
+                    if (bestScore < -1000.0f)
+                    {
+                        bestScore = -1000.0f;
+                        bestExit = AllExits[i];
+                    }
+                    continue;
+                }
+
+                float convenience = (1000.0f - Vector3.Distance(myPos, Exits[areaName][i]));
+                float danger = 0.0f;
+                for (int j = 0; j < enemies.Count; j++)
+                {
+                    danger -= Vector3.Distance(enemies[j].position, Exits[areaName][i]);
+                }
+
+                float score = convenience - danger;
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestExit = Exits[areaName][i];
+                }
+            }
+        }
+
+        return bestExit;
+    }
+}
+
+
+public class EscapePlanner : MonoBehaviour {
+
+    public string areaName;
+    
+    private void Start()
+    {
+        if (!EscapeGraph.Initialized)
+        {
+            EscapeGraph.InitializeExitGraph();
+        }
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "AreaVolume")
+        if (other.tag == "AreaVolume")
         {
             areaName = other.GetComponent<AreaVolume>().areaName;
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "AreaVolume")
+        {
+            if(areaName == other.GetComponent<AreaVolume>().areaName)
+            {
+                areaName = "";
+            }
+        }
+    }
 
 }

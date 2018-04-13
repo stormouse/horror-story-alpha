@@ -17,7 +17,7 @@ public class LookDecision : AIDecision {
 		Collider[] targetsInViewRadius = Physics.OverlapSphere (controller.transform.position, controller.enemyStats.lookRange, controller.targetMask);
 
 		for (int i = 0; i < targetsInViewRadius.Length; i++) {
-			if (targetsInViewRadius [i].tag.Equals ("Hunter")) {
+			if (targetsInViewRadius [i].GetComponent<NetworkCharacter>().Team == GameEnum.TeamType.Hunter) {
 				Transform target = targetsInViewRadius [i].transform;
 				Vector3 dirToTarget = (target.position - controller.transform.position).normalized;
 				//if (Vector3.Angle (controller.transform.forward, dirToTarget) < controller.enemyStats.fov.viewAngle / 2) {

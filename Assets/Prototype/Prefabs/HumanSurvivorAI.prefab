@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 114100020944193866}
   - component: {fileID: 195597216343965720}
   - component: {fileID: 114684137378114400}
+  - component: {fileID: 114626205796198372}
   m_Layer: 8
   m_Name: HumanSurvivorAI
   m_TagString: Player
@@ -1391,6 +1392,18 @@ MonoBehaviour:
   targetHeight: 1
   smoothFactor: 0.5
   focalDistance: 5
+--- !u!114 &114626205796198372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029068413829026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b97fb92438a7e0747819e44b22120610, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaName: 
 --- !u!114 &114626708487797220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1403,8 +1416,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionButtonName: Interaction
-  flashCooldown: 6
-  flashCount: 3
+  smokePrefab: {fileID: 1071767384830490, guid: 7d8f34fe77f2df84eb11e981ff5f25e4,
+    type: 2}
+  smokeCooldown: 6
+  smokeCount: 3
+  smokeEffectiveTime: 12
+  smokeFlySpeed: 5
+  smokeTimeInTheAir: 0.5
+  smokeDecelerationFactor: 0.8
   deployAnimationLength: 1
   trapCooldown: 5
   trapCount: 2

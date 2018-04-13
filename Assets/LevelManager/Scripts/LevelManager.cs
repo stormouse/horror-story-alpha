@@ -107,8 +107,11 @@ public class LevelManager : NetworkBehaviour
 					ai.SetupAI (true, targetPoint, players);
 				}
 			}
-			GameObject[] hunters = GameObject.FindGameObjectsWithTag("Hunter");
+			GameObject[] hunters = GameObject.FindGameObjectsWithTag("Player");
 			foreach (GameObject p in hunters) {
+                if (p.GetComponent<NetworkCharacter>().Team != GameEnum.TeamType.Hunter)
+                    continue;
+
 				var ai = p.GetComponent<_HunterStateController> ();
 				//Debug.Log ("here2!");
 				if (ai != null) {
