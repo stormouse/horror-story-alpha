@@ -212,6 +212,7 @@ ModelImporter:
     100408: yellowhouse_1
     100410: yellowhouse_2
     100412: yellowhouse_3
+    100414: Cube
     400000: blackhouse_1
     400002: Boat
     400004: Boat_001
@@ -419,6 +420,7 @@ ModelImporter:
     400408: yellowhouse_1
     400410: yellowhouse_2
     400412: yellowhouse_3
+    400414: Cube
     2100000: seastone
     2100002: tree
     2100004: pillar
@@ -440,6 +442,7 @@ ModelImporter:
     2100036: sea
     2100038: grass_001
     2100040: boat
+    2100042: unnamed
     2300000: blackhouse_1
     2300002: Boat
     2300004: Boat_001
@@ -646,6 +649,7 @@ ModelImporter:
     2300406: yellowhouse_1
     2300408: yellowhouse_2
     2300410: yellowhouse_3
+    2300412: Cube
     3300000: blackhouse_1
     3300002: Boat
     3300004: Boat_001
@@ -852,6 +856,7 @@ ModelImporter:
     3300406: yellowhouse_1
     3300408: yellowhouse_2
     3300410: yellowhouse_3
+    3300412: Cube
     4300000: Icosphere_018
     4300002: Icosphere_015
     4300004: Icosphere_014
@@ -1058,6 +1063,7 @@ ModelImporter:
     4300406: grass_509
     4300408: Boat
     4300410: Icosphere_002
+    4300412: Cube
     7400000: Default Take
     9500000: //RootNode
   externalObjects:
@@ -1193,7 +1199,7 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
