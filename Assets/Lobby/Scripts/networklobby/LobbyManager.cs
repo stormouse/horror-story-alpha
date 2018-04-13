@@ -58,7 +58,6 @@ public class LobbyManager : NetworkLobbyManager {
     private List<LobbyPlayer> survivorPlayers = new List<LobbyPlayer>();
     private List<string> survivorAIs = new List<string>();
     
-
     public GameObject lobbyUIContainer = null;
     public GameObject roomUIContainer = null;
     public GameObject hunterPrefab = null;
@@ -73,7 +72,6 @@ public class LobbyManager : NetworkLobbyManager {
 
     private string[] survivorFunnyNames = new string[] { "TRAJAN", "HADRIAN", "ANTONINUS", "MARCUS" };
     private string[] hunterFunnyNames = new string[] { "COMMODUS", "NERO" };
-
 
     private void Start()
     {

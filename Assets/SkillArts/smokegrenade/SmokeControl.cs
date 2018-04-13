@@ -13,21 +13,27 @@ public class SmokeControl : NetworkBehaviour, ISpeedEffectSource {
 
 
     [HideInInspector]
+    [SyncVar]
     public Vector3 origin;
 
     [HideInInspector]
+    [SyncVar]
     public Vector3 destination;
     
     [HideInInspector]
+    [SyncVar]
     public float flySpeed;
 
     [HideInInspector]
+    [SyncVar]
     public float maxTimeInAir;
 
     [HideInInspector]
+    [SyncVar]
     public float smokeEffectiveTime;
 
     [HideInInspector]
+    [SyncVar]
     public float decelerationFactor;
 
     bool exploded = false;
@@ -37,7 +43,6 @@ public class SmokeControl : NetworkBehaviour, ISpeedEffectSource {
 
     private void Start()
     {
-        influenceVolume.enabled = false;
         Throw();
     }
 

@@ -1823,8 +1823,8 @@ MonoBehaviour:
     type: 2}
   smokeCooldown: 6
   smokeCount: 3
-  smokeEffectiveTime: 15
-  smokeFlySpeed: 6
+  smokeEffectiveTime: 60
+  smokeFlySpeed: 3
   smokeTimeInTheAir: 0.5
   smokeDecelerationFactor: 0.45
   deployAnimationLength: 2

@@ -203,6 +203,9 @@ public class HunterSkills : NetworkBehaviour {
         lastAttackTime = Time.time;
         character.Transit(CharacterState.Casting);
         character.SwitchCoroutine(StartCoroutine(AttackCoroutine()));
+
+        if (PlayerUIManager.singleton != null)
+            PlayerUIManager.singleton.EnterCooldown(0, attackCooldown);
     }
 
 
@@ -462,8 +465,12 @@ public class HunterSkills : NetworkBehaviour {
             }
             StartCoroutine(ScanCoroutine(warSenseTimeLength, warSenseRadius, warSenseScanPass));
             // play audio
+
+            if (PlayerUIManager.singleton != null)
+                PlayerUIManager.singleton.EnterCooldown(2, warSenseCooldown);
         }
     }
+
 
     IEnumerator ScanCoroutine(float timeLength, float scanRadius, int scanPassCount)
     {

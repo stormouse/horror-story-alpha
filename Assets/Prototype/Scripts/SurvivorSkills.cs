@@ -81,8 +81,6 @@ public class SurvivorSkills : NetworkBehaviour {
 		m_rigidbody = GetComponent<Rigidbody>();
 		character = GetComponent<NetworkCharacter>();
         cameraFx = GetComponent<CameraFollow>();
-
-        ClientScene.RegisterPrefab(smokePrefab); // TODO: move it into a level manager
     }
 
 	void AttachSkillsToCharacter()
@@ -299,6 +297,16 @@ public class SurvivorSkills : NetworkBehaviour {
         {
             lastSmokeTime = Time.time;
             smokeCount -= 1;
+        }
+
+        // no matter server or client
+        if (PlayerUIManager.singleton != null)
+        {
+            PlayerUIManager.singleton.UpdateItemCount(0, smokeCount);
+            if (trapCount > 0)
+            {
+                PlayerUIManager.singleton.EnterCooldown(0, smokeCooldown);
+            }
         }
     }
 

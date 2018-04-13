@@ -76,6 +76,14 @@ public class NetworkCharacter : NetworkBehaviour {
     {
         UpdateAnimatorSpeed();
     }
+
+    public override void OnStartLocalPlayer()
+    {
+        if (PlayerUIManager.singleton)
+        {
+            PlayerUIManager.singleton.Initialize();
+        }
+    }
     #endregion Builtin_Functions
 
 

@@ -93,30 +93,30 @@ public class PlayerUIManager : MonoBehaviour {
     }
 
 
-    void Start()
+    void Awake()
     {
         s_singleton = this;
-        foreach(var player in FindObjectsOfType<NetworkCharacter>())
+    }
+
+
+    public void Initialize()
+    {
+        foreach (var player in FindObjectsOfType<NetworkCharacter>())
         {
             if (player.isLocalPlayer)
             {
                 playerTeam = player.Team;
             }
-            if(player.Team == GameEnum.TeamType.Survivor)
+            if (player.Team == GameEnum.TeamType.Survivor)
             {
                 survivorCount += 1;
             }
-            else if(playerTeam == GameEnum.TeamType.Hunter)
+            else if (playerTeam == GameEnum.TeamType.Hunter)
             {
                 hunterCount += 1;
             }
         }
-        InitializeSprites();
-    }
 
-
-    void InitializeSprites()
-    {
         if (playerTeam == GameEnum.TeamType.Hunter)
         {
             for (int i = 0; i < 4; i++)
@@ -133,8 +133,7 @@ public class PlayerUIManager : MonoBehaviour {
         }
         else
         {
-            if(UIContainer)
-                UIContainer.SetActive(false);
+            UIContainer.SetActive(false);
         }
         foreach (var img in cooldownImage)
         {
