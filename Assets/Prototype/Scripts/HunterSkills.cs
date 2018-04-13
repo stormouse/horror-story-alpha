@@ -37,6 +37,7 @@ public class HunterSkills : NetworkBehaviour {
 
     // components
     public GameObject hookPrefab;
+    public LineRenderer aimLine;
     private Rigidbody m_rigidbody;
     private NetworkCharacter character;
     private CameraFollow cameraFx;
@@ -63,6 +64,27 @@ public class HunterSkills : NetworkBehaviour {
         if (isLocalPlayer)
         {
             ReceivePlayerControl();
+        }
+    }
+
+
+    private void FixedUpdate()
+    {
+        if (aiming && aimLine)
+        {
+            RaycastHit hit;
+            var eyePosition = aimLine.GetPosition(0);
+            if(Physics.Raycast(eyePosition, transform.forward, out hit, mDiff + hookRange * 1.1f))
+            {
+                var localHitPoint = transform.InverseTransformVector(hit.point);
+                localHitPoint.y = eyePosition.y;
+                aimLine.SetPosition(1, localHitPoint);
+            }
+            else
+            {
+                aimLine.SetPosition(1, eyePosition + Vector3.forward * (mDiff + hookRange * 1.1f) / transform.localScale.x);
+            }
+            
         }
     }
     #endregion Builtin_Functions
@@ -118,6 +140,7 @@ public class HunterSkills : NetworkBehaviour {
                 if (character.CurrentState == CharacterState.Normal)
                 {
                     cameraFx.ActivateAimingPerspective();
+                    if (aimLine) aimLine.enabled = true;
                     aiming = true;
                 }
             }
@@ -127,6 +150,7 @@ public class HunterSkills : NetworkBehaviour {
             if (aiming)
             {
                 cameraFx.Deactivate();
+                if (aimLine) aimLine.enabled = false;
                 aiming = false;
             }
         }
@@ -252,18 +276,23 @@ public class HunterSkills : NetworkBehaviour {
 
         else
         {
-            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit info;
-            if (Physics.Raycast(mouseRay, out info))
-            {
-                Vector3 dest = Vector3.Scale(info.point, new Vector3(1, 0, 1));
-                Vector3 origin = Vector3.Scale(transform.position, new Vector3(1, 0, 1));
-                Vector3 dir = dest - origin;
-                CmdHook(dir.normalized);
+            CmdHook(transform.forward);
 
-                // flicking support for human players
-                character.SwitchCoroutine(StartCoroutine(_ThrowHookDelayPlayer(dir, hookSpellTime)));
-            }
+            // flicking support for human players
+            character.SwitchCoroutine(StartCoroutine(_ThrowHookDelayPlayer(transform.forward, hookSpellTime)));
+
+            //Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //RaycastHit info;
+            //if (Physics.Raycast(mouseRay, out info))
+            //{
+            //    Vector3 dest = Vector3.Scale(info.point, new Vector3(1, 0, 1));
+            //    Vector3 origin = Vector3.Scale(transform.position, new Vector3(1, 0, 1));
+            //    Vector3 dir = dest - origin;
+            //    CmdHook(dir.normalized);
+
+            //    // flicking support for human players
+            //    character.SwitchCoroutine(StartCoroutine(_ThrowHookDelayPlayer(dir, hookSpellTime)));
+            //}
         }
     }
 
@@ -324,7 +353,8 @@ public class HunterSkills : NetworkBehaviour {
     IEnumerator _ThrowHookDelayPlayer(Vector3 original_dir, float delay)
     {
         yield return new WaitForSeconds(delay);
-
+        CmdSpawnHook(transform.forward);
+        /* no flicking anymore
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit info;
         if (Physics.Raycast(mouseRay, out info))
@@ -336,8 +366,9 @@ public class HunterSkills : NetworkBehaviour {
         }
         else
         {
-            CmdSpawnHook(original_dir);
+            CmdSpawnHook(transform.forward);
         }
+        */
     }
 
     // original hook delay method

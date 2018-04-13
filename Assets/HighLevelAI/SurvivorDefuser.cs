@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BotHearing : MonoBehaviour {
+public class SurvivorDefuser : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

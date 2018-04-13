@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurvivorBehavior : MonoBehaviour {
+public class HunterRoamer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

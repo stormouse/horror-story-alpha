@@ -52,6 +52,9 @@ public class HookControl : NetworkBehaviour {
         if (other.gameObject.tag == "PowerSource")
             return;
 
+        if (other.gameObject.tag == "AreaVolume")
+            return;
+
         var otherCharacter = other.GetComponent<NetworkCharacter>();
         if (otherCharacter && otherCharacter.Team == GameEnum.TeamType.Survivor)
         {

@@ -87,9 +87,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4649360445906694}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AreaVolumes
-  m_TagString: Untagged
+  m_TagString: AreaVolume
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

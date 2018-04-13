@@ -7,7 +7,6 @@ TagManager:
   - Hook
   - LobbyPlayer
   - PowerSource
-  - Area Volumes
   - AreaVolume
   layers:
   - Default
