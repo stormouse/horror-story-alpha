@@ -45,8 +45,12 @@ public class NetworkCharacter : NetworkBehaviour {
     private Rigidbody m_rigidbody;
     private Animator m_animator;
     public Animator Animator { get { return m_animator; } } // ...
+    private float distanceTravelledSinceLastCheck;
+    private float distanceCheckInterval = 0.12f;
+    private float lastDistanceCheckTime;
+    private Vector3 lastFramePosition;
 
-    
+
     /* Public Property */
     [SerializeField]
     private CharacterState currentState;
@@ -71,6 +75,12 @@ public class NetworkCharacter : NetworkBehaviour {
         SetupActionMethods();
     }
 
+    private void Start()
+    {
+        if (!isLocalPlayer) {
+            lastDistanceCheckTime = Time.time;
+        }
+    }
 
     void Update()
     {
@@ -370,7 +380,30 @@ public class NetworkCharacter : NetworkBehaviour {
 				RpcUpdateAIAnimatorSpeed (GetComponent<_HunterStateController> ().navMeshAgent.velocity.magnitude);
 			}
 		} else {
-        	m_animator.SetFloat("Speed", m_rigidbody.velocity.magnitude); //original script line
+            if (isLocalPlayer)
+            {
+                m_animator.SetFloat("Speed", m_rigidbody.velocity.magnitude); //original script line
+            }
+            else
+            {
+                float now = Time.time;
+                if(now - lastDistanceCheckTime > distanceCheckInterval)
+                {
+                    distanceTravelledSinceLastCheck += Vector3.Distance(transform.position, lastFramePosition);
+                    var avgSpeed = distanceTravelledSinceLastCheck / (now - lastDistanceCheckTime);
+                    m_animator.SetFloat("Speed", Mathf.Max(avgSpeed, m_rigidbody.velocity.magnitude));
+
+                    lastDistanceCheckTime = now;
+                    distanceTravelledSinceLastCheck = 0.0f;
+                    lastFramePosition = transform.position;
+                }
+                else
+                {
+                    distanceTravelledSinceLastCheck += Vector3.Distance(transform.position, lastFramePosition);
+                    lastFramePosition = transform.position;
+                }
+
+            }
 		}
     }
 	/*zx modified for AI*/

@@ -10,13 +10,17 @@ public class PlayerUIManager : MonoBehaviour {
     private GameEnum.TeamType playerTeam;
 
     public GameObject UIContainer;
+    public GameObject objectivePanel;
 
     public Sprite[] hunterSkillSprites;
     public Sprite[] survivorSkillSprites;
+    public Sprite[] hunterSkillKeys;
+    public Sprite[] survivorSkillKeys;
     public Sprite skillExhaustedSprite;
 
     public Image[] skillImage;
     public Image[] cooldownImage;
+    public Image[] skillKeyImage;
     public Text[] itemCount;
     public Text[] objectiveIndicator;
 
@@ -25,7 +29,7 @@ public class PlayerUIManager : MonoBehaviour {
 
     private int survivorCount = 0;
     private int hunterCount = 0;
-    private int batteryCount = 5;
+    private int batteryCount = 8;
     private int openExitCount = 0;
     private int toyCarCount = 0;
 
@@ -37,6 +41,8 @@ public class PlayerUIManager : MonoBehaviour {
     string batteryCountStr;
     string openExitCountStr;
     string toyCarCountStr;
+
+    bool bObjectivePanelActive;
 
     private void OnGUI()
     {
@@ -96,7 +102,30 @@ public class PlayerUIManager : MonoBehaviour {
     void Awake()
     {
         s_singleton = this;
+        bObjectivePanelActive = false;
+        objectivePanel.SetActive(false);
     }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            if (!bObjectivePanelActive)
+            {
+                bObjectivePanelActive = true;
+                objectivePanel.SetActive(true);
+            }
+        }
+        else
+        {
+            if (bObjectivePanelActive)
+            {
+                bObjectivePanelActive = false;
+                objectivePanel.SetActive(false);
+            }
+        }
+    }
+
 
 
     public void Initialize()
@@ -119,16 +148,19 @@ public class PlayerUIManager : MonoBehaviour {
 
         if (playerTeam == GameEnum.TeamType.Hunter)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
                 skillImage[i].sprite = hunterSkillSprites[i];
+                skillKeyImage[i].sprite = hunterSkillKeys[i];
+                itemCount[i].gameObject.SetActive(false);
             }
         }
         else if(playerTeam == GameEnum.TeamType.Survivor)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
                 skillImage[i].sprite = survivorSkillSprites[i];
+                skillKeyImage[i].sprite = survivorSkillKeys[i];
             }
         }
         else
@@ -180,7 +212,7 @@ public class PlayerUIManager : MonoBehaviour {
 
     public void UpdateItemCount(int index, int count)
     {
-        itemCount[index].text = string.Format("w {0}", count);
+        itemCount[index].text = string.Format("w{0}", count);
         if(count == 0)
         {
             skillImage[index].sprite = skillExhaustedSprite;

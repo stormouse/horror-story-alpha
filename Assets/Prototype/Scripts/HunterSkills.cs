@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class HunterSkills : NetworkBehaviour {
 
     // skills
+    public int hookSkillIndex = 0;
     public float hookCooldown = 10.0f;
     public float hookRange = 5.0f;
     public float hookSpeed = 1.0f;
@@ -20,6 +21,7 @@ public class HunterSkills : NetworkBehaviour {
     private float lastWardTime = 0.0f;
     public bool WardReady { get { return Time.time - lastWardTime > wardCooldown && wardCount > 0; } }
 
+    public int warSenseSkillIndex = 1;
     public float warSenseCooldown = 45.0f;
     public float warSenseTimeLength = 6.0f;
     public int warSenseScanPass = 3;
@@ -109,17 +111,24 @@ public class HunterSkills : NetworkBehaviour {
 
     void ReceivePlayerControl()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (HookReady)
-            {
-                character.Perform("Hook", gameObject, null);
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.G))
+        //{
+        //    if (HookReady)
+        //    {
+        //        character.Perform("Hook", gameObject, null);
+        //    }
+        //}
 
         if (Input.GetButtonDown("Fire1"))
         {
-            if (AttackReady)
+            if (aiming)
+            {
+                if (HookReady)
+                {
+                    character.Perform("Hook", gameObject, null);
+                }
+            }
+            else if (AttackReady)
             {
                 character.Perform("Attack", gameObject, null);
             }
@@ -203,9 +212,6 @@ public class HunterSkills : NetworkBehaviour {
         lastAttackTime = Time.time;
         character.Transit(CharacterState.Casting);
         character.SwitchCoroutine(StartCoroutine(AttackCoroutine()));
-
-        if (PlayerUIManager.singleton != null)
-            PlayerUIManager.singleton.EnterCooldown(0, attackCooldown);
     }
 
 
@@ -395,7 +401,7 @@ public class HunterSkills : NetworkBehaviour {
         if (isLocalPlayer)
         {
             if (PlayerUIManager.singleton != null)
-                PlayerUIManager.singleton.EnterCooldown(1, hookCooldown);
+                PlayerUIManager.singleton.EnterCooldown(hookSkillIndex, hookCooldown);
         }
     }
     #endregion Hook_Cast
@@ -467,7 +473,7 @@ public class HunterSkills : NetworkBehaviour {
             // play audio
 
             if (PlayerUIManager.singleton != null)
-                PlayerUIManager.singleton.EnterCooldown(2, warSenseCooldown);
+                PlayerUIManager.singleton.EnterCooldown(warSenseSkillIndex, warSenseCooldown);
         }
     }
 

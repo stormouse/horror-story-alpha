@@ -10,6 +10,7 @@ public class SurvivorSkills : NetworkBehaviour {
 	public string m_InteractionButtonName = "Interaction";
 
     // skills
+    public int smokeSkillIndex = 0;
     public GameObject smokePrefab;
     public float smokeCooldown = 6.0f;
     public int smokeCount = 3;
@@ -20,6 +21,7 @@ public class SurvivorSkills : NetworkBehaviour {
     private float lastSmokeTime = -100.0f;
     public bool SmokeReady { get { return Time.time - lastSmokeTime > smokeCooldown && smokeCount > 0; } }
 
+    public int trapSkillIndex = 1;
     public float deployAnimationLength = 2f;
     public float trapCooldown = 5.0f;
     public int trapCount = 2;
@@ -94,7 +96,7 @@ public class SurvivorSkills : NetworkBehaviour {
 
 	void ReceivePlayerControl()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.G))
 		{
 			DeployPerform ();
 		}
@@ -179,10 +181,10 @@ public class SurvivorSkills : NetworkBehaviour {
         trapCount -= 1;
         if (PlayerUIManager.singleton != null)
         {
-            PlayerUIManager.singleton.UpdateItemCount(1, trapCount);
+            PlayerUIManager.singleton.UpdateItemCount(trapSkillIndex, trapCount);
             if (trapCount > 0)
             {
-                PlayerUIManager.singleton.EnterCooldown(1, trapCooldown);
+                PlayerUIManager.singleton.EnterCooldown(trapSkillIndex, trapCooldown);
             }
         }
 	}
@@ -302,10 +304,10 @@ public class SurvivorSkills : NetworkBehaviour {
         // no matter server or client
         if (PlayerUIManager.singleton != null)
         {
-            PlayerUIManager.singleton.UpdateItemCount(0, smokeCount);
+            PlayerUIManager.singleton.UpdateItemCount(smokeSkillIndex, smokeCount);
             if (trapCount > 0)
             {
-                PlayerUIManager.singleton.EnterCooldown(0, smokeCooldown);
+                PlayerUIManager.singleton.EnterCooldown(smokeSkillIndex, smokeCooldown);
             }
         }
     }
