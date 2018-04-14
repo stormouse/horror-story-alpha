@@ -98,7 +98,7 @@ public class LevelManager : NetworkBehaviour
 			//Debug.Log ("here1!");
 			//Debug.Log (players.Length);
 			foreach (GameObject p in players) {
-				Debug.Log (p.GetComponent<NetworkCharacter> ().Team);
+				Debug.Log (p.GetComponent<NetworkCharacter> ().Team);   
 				if (p.GetComponent<NetworkCharacter> ().Team == GameEnum.TeamType.Survivor) {
 					survivors.Add (p);
 				} else if(p.GetComponent<NetworkCharacter>().Team == GameEnum.TeamType.Hunter) {

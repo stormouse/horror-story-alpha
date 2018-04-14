@@ -8,6 +8,7 @@ TagManager:
   - LobbyPlayer
   - PowerSource
   - AreaVolume
+  - Spectator
   layers:
   - Default
   - TransparentFX

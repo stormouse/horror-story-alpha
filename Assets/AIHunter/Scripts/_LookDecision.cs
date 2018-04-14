@@ -29,7 +29,7 @@ public class _LookDecision : AIDecision {
 		for (int i = 0; i < targetsInViewRadius.Length; i++) {
 			if (targetsInViewRadius [i].tag.Equals ("Player")) {
 				NetworkCharacter target = targetsInViewRadius [i].GetComponent<NetworkCharacter>(); 
-				if (target.CurrentState != CharacterState.Dead)
+				if (target.Team == GameEnum.TeamType.Survivor && target.CurrentState != CharacterState.Dead)
 					controller.chaseTarget.Add (target);
 				}
 			} 
