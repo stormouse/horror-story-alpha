@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu (menuName = "AIHunter/Decisions/_Look")]
-public class _LookDecision : _Decision {
+public class _LookDecision : AIDecision {
 
-	public override bool Decide(_HunterStateController controller){
+	public override bool Decide(AIStateController controller){
 		bool targetVisiable = Look(controller);
 		return targetVisiable;
 	}
 
-	private bool Look(_HunterStateController controller){
+	private bool Look(AIStateController controller){
 //		RaycastHit hit;
 //
 //		Debug.DrawRay (controller.eye.position, controller.eye.forward.normalized * controller.enemyStats.lookRange, Color.green);

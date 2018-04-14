@@ -3,20 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AIHunter/Actions/_AttackAction")]
-public class _AttackAction : _Action {
+public class _AttackAction : AIAction {
 
-	public override void Act (_HunterStateController controller)
+	public override void Act (AIStateController controller)
 	{
-		if (controller.character.CurrentState == CharacterState.Normal) {
-			if (!controller.navMeshAgent.enabled)
-				controller.navMeshAgent.enabled = true;
-			Attack (controller);
-		} else {
-			controller.navMeshAgent.enabled = false;
-		}
+		Attack (controller);
 	}
 
-	public void Attack(_HunterStateController controller){
+	public void Attack(AIStateController controller){
 		//attack kill here
 		controller.character.Perform ("Attack", controller.gameObject, null);
 		controller.chaseTarget [0].Perform ("Die", controller.chaseTarget[0].gameObject, null);

@@ -3,24 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu (menuName = "AIHunter/Actions/_PatrolAction")]
-public class _PatrolAction : _Action {
-	public override void Act (_HunterStateController controller)
+public class _PatrolAction : AIAction {
+	public override void Act (AIStateController controller)
 	{
-		if (controller.character.CurrentState == CharacterState.Normal) {
-			if (!controller.navMeshAgent.enabled)
-				controller.navMeshAgent.enabled = true;
-			Patrol (controller);
-		} else {
-			controller.navMeshAgent.enabled = false;
-		}
+		Patrol (controller);
 	}
 
-	public void Patrol(_HunterStateController controller){
+	public void Patrol(AIStateController controller){
 
 		//check valid
-		foreach (PowerSourceController psc in controller.wayPointList) {
+		foreach (Transform ps in controller.wayPointList) {
+			PowerSourceController psc = ps.GetComponent<PowerSourceController> ();
 			if (null == psc || psc.Charged) {
-				controller.wayPointList.Remove (psc);
+				controller.wayPointList.Remove (ps);
 			}
 		}
 

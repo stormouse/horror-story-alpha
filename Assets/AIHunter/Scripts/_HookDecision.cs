@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu (menuName = "AIHunter/Decisions/_HookDecision")]
-public class _HookDecision : _Decision {
+public class _HookDecision : AIDecision {
 
-	public override bool Decide(_HunterStateController controller){
+	public override bool Decide(AIStateController controller){
 		bool hookAble = HookAble(controller);
 		return hookAble;
 	}
 
-	public bool HookAble(_HunterStateController controller){
+	public bool HookAble(AIStateController controller){
 		if (controller.chaseTarget.Count == 0)
 			return false;
 		if (controller.chaseTarget [0] == null) {

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu (menuName = "AIHunter/Decisions/_AttackDecision")]
-public class _AttackDecision : _Decision {
+public class _AttackDecision : AIDecision {
 
-	public override bool Decide(_HunterStateController controller){
+	public override bool Decide(AIStateController controller){
 		bool attackable = AttackAble(controller);
 		return attackable;
 	}
 
-	public bool AttackAble(_HunterStateController controller){
+	public bool AttackAble(AIStateController controller){
 		if (controller.chaseTarget.Count == 0)
 			return false;
 		//is died

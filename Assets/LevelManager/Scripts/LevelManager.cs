@@ -93,9 +93,20 @@ public class LevelManager : NetworkBehaviour
         if (isServer)
         {
 			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+			List<GameObject> survivors = new List<GameObject>();
+			List<GameObject> hunters = new List<GameObject>();
 			//Debug.Log ("here1!");
 			//Debug.Log (players.Length);
 			foreach (GameObject p in players) {
+				Debug.Log (p.GetComponent<NetworkCharacter> ().Team);
+				if (p.GetComponent<NetworkCharacter> ().Team == GameEnum.TeamType.Survivor) {
+					survivors.Add (p);
+				} else if(p.GetComponent<NetworkCharacter>().Team == GameEnum.TeamType.Hunter) {
+					hunters.Add (p);
+				}
+			}
+			foreach (GameObject p in survivors) {
+				
 				var ai = p.GetComponent<AIStateController> ();
 				//Debug.Log ("here2!");
 				if (ai != null) {
@@ -104,23 +115,22 @@ public class LevelManager : NetworkBehaviour
 						//Debug.Log(ps.transform.position.x);
 						targetPoint.Add (ps.transform);
 					}
-					ai.SetupAI (true, targetPoint, players);
+					ai.SetupAI (true, targetPoint, survivors);
 				}
 			}
-			GameObject[] hunters = GameObject.FindGameObjectsWithTag("Player");
+			//GameObject[] hunters = GameObject.FindGameObjectsWithTag("Player");
 			foreach (GameObject p in hunters) {
-                if (p.GetComponent<NetworkCharacter>().Team != GameEnum.TeamType.Hunter)
-                    continue;
-
-				var ai = p.GetComponent<_HunterStateController> ();
+				
+				var ai = p.GetComponent<AIStateController> ();
 				//Debug.Log ("here2!");
 				if (ai != null) {
-					List<PowerSourceController> targetps = new List<PowerSourceController> ();
-					foreach (PowerSourceController ps in m_PowerSources) {
+					//List<PowerSourceController> targetps = new List<PowerSourceController> ();
+					targetPoint = new List<Transform> ();
+					foreach (var ps in m_PowerSources) {
 						//Debug.Log(ps.transform.position.x);
-						targetps.Add (ps);
+						targetPoint.Add (ps.transform);
 					}
-					ai.SetupAI (true, targetps);
+					ai.SetupAI (true, targetPoint, null);
 				}
 			}
 			/*

@@ -3,20 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AIHunter/Actions/_HookAction")]
-public class _HookAction : _Action {
+public class _HookAction : AIAction {
 
-	public override void Act (_HunterStateController controller)
+	public override void Act (AIStateController controller)
 	{
-		if (controller.character.CurrentState == CharacterState.Normal) {
-			if (!controller.navMeshAgent.enabled)
-				controller.navMeshAgent.enabled = true;
 			lunchHook (controller);
-		} else {
-			controller.navMeshAgent.enabled = false;
-		}
 	}
 
-	public void lunchHook(_HunterStateController controller){
+	public void lunchHook(AIStateController controller){
 		//lunch hook here
 		DirectionArgument dir = new DirectionArgument();
 		dir.direction = controller.chaseTarget [0].transform.position - controller.transform.position;

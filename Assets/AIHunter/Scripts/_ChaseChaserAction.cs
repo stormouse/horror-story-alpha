@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "AIHunter/Actions/_ChaseChaserAction")]
-public class _ChaseChaserAction : _Action {
+public class _ChaseChaserAction : AIAction {
 
-	public override void Act (_HunterStateController controller)
+	public override void Act (AIStateController controller)
 	{
 		chase (controller);
 	}
 
-	public void chase(_HunterStateController controller){
+	public void chase(AIStateController controller){
 		if (controller.character.CurrentState == CharacterState.Normal) {
 			if (!controller.navMeshAgent.enabled)
 				controller.navMeshAgent.enabled = true;

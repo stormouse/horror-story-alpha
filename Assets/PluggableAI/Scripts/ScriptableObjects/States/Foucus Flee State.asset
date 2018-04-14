@@ -9,12 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ca8bd514b325254b8d312a1d2eec7b3, type: 3}
-  m_Name: Flee State
+  m_Name: Foucus Flee State
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: 11400000, guid: d4157c4ebb24ce44fa5a3ba844af9cad, type: 2}
+  - {fileID: 11400000, guid: 6e7ef252a635be94f82d3448b247818b, type: 2}
   transitions:
   - decision: {fileID: 11400000, guid: d7e8a35759cb1e440bf27593fc783159, type: 2}
     trueState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}
     falseState: {fileID: 11400000, guid: eef8f0c2bf115e940b6b8c62d9038045, type: 2}
+  - decision: {fileID: 11400000, guid: 7461f850f5caadf43bfcd901ba02c4d8, type: 2}
+    trueState: {fileID: 11400000, guid: 0f66fba25f866354ab3c783a1bd6c506, type: 2}
+    falseState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}
   sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

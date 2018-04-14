@@ -19,3 +19,4 @@ MonoBehaviour:
   attackRate: 1
   searchDuration: 4
   searchingTurnSpeed: 120
+  fleeDuration: 1

@@ -1517,10 +1517,11 @@ GameObject:
   - component: {fileID: 114668808419412122}
   - component: {fileID: 114244322774433520}
   - component: {fileID: 114735295300703876}
-  - component: {fileID: 114755268767692974}
   - component: {fileID: 195799664509924988}
   - component: {fileID: 114266717180239754}
   - component: {fileID: 114736424616667242}
+  - component: {fileID: 114231138282031106}
+  - component: {fileID: 114831725995911432}
   m_Layer: 8
   m_Name: HunterWerewolfAI
   m_TagString: Player
@@ -3372,6 +3373,49 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114231138282031106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1843327644783622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128f51e63fd66d943a93946aeb38e6ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionRange: 20
+  attackRange: 2
+  hookRange: 10
+  navStopDistance: 2
+  pSStopDistance: 10
+  chaseTarget: []
+  wonderPoint: {x: 0, y: 0, z: 0}
+  underInvokeList: []
+  hskills: {fileID: 0}
+  currentState: {fileID: 11400000, guid: b85169401d96e9d4c8a1b7557bfd3408, type: 2}
+  enemyStats: {fileID: 11400000, guid: e590306de9c33d64193eee4655f9eb46, type: 2}
+  remainState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
+  fleeDest: {x: 0, y: 0, z: 0}
+  fleeOffsetMultiplyBy: 0
+  navMeshAgent: {fileID: 0}
+  wayPointList: []
+  nextWayPoint: 0
+  visibleTargets: []
+  targetIndx: -1
+  survivorsk: {fileID: 0}
+  timeElapsed: 0
+  aiActive: 0
+  character: {fileID: 0}
+  players: []
+  predictTargets: 
+  playerIndex: 0
 --- !u!114 &114244322774433520
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3476,6 +3520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6297c4d8a1a40140a303d2cb4daee5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hookSkillIndex: 0
   hookCooldown: 10
   hookRange: 12
   hookSpeed: 80
@@ -3484,6 +3529,7 @@ MonoBehaviour:
   wardCooldown: 5
   wardCount: 2
   wardAnimationLength: 2
+  warSenseSkillIndex: 1
   warSenseCooldown: 45
   warSenseTimeLength: 6
   warSenseScanPass: 3
@@ -3495,6 +3541,7 @@ MonoBehaviour:
   attackAnimationLength: 1
   lastAttackTime: -1
   hookPrefab: {fileID: 1931548332930490, guid: aeaeb2ab19d4548a5aac130f6e417a16, type: 2}
+  aimLine: {fileID: 0}
 --- !u!114 &114736424616667242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3506,13 +3553,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0084d3b5c867544a4ae5c32ff7acfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114755268767692974
+--- !u!114 &114787435481096718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1302027775850054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20f61da26997df5478c40fb03226d5c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 4150997718016616}
+--- !u!114 &114831725995911432
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1843327644783622}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 527fe2ff2118f452d82374f7d7415ae5, type: 3}
   m_Name: 
@@ -3540,18 +3599,6 @@ MonoBehaviour:
   underInvokeList: []
   hskills: {fileID: 0}
   character: {fileID: 0}
---- !u!114 &114787435481096718
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1302027775850054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20f61da26997df5478c40fb03226d5c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 4150997718016616}
 --- !u!136 &136197038977618518
 CapsuleCollider:
   m_ObjectHideFlags: 1

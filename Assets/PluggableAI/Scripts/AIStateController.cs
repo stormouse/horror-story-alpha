@@ -4,15 +4,28 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class AIStateController : MonoBehaviour {
+	//hunter's parameters
+	public float visionRange;
+	public float attackRange;
+	public float hookRange;
+	public float navStopDistance;
+	public float pSStopDistance;
+	[HideInInspector] public List<NetworkCharacter> chaseTarget;
+	[HideInInspector] public Vector3 wonderPoint;
+	[HideInInspector] public List<Transform> underInvokeList;
+	[HideInInspector] public HunterSkills hskills;
+
+
 
 	public AIState currentState;
 	public EnemyStats enemyStats;
-	public Transform eyes;
 	public AIState remainState;
 
 	public LayerMask targetMask;
 	public LayerMask obstacleMask;
 
+	[HideInInspector] public Vector3 fleeDest;
+	[HideInInspector] public float fleeOffsetMultiplyBy;
 	[HideInInspector] public NavMeshAgent navMeshAgent;
 	[HideInInspector] public List<Transform> wayPointList;
 	[HideInInspector] public int nextWayPoint;
@@ -23,21 +36,26 @@ public class AIStateController : MonoBehaviour {
 
 	[HideInInspector] public bool aiActive;
 	[HideInInspector] public NetworkCharacter character;
-	[HideInInspector] public GameObject[] players;
+	[HideInInspector] public List<GameObject> players;
 	[HideInInspector] public int[] predictTargets;
 	[HideInInspector] public int playerIndex; //this index of this AI in players array
 	void Awake() {
 		navMeshAgent = GetComponent<NavMeshAgent> ();
 		survivorsk = GetComponent<SurvivorSkills> ();
 		character = GetComponent<NetworkCharacter> ();
+		hskills = GetComponent<HunterSkills> ();
+		navMeshAgent.stoppingDistance = navStopDistance;
 	}
 
-	public void SetupAI(bool aiActivationFromLevelManager, List<Transform> wayPointFromLevelManager, GameObject[] playersFromLevelManager) {
+	public void SetupAI(bool aiActivationFromLevelManager, List<Transform> wayPointFromLevelManager, List<GameObject> playersFromLevelManager) {
 		wayPointList = wayPointFromLevelManager;
 		aiActive = aiActivationFromLevelManager;
-		players = playersFromLevelManager;
-		predictTargets = new int[players.Length];
-		for (int i = 0; i < players.Length; i++) {
+		if (playersFromLevelManager != null) {
+			players = playersFromLevelManager;
+			predictTargets = new int[players.Count];
+		}
+		nextWayPoint = Random.Range (0, wayPointList.Count); //Random for hunter starting patrol point
+		for (int i = 0; i < players.Count; i++) {
 			if (players [i] == this.gameObject) {
 				playerIndex = i;
 				break;
@@ -49,19 +67,17 @@ public class AIStateController : MonoBehaviour {
 			navMeshAgent.enabled = false;
 		}
 	}
+	public void DisableAI()
+	{
+		aiActive = false;
+		navMeshAgent.enabled = false;
+	}
 
-    
-    public void DisableAI()
-    {
-        aiActive = false;
-        navMeshAgent.enabled = false;
-    }
-
-    public void ResumeAI()
-    {
-        aiActive = true;
-        navMeshAgent.enabled = true;
-    }
+	public void ResumeAI()
+	{
+		aiActive = true;
+		navMeshAgent.enabled = true;
+	}
 
 
 	void Update() {
@@ -70,14 +86,6 @@ public class AIStateController : MonoBehaviour {
 		}
 		currentState.UpdateState (this);
 	}
-	//Draw Gizmos
-	void OnDrawGizmos() {
-		if (currentState != null && eyes != null) {
-			Gizmos.color = currentState.sceneGizmoColor;
-			Gizmos.DrawWireSphere (eyes.position, enemyStats.lookSphereCastRadius);
-		}
-	}
-
     public void TransitionToState (AIState nextState) {
 		if (nextState != remainState) {
 			currentState = nextState;
@@ -92,8 +100,11 @@ public class AIStateController : MonoBehaviour {
 
 	private void OnExitState() {
 		timeElapsed = 0;
-		survivorsk.m_Charging = false;
+		if (survivorsk != null) {
+			survivorsk.m_Charging = false;
+		}
 		targetIndx = -1;
 		navMeshAgent.isStopped = true;
+		fleeOffsetMultiplyBy = 0;
 	}
 }

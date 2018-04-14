@@ -51,7 +51,7 @@ public class GoToTargetAction : AIAction{
 			float min = float.MaxValue;
 			if (controller.wayPointList [i].gameObject.activeSelf) {
 				int tempindx = -1;
-				for (int k = 0; k < controller.players.Length; k++) {
+				for (int k = 0; k < controller.players.Count; k++) {
 					if (controller.players[k] != null && controller.predictTargets[k] == -1) {
 						float dis = Vector3.Distance(controller.players [k].transform.position, controller.wayPointList [i].position);
 						if (dis < min) {
@@ -65,7 +65,7 @@ public class GoToTargetAction : AIAction{
 			}
 		}
 		if (controller.predictTargets [controller.playerIndex] == -1) {
-			for (int i = 0; i < controller.players.Length; i++) {
+			for (int i = 0; i < controller.players.Count; i++) {
 				if (controller.players [i] != null && controller.predictTargets [i] != -1) {
 					controller.predictTargets [controller.playerIndex] = controller.predictTargets [i];
 					break;
