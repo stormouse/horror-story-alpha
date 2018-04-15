@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof(Rigidbody), typeof(NetworkCharacter)), NetworkSettings(sendInterval = 0f)]
-public class HunterSkills : NetworkBehaviour {
+public class HunterSkills : NetworkBehaviour, ICountableSlots
+{
 
     // skills
     public int hookSkillIndex = 0;
@@ -521,6 +523,11 @@ public class HunterSkills : NetworkBehaviour {
             return false;
         }
         return true;
+    }
+
+    public int GetCountOfIndex(int i)
+    {
+        return 1;
     }
 
     #endregion WarSense Logic

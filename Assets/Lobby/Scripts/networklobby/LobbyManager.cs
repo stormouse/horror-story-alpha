@@ -67,6 +67,9 @@ public class LobbyManager : NetworkLobbyManager {
     public GameObject survivorSpiritPrefab = null;
     public GameObject spectatorPrefab = null;
 
+    public int survivorCount;
+    public int hunterCount;
+
     int survivorSpawned = 0;
     int hunterSpawned = 0;
 
@@ -221,6 +224,9 @@ public class LobbyManager : NetworkLobbyManager {
     private void UpdateLobbyStateClient(NetworkMessage _msg)
     {
         var state = JsonUtility.FromJson<LobbyStateSummary>(_msg.ReadMessage<SyncLobbyStateMessage>().data);
+
+        survivorCount = state.survivorCount;
+        hunterCount = state.hunterCount;
 
         // clear everything
         for (int i = 0; i < 4; i++)

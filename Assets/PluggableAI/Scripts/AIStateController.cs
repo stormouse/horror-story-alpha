@@ -21,6 +21,9 @@ public class AIStateController : MonoBehaviour {
 	public EnemyStats enemyStats;
 	public AIState remainState;
 
+
+    public CharacterRole characterRole;
+
 	public LayerMask targetMask;
 	public LayerMask obstacleMask;
 

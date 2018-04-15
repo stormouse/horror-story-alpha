@@ -1522,7 +1522,7 @@ MonoBehaviour:
   hookCooldown: 3
   hookRange: 15
   hookSpeed: 80
-  hookSpellTime: 0.4
+  hookSpellTime: 0.2
   hasHook: 1
   wardCooldown: 5
   wardCount: 2

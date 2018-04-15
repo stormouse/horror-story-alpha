@@ -89,8 +89,11 @@ public class NetworkCharacter : NetworkBehaviour {
 
     public override void OnStartLocalPlayer()
     {
+        LocalPlayerInfo.playerCharacter = this;
+        LocalPlayerInfo.playerObject = this.gameObject;
         if (PlayerUIManager.singleton)
         {
+            // initialization of player UI will use LocalPlayerInfo - bad logic?
             PlayerUIManager.singleton.Initialize();
         }
     }

@@ -1829,7 +1829,7 @@ MonoBehaviour:
   smokeTimeInTheAir: 0.5
   smokeDecelerationFactor: 0.45
   trapSkillIndex: 1
-  deployAnimationLength: 1
+  deployAnimationLength: 1.7
   trapCooldown: 5
   trapCount: 10
   camouflageAnimationLength: 1

@@ -27,7 +27,7 @@ public class FleeAction : AIAction {
             Vector3 dest = EscapeGraph.GetDestination(controller.transform.position, controller.visibleTargets, planner.areaName);
             if (Vector3.SqrMagnitude(dest - controller.transform.position) > 16.0f)
             {
-                Debug.Log("Recommended Exit Location: " + dest);
+                // Debug.Log("Recommended Exit Location: " + dest);
                 controller.navMeshAgent.destination = dest;
                 controller.navMeshAgent.isStopped = false; // is this safe?
             }

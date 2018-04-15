@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c87e8a38ce3274091996ddb433f0ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Doors:
+  m_EscapeAreas:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -100,5 +100,7 @@ MonoBehaviour:
   - {fileID: 0}
   timeBeforeDeadBodyDisappear: 2
   timeBeforeLoadingLobbyAfterGameOver: 8
-  roundTimeInMinute: 0.3
+  timeFreezeBeforeStart: 1
+  roundTimeInMinute: 10
+  numBetteriesToOpenDoor: 5
   gameState: 0

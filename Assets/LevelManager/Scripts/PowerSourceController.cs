@@ -24,7 +24,10 @@ public class PowerSourceController : NetworkBehaviour
 	public Slider m_Slider;                            
 	public Image m_FillImage;                          
 	public Color m_FullPowerColor = Color.green;       
-	public Color m_ZeroPowerColor = Color.red;    
+	public Color m_ZeroPowerColor = Color.red;
+
+    public float CurrentPower { get { return m_CurrentPower; } }
+
 	[SyncVar]
 	private float m_CurrentPower;
     [SyncVar]
@@ -153,10 +156,11 @@ public class PowerSourceController : NetworkBehaviour
         GetComponent<Collider>().enabled = false;
         gameObject.tag = "Untagged";
         CreateDestruction();
-        if (PlayerUIManager.singleton)
-        {
-            PlayerUIManager.singleton.DecreaseBatteryCount();
-        }
+
+        Observation obs = new Observation();
+        obs.subject = this.gameObject;
+        obs.what = Observation.Demolishment;
+        LevelManager.Singleton.Observe(obs);
     }
 
     void CreateDestruction()

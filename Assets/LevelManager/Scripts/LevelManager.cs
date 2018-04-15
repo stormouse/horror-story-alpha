@@ -21,6 +21,7 @@ public enum GameState
     Over
 }
 
+[NetworkSettings(sendInterval = 0)]
 public class LevelManager : NetworkBehaviour
 {
 
@@ -37,9 +38,10 @@ public class LevelManager : NetworkBehaviour
 
     /* game scene resources */
     [Header("Game Resources")]
-    public DoorControl[] m_Doors;
+    public EscapeArea[] m_EscapeAreas;
     public PowerSourceController[] m_PowerSources;
     public TreeControl[] m_Trees;
+
 
     /* game arguments */
     [Header("Game Settings")]
@@ -47,35 +49,49 @@ public class LevelManager : NetworkBehaviour
     public float timeBeforeDeadBodyDisappear;
     // use longer time to prevent 'null reference deletion' caused by early scene switch
     public float timeBeforeLoadingLobbyAfterGameOver;
+    // map freeze time
+    public float timeFreezeBeforeStart = 1.0f;
     // round time
     public float roundTimeInMinute = 0.3f;
-
+    // num of batteries needs to be defused
+    public int numBetteriesToOpenDoor = 5;
 
     /* game flags */
     public GameState gameState = GameState.Waiting;  // default value should be 'Waiting', currently for debug use
     GameOverReason gameOverReason = GameOverReason.None;
 
+
+    List<GameObject> survivors = new List<GameObject>();
+    List<GameObject> hunters = new List<GameObject>();
+
+    float sceneLoadTime;
     float roundStartTime;
     bool m_PowerEnough = false;
     bool m_PowerFull = false;
     int m_EscapeCount = 0;
 
-	/* zx modified for AI*/
-	private List<Transform> targetPoint;
+    
+    private int survivorCount;
+    public int SurvivorCount { get { return survivorCount; } }
+    
+    private int powerSourceCount;
+    public int PowerSourceCount { get { return powerSourceCount; } }
+
+
+    /* zx modified for AI*/
+    private List<Transform> targetPoint;
 
 
     private void Awake()
     {
         SetSingleton();
-        GetPrefabsFromLobbyManager();
+        GetInfoFromLobbyManager();
     }
 
     private void Start()
     {
-        SetupAiMasterMinds();
-
-        // TODO: move this out of Start function after finishing Waiting logic
-        RoundStarting();
+        sceneLoadTime = Time.time;
+        powerSourceCount = m_PowerSources.Length;
     }
 
 
@@ -92,57 +108,40 @@ public class LevelManager : NetworkBehaviour
     {
         if (isServer)
         {
-			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-			List<GameObject> survivors = new List<GameObject>();
-			List<GameObject> hunters = new List<GameObject>();
-			//Debug.Log ("here1!");
-			//Debug.Log (players.Length);
-			foreach (GameObject p in players) {
-				Debug.Log (p.GetComponent<NetworkCharacter> ().Team);   
-				if (p.GetComponent<NetworkCharacter> ().Team == GameEnum.TeamType.Survivor) {
-					survivors.Add (p);
-				} else if(p.GetComponent<NetworkCharacter>().Team == GameEnum.TeamType.Hunter) {
-					hunters.Add (p);
-				}
-			}
-			foreach (GameObject p in survivors) {
-				
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject p in players)
+            {
+                if (p.GetComponent<NetworkCharacter>().Team == GameEnum.TeamType.Survivor)
+                {
+                    survivors.Add(p);
+                }
+                else if (p.GetComponent<NetworkCharacter>().Team == GameEnum.TeamType.Hunter)
+                {
+                    hunters.Add(p);
+                }
+            }
+            foreach (GameObject p in survivors) {
 				var ai = p.GetComponent<AIStateController> ();
-				//Debug.Log ("here2!");
 				if (ai != null) {
 					targetPoint = new List<Transform> ();
 					foreach (var ps in m_PowerSources) {
-						//Debug.Log(ps.transform.position.x);
 						targetPoint.Add (ps.transform);
 					}
 					ai.SetupAI (true, targetPoint, survivors);
 				}
 			}
-			//GameObject[] hunters = GameObject.FindGameObjectsWithTag("Player");
-			foreach (GameObject p in hunters) {
-				
+
+			foreach (GameObject p in hunters) { 	
 				var ai = p.GetComponent<AIStateController> ();
-				//Debug.Log ("here2!");
 				if (ai != null) {
-					//List<PowerSourceController> targetps = new List<PowerSourceController> ();
 					targetPoint = new List<Transform> ();
 					foreach (var ps in m_PowerSources) {
-						//Debug.Log(ps.transform.position.x);
 						targetPoint.Add (ps.transform);
 					}
 					ai.SetupAI (true, targetPoint, null);
 				}
 			}
-			/*
-            foreach (var p in players)
-            {
-                var ai = p.GetComponent<ISensible>();
-                if (ai != null)
-                {
-                    ai.Activate();
-                }
-            }
-            */
+
         }
     }
 
@@ -153,7 +152,7 @@ public class LevelManager : NetworkBehaviour
         _singleton = this;
     }
 
-    private void GetPrefabsFromLobbyManager()
+    private void GetInfoFromLobbyManager()
     {
         if (LobbyManager.Singleton)
         {
@@ -161,6 +160,7 @@ public class LevelManager : NetworkBehaviour
             survivorPrefab = LobbyManager.Singleton.survivorPrefab;
             spectatorPrefab = LobbyManager.Singleton.spectatorPrefab; // of no use here
             survivorSpiritPrefab = LobbyManager.Singleton.survivorSpiritPrefab;
+            survivorCount = LobbyManager.Singleton.survivorCount;
         }
     }
 
@@ -174,6 +174,10 @@ public class LevelManager : NetworkBehaviour
     {
         if(gameState == GameState.Waiting)
         {
+            if(Time.time - sceneLoadTime > timeFreezeBeforeStart)
+            {
+                RoundStart();
+            }
             // FreezeTime here;
         }
         else if(gameState == GameState.Playing)
@@ -182,14 +186,18 @@ public class LevelManager : NetworkBehaviour
         }
     }
 
+
     // server only
-    private void RoundStarting()
+    private void RoundStart()
     {
         //reset power source
         //disable player motion
         roundStartTime = Time.time;
         gameState = GameState.Playing;
+
+        SetupAiMasterMinds();
     }
+
 
     // server only
     private void RoundPlaying()
@@ -215,11 +223,11 @@ public class LevelManager : NetworkBehaviour
         // disable player control
         if(gameOverReason == GameOverReason.Elimination)
         {
-            Debug.Log("All humans are eliminated.");
+            Debug.Log("All sheep are eliminated.");
         }
         else if(gameOverReason == GameOverReason.Breakout)
         {
-            Debug.Log("VIP escaped from the island.");
+            Debug.Log("Someone escaped from the island.");
         }
         else if(gameOverReason == GameOverReason.TimeOut)
         {
@@ -238,6 +246,7 @@ public class LevelManager : NetworkBehaviour
         LobbyManager.Singleton.ServerChangeScene(LobbyManager.Singleton.lobbyScene);
     }
     
+
     [ClientRpc]
     private void RpcChangeGameState(GameState newState, GameOverReason reason)
     {
@@ -265,19 +274,30 @@ public class LevelManager : NetworkBehaviour
                     num++;
                 }
             }
-            bool power = true;
-            for (int i = 0; i < m_Doors.Length; i++)
+
+            bool power = (num >= numBetteriesToOpenDoor);
+            if (power)
             {
-                if (num < m_Doors[i].NumberOfPowerToOpen)
+                m_PowerEnough = true;
+                for (int i = 0; i < m_EscapeAreas.Length; i++)
                 {
-                    power = false;
-                }
-                if (num >= m_Doors[i].NumberOfPowerToOpen && !m_Doors[i].DoorOpen)
-                {
-                    m_PowerEnough = true;
-                    RpcOpenDoor(i);
+                    m_EscapeAreas[i].Activate();
                 }
             }
+
+            //// old doors
+            //for (int i = 0; i < m_Doors.Length; i++)
+            //{
+            //    if (num < m_Doors[i].NumberOfPowerToOpen)
+            //    {
+            //        power = false;
+            //    }
+            //    if (num >= m_Doors[i].NumberOfPowerToOpen && !m_Doors[i].DoorOpen)
+            //    {
+            //        m_PowerEnough = true;
+            //        RpcOpenDoor(i);
+            //    }
+            //}
             m_PowerFull = power;
         }
 
@@ -291,7 +311,7 @@ public class LevelManager : NetworkBehaviour
 
     bool SurvivorAllDead()
     {
-        return false;
+        return survivorCount == 0;
     }
 
     bool TimesUp()
@@ -304,15 +324,18 @@ public class LevelManager : NetworkBehaviour
         Debug.Log("Player Escape");
         m_EscapeCount++;
     }
+
+
     public void PlayerNotEscape()
     {
         Debug.Log("Player Not Escape");
         m_EscapeCount--;
     }
 
+
     bool SurvivorAllEscaped()
     {
-        return false;
+        return m_EscapeCount > 0;
     }
 
 
@@ -347,7 +370,7 @@ public class LevelManager : NetworkBehaviour
     [ClientRpc]
     void RpcOpenDoor(int door)
     {
-        m_Doors[door].OpenDoor();
+        //m_Doors[door].OpenDoor();
         //m_PowerEnough = true;
     }
 
@@ -358,6 +381,10 @@ public class LevelManager : NetworkBehaviour
         if (observation.what == Observation.Death)
         {
             KillSurvivor(observation.subject);
+        }
+        if(observation.what == Observation.Demolishment)
+        {
+            powerSourceCount -= 1;
         }
     }
 
@@ -377,6 +404,8 @@ public class LevelManager : NetworkBehaviour
             NetworkServer.Spawn(spirit);
         }
 
+        survivorCount -= 1;
+        
         DestoryNetworkObject(survivorObject, timeBeforeDeadBodyDisappear);
     }
 

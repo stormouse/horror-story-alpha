@@ -21,10 +21,12 @@ public class AIState : ScriptableObject{
 	private void CheckTransitions(AIStateController controller) {
 		for (int i = 0; i < transitions.Length; i++) {
 			bool decisionSucceeded = transitions [i].decision.Decide (controller);
-			//Debug.Log (decisionSucceeded);
-			if (decisionSucceeded) {
+            if (decisionSucceeded)
+            {
 				controller.TransitionToState (transitions [i].trueState);
-			} else {
+			}
+            else
+            {
 				controller.TransitionToState (transitions [i].falseState);
 			}
 		}

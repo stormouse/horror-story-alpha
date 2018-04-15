@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [NetworkSettings(sendInterval = 0)]
-public class SurvivorSkills : NetworkBehaviour {
+public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 	
     // properties
 	public string m_InteractionButtonName = "Interaction";
@@ -179,7 +179,7 @@ public class SurvivorSkills : NetworkBehaviour {
 
         lastTrapTime = Time.time;
         trapCount -= 1;
-        if (PlayerUIManager.singleton != null)
+        if (isLocalPlayer && PlayerUIManager.singleton != null)
         {
             PlayerUIManager.singleton.UpdateItemCount(trapSkillIndex, trapCount);
             if (trapCount > 0)
@@ -302,7 +302,7 @@ public class SurvivorSkills : NetworkBehaviour {
         }
 
         // no matter server or client
-        if (PlayerUIManager.singleton != null)
+        if (isLocalPlayer && PlayerUIManager.singleton != null)
         {
             PlayerUIManager.singleton.UpdateItemCount(smokeSkillIndex, smokeCount);
             if (trapCount > 0)
@@ -313,4 +313,19 @@ public class SurvivorSkills : NetworkBehaviour {
     }
 
     #endregion Smoke Grenade
+
+
+    public int GetCountOfIndex(int i)
+    {
+        if(i == trapSkillIndex)
+        {
+            return trapCount;
+        }
+        else if(i == smokeSkillIndex)
+        {
+            return smokeCount;
+        }
+
+        return 1;
+    }
 }
