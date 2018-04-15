@@ -1566,7 +1566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
-  m_Speed: 6.7
+  m_Speed: 7.6
   m_RunSpead: 9
   m_BackSpead: 3
   m_TurnSpeed: 80

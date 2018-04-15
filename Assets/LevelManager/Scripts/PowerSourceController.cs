@@ -153,6 +153,10 @@ public class PowerSourceController : NetworkBehaviour
         GetComponent<Collider>().enabled = false;
         gameObject.tag = "Untagged";
         CreateDestruction();
+        if (PlayerUIManager.singleton)
+        {
+            PlayerUIManager.singleton.DecreaseBatteryCount();
+        }
     }
 
     void CreateDestruction()

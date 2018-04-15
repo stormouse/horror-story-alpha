@@ -181,15 +181,21 @@ public class PlayerUIManager : MonoBehaviour {
 
     public void UpdateSurvivorCount(int count)
     {
+        survivorCount = count;
         objectiveIndicator[0].text = count.ToString();
     }
 
 
     public void UpdateBatteryCount(int count)
     {
+        batteryCount = count;
         objectiveIndicator[1].text = count.ToString();
     }
 
+    public void DecreaseBatteryCount()
+    {
+        UpdateBatteryCount(batteryCount - 1);
+    }
 
     public void UpdateOpenExitCount(int count, int total)
     {

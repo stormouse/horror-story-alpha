@@ -1803,7 +1803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
-  m_Speed: 10
+  m_Speed: 7.5
   m_RunSpead: 9
   m_BackSpead: 5
   m_TurnSpeed: 100
@@ -1819,6 +1819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionButtonName: Interaction
+  smokeSkillIndex: 0
   smokePrefab: {fileID: 1071767384830490, guid: 7d8f34fe77f2df84eb11e981ff5f25e4,
     type: 2}
   smokeCooldown: 6
@@ -1827,6 +1828,7 @@ MonoBehaviour:
   smokeFlySpeed: 3
   smokeTimeInTheAir: 0.5
   smokeDecelerationFactor: 0.45
+  trapSkillIndex: 1
   deployAnimationLength: 2
   trapCooldown: 5
   trapCount: 2

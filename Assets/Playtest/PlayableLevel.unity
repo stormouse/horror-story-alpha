@@ -1463,6 +1463,21 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingSpead
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
   m_IsPrefabParent: 0
@@ -1644,6 +1659,21 @@ Prefab:
     - target: {fileID: 1356235814632506, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingSpead
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerSpeed
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
@@ -1867,6 +1897,21 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingSpead
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
   m_IsPrefabParent: 0
@@ -2007,6 +2052,21 @@ Prefab:
     - target: {fileID: 1669712108089248, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingSpead
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerSpeed
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
@@ -2406,6 +2466,21 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingSpead
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
   m_IsPrefabParent: 0
@@ -2654,6 +2729,21 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingSpead
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
   m_IsPrefabParent: 0
@@ -2887,6 +2977,21 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingSpead
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerSpeed
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
@@ -3285,6 +3390,21 @@ Prefab:
     - target: {fileID: 1669712108089248, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerLeakingSpead
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792837843505870, guid: 6be8a495396ff774bb6ad105e77580b0,
+        type: 2}
+      propertyPath: m_PowerSpeed
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6be8a495396ff774bb6ad105e77580b0, type: 2}
