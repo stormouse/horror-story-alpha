@@ -190,6 +190,10 @@ public class PlayerUIManager : MonoBehaviour {
     {
         batteryCount = count;
         objectiveIndicator[1].text = count.ToString();
+        if(count <= 3)
+        {
+            UpdateOpenExitCount(3, 3);
+        }
     }
 
     public void DecreaseBatteryCount()

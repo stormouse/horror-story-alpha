@@ -1822,16 +1822,16 @@ MonoBehaviour:
   smokeSkillIndex: 0
   smokePrefab: {fileID: 1071767384830490, guid: 7d8f34fe77f2df84eb11e981ff5f25e4,
     type: 2}
-  smokeCooldown: 6
-  smokeCount: 3
-  smokeEffectiveTime: 60
+  smokeCooldown: 15
+  smokeCount: 5
+  smokeEffectiveTime: 8
   smokeFlySpeed: 3
   smokeTimeInTheAir: 0.5
   smokeDecelerationFactor: 0.45
   trapSkillIndex: 1
-  deployAnimationLength: 2
+  deployAnimationLength: 1
   trapCooldown: 5
-  trapCount: 2
+  trapCount: 10
   camouflageAnimationLength: 1
   camouflageCooldown: 20
   camouflageCount: 2

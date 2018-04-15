@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3179152297b5e69479da68bbdbf2858d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trapStunTime: 3
+  trapStunTime: 6
 --- !u!136 &136245940177037286
 CapsuleCollider:
   m_ObjectHideFlags: 1
