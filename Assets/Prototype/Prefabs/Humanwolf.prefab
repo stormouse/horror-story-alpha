@@ -927,7 +927,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1401743979559124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.7367738, y: -0.0000019073486, z: -25.04372}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children:
   - {fileID: 4010838103157636}
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   hookCooldown: 3
   hookRange: 15
   hookSpeed: 80
-  hookSpellTime: 0.2
+  hookSpellTime: 0.4
   hasHook: 1
   wardCooldown: 5
   wardCount: 2
@@ -1566,7 +1566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
-  m_Speed: 7.6
+  m_Speed: 6.8
   m_RunSpead: 9
   m_BackSpead: 3
   m_TurnSpeed: 80
