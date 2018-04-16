@@ -6,11 +6,13 @@ using UnityEngine;
 public class WarSenseEffect : MonoBehaviour {
     
     private RadarScanRing shaderScript;
+    [SerializeField]
+    public Color ringColor = new Color(0.8f, 0.4f, 0.4f, 0.7f);
 
     public void Scan(float timeLength, float scanRadius, int scanPassCount)
     {
         shaderScript = Camera.main.gameObject.AddComponent<RadarScanRing>();
-        shaderScript.ringColor = new Color(1.0f, 0.0f, 0.0f, 0.8f);
+        shaderScript.ringColor = ringColor;
         shaderScript.radius = 0.1f;
         shaderScript.thickness = 1.0f;
         shaderScript.sourceTransform = transform;
