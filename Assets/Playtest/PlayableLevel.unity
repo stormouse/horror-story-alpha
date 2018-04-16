@@ -503,12 +503,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boat: {fileID: 0}
---- !u!114 &135047267 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114083367612551866, guid: 967bc75c1d88c244e8f7aad17c0f2345,
-    type: 2}
-  m_PrefabInternal: {fileID: 135047263}
-  m_Script: {fileID: 11500000, guid: 821d2c73fb1ad454cb4195fa4c041b80, type: 3}
 --- !u!4 &135047268 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4814364212055610, guid: 967bc75c1d88c244e8f7aad17c0f2345,
@@ -5800,12 +5794,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boat: {fileID: 0}
---- !u!114 &1487262289 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114083367612551866, guid: 967bc75c1d88c244e8f7aad17c0f2345,
-    type: 2}
-  m_PrefabInternal: {fileID: 1487262285}
-  m_Script: {fileID: 11500000, guid: 821d2c73fb1ad454cb4195fa4c041b80, type: 3}
 --- !u!4 &1487262290 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4814364212055610, guid: 967bc75c1d88c244e8f7aad17c0f2345,
@@ -5979,11 +5967,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
-        type: 2}
-      propertyPath: m_PowerSources.Array.size
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 4693300338638020, guid: e602f53c837581042bdc81c1a47b7525, type: 2}
       propertyPath: m_LocalPosition.x
       value: -8.194917
@@ -6018,21 +6001,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
         type: 2}
-      propertyPath: m_Doors.Array.data[0]
-      value: 
-      objectReference: {fileID: 1487262289}
-    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
-        type: 2}
-      propertyPath: m_Doors.Array.data[1]
-      value: 
-      objectReference: {fileID: 1716805106}
-    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
-        type: 2}
-      propertyPath: m_Doors.Array.data[2]
-      value: 
-      objectReference: {fileID: 135047267}
-    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
-        type: 2}
       propertyPath: m_PowerSources.Array.data[0]
       value: 
       objectReference: {fileID: 859316962}
@@ -6058,26 +6026,6 @@ Prefab:
       objectReference: {fileID: 1411109455}
     - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
         type: 2}
-      propertyPath: m_Trees.Array.data[0]
-      value: 
-      objectReference: {fileID: 1865161040}
-    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
-        type: 2}
-      propertyPath: m_Trees.Array.data[1]
-      value: 
-      objectReference: {fileID: 973768500}
-    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
-        type: 2}
-      propertyPath: m_Trees.Array.data[2]
-      value: 
-      objectReference: {fileID: 842165846}
-    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
-        type: 2}
-      propertyPath: roundTimeInMinute
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
-        type: 2}
       propertyPath: m_PowerSources.Array.data[5]
       value: 
       objectReference: {fileID: 1006014716}
@@ -6091,6 +6039,21 @@ Prefab:
       propertyPath: m_PowerSources.Array.data[7]
       value: 
       objectReference: {fileID: 17291786}
+    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
+        type: 2}
+      propertyPath: m_Trees.Array.data[0]
+      value: 
+      objectReference: {fileID: 1865161040}
+    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
+        type: 2}
+      propertyPath: m_Trees.Array.data[1]
+      value: 
+      objectReference: {fileID: 973768500}
+    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
+        type: 2}
+      propertyPath: m_Trees.Array.data[2]
+      value: 
+      objectReference: {fileID: 842165846}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e602f53c837581042bdc81c1a47b7525, type: 2}
   m_IsPrefabParent: 0
@@ -7095,12 +7058,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boat: {fileID: 0}
---- !u!114 &1716805106 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114083367612551866, guid: 967bc75c1d88c244e8f7aad17c0f2345,
-    type: 2}
-  m_PrefabInternal: {fileID: 1716805102}
-  m_Script: {fileID: 11500000, guid: 821d2c73fb1ad454cb4195fa4c041b80, type: 3}
 --- !u!4 &1716805107 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4814364212055610, guid: 967bc75c1d88c244e8f7aad17c0f2345,
