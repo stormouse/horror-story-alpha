@@ -94,6 +94,21 @@ ModelImporter:
     100172: Sphere_020
     100174: Sphere_021
     100176: Sphere_022
+    100178: bones
+    100180: Canyon_006
+    100182: smalltree_017
+    100184: smalltree_018
+    100186: smalltree_019
+    100188: smalltree_020
+    100190: smalltree_021
+    100192: smalltree_022
+    100194: smalltree_023
+    100196: smalltree_024
+    100198: smalltree_025
+    100200: smalltree_026
+    100202: spirittree_000
+    100204: spirittree_001
+    100206: spirittree_in_desert
     400000: blackhouse_1
     400002: Boat
     400004: Boat_001
@@ -183,6 +198,21 @@ ModelImporter:
     400172: Sphere_020
     400174: Sphere_021
     400176: Sphere_022
+    400178: bones
+    400180: Canyon_006
+    400182: smalltree_017
+    400184: smalltree_018
+    400186: smalltree_019
+    400188: smalltree_020
+    400190: smalltree_021
+    400192: smalltree_022
+    400194: smalltree_023
+    400196: smalltree_024
+    400198: smalltree_025
+    400200: smalltree_026
+    400202: spirittree_000
+    400204: spirittree_001
+    400206: spirittree_in_desert
     2100000: Roadstone
     2100002: tree_001
     2100004: house_texture4_001
@@ -290,6 +320,21 @@ ModelImporter:
     2300170: Sphere_020
     2300172: Sphere_021
     2300174: Sphere_022
+    2300176: bones
+    2300178: Canyon_006
+    2300180: smalltree_017
+    2300182: smalltree_018
+    2300184: smalltree_019
+    2300186: smalltree_020
+    2300188: smalltree_021
+    2300190: smalltree_022
+    2300192: smalltree_023
+    2300194: smalltree_024
+    2300196: smalltree_025
+    2300198: smalltree_026
+    2300200: spirittree_000
+    2300202: spirittree_001
+    2300204: spirittree_in_desert
     3300000: blackhouse_1
     3300002: Boat
     3300004: Boat_001
@@ -378,6 +423,21 @@ ModelImporter:
     3300170: Sphere_020
     3300172: Sphere_021
     3300174: Sphere_022
+    3300176: bones
+    3300178: Canyon_006
+    3300180: smalltree_017
+    3300182: smalltree_018
+    3300184: smalltree_019
+    3300186: smalltree_020
+    3300188: smalltree_021
+    3300190: smalltree_022
+    3300192: smalltree_023
+    3300194: smalltree_024
+    3300196: smalltree_025
+    3300198: smalltree_026
+    3300200: spirittree_000
+    3300202: spirittree_001
+    3300204: spirittree_in_desert
     4300000: Sphere_001
     4300002: Sphere_000
     4300004: smalltree_016
@@ -466,6 +526,21 @@ ModelImporter:
     4300170: Sphere_006
     4300172: Sphere_003
     4300174: Sphere_002
+    4300176: spirittree_001
+    4300178: spirittree_000
+    4300180: bones
+    4300182: Canyon_006
+    4300184: smalltree_026
+    4300186: smalltree_025
+    4300188: smalltree_024
+    4300190: smalltree_023
+    4300192: smalltree_022
+    4300194: smalltree_021
+    4300196: smalltree_020
+    4300198: smalltree_019
+    4300200: smalltree_018
+    4300202: smalltree_017
+    4300204: spirittree_in_desert
     7400000: Default Take
     9500000: //RootNode
   externalObjects:
