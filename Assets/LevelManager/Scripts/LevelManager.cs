@@ -405,8 +405,18 @@ public class LevelManager : NetworkBehaviour
         }
 
         survivorCount -= 1;
+        RpcKillSurvivor();
         
         DestoryNetworkObject(survivorObject, timeBeforeDeadBodyDisappear);
+    }
+
+    [ClientRpc]
+    private void RpcKillSurvivor()
+    {
+        if (!isServer)
+        {
+            survivorCount -= 1;
+        }
     }
 
 

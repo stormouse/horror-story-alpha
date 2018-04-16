@@ -89,43 +89,6 @@ public class LobbyManager : NetworkLobbyManager {
     }
 
 
-    // Debug GUI
-    /*
-    private void OnGUI()
-    {
-        int i = 0;
-
-        GUILayout.Label("Spectators:"); 
-        foreach(var p in spectatorPlayers)
-        {
-            GUILayout.Label("Player " + p.netId.ToString());
-            i++;
-        }
-
-        GUILayout.Label("Hunters:");
-        foreach(var p in hunterPlayers)
-        {
-            GUILayout.Label("Player " + p.netId.ToString());
-            i++;
-        }
-        foreach(var p in hunterAIs)
-        {
-            GUILayout.Label(p);
-        }
-
-        GUILayout.Label("Survivors:");
-        foreach(var p in survivorPlayers)
-        {
-            GUILayout.Label("Player " + p.netId.ToString());
-        }
-        foreach (var p in survivorAIs)
-        {
-            GUILayout.Label(p);
-        }
-    }
-    */
-
-
     // Register runtime spawnables to ClientScene
     private void RegisterSpawnablePrefabs()
     {
