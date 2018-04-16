@@ -102,11 +102,13 @@ public class PlayerUIManager : MonoBehaviour {
         UpdateSurvivorCount(LevelManager.Singleton.SurvivorCount);
         UpdateBatteryCount(LevelManager.Singleton.PowerSourceCount);
         UpdateOpenExitCount(0, 3);
+
         var countableSlots = LocalPlayerInfo.playerObject.GetComponent<ICountableSlots>();
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             UpdateItemCount(i, countableSlots.GetCountOfIndex(i));
         }
+
         // UpdateToyCarCount(toyCarCount);
     }
 

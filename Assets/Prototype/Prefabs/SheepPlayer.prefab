@@ -1285,7 +1285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
-  currentState: 0
+  currentState: 1
   team: 2
 --- !u!114 &114879290908849850
 MonoBehaviour:

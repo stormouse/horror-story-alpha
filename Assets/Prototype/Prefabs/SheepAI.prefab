@@ -1163,7 +1163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
-  currentState: 0
+  currentState: 1
   team: 2
 --- !u!114 &114440592528390090
 MonoBehaviour:
@@ -1359,6 +1359,7 @@ MonoBehaviour:
   currentState: {fileID: 11400000, guid: eef8f0c2bf115e940b6b8c62d9038045, type: 2}
   enemyStats: {fileID: 11400000, guid: e590306de9c33d64193eee4655f9eb46, type: 2}
   remainState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}
+  characterRole: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 256

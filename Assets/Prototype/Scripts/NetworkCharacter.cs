@@ -91,7 +91,10 @@ public class NetworkCharacter : NetworkBehaviour {
     {
         LocalPlayerInfo.playerCharacter = this;
         LocalPlayerInfo.playerObject = this.gameObject;
-        if (PlayerUIManager.singleton)
+
+        Debug.Log("New local NetworkCharacter here. I am a " + Team.ToString() + " and my status is " + currentState.ToString());
+
+        if (PlayerUIManager.singleton && currentState != CharacterState.Dead)
         {
             // initialization of player UI will use LocalPlayerInfo - bad logic?
             PlayerUIManager.singleton.Initialize();
@@ -173,7 +176,6 @@ public class NetworkCharacter : NetworkBehaviour {
 
     private void InitializeVariables()
     {
-        currentState = CharacterState.Normal;
         currentCoroutine = null;
         actions = new Dictionary<CharacterState, Dictionary<string, ActionFunction>>();
         foreach(CharacterState state in Enum.GetValues(typeof(CharacterState)))
@@ -383,29 +385,31 @@ public class NetworkCharacter : NetworkBehaviour {
 				RpcUpdateAIAnimatorSpeed (GetComponent<_HunterStateController> ().navMeshAgent.velocity.magnitude);
 			}
 		} else {
-            if (isLocalPlayer)
+            if (isLocalPlayer && m_animator && m_rigidbody)
             {
                 m_animator.SetFloat("Speed", m_rigidbody.velocity.magnitude); //original script line
             }
             else
             {
-                float now = Time.time;
-                if(now - lastDistanceCheckTime > distanceCheckInterval)
+                if (m_animator && m_rigidbody)
                 {
-                    distanceTravelledSinceLastCheck += Vector3.Distance(transform.position, lastFramePosition);
-                    var avgSpeed = distanceTravelledSinceLastCheck / (now - lastDistanceCheckTime);
-                    m_animator.SetFloat("Speed", Mathf.Max(avgSpeed, m_rigidbody.velocity.magnitude));
+                    float now = Time.time;
+                    if (now - lastDistanceCheckTime > distanceCheckInterval)
+                    {
+                        distanceTravelledSinceLastCheck += Vector3.Distance(transform.position, lastFramePosition);
+                        var avgSpeed = distanceTravelledSinceLastCheck / (now - lastDistanceCheckTime);
+                        m_animator.SetFloat("Speed", Mathf.Max(avgSpeed, m_rigidbody.velocity.magnitude));
 
-                    lastDistanceCheckTime = now;
-                    distanceTravelledSinceLastCheck = 0.0f;
-                    lastFramePosition = transform.position;
+                        lastDistanceCheckTime = now;
+                        distanceTravelledSinceLastCheck = 0.0f;
+                        lastFramePosition = transform.position;
+                    }
+                    else
+                    {
+                        distanceTravelledSinceLastCheck += Vector3.Distance(transform.position, lastFramePosition);
+                        lastFramePosition = transform.position;
+                    }
                 }
-                else
-                {
-                    distanceTravelledSinceLastCheck += Vector3.Distance(transform.position, lastFramePosition);
-                    lastFramePosition = transform.position;
-                }
-
             }
 		}
     }
