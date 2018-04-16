@@ -50,7 +50,7 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     private GameObject hook;
     private float angle = 0f;
     private int freshCounter = 0;
-    private float mDiff = 2.0f;
+    private float mDiff = 1.0f;
 
     private bool aiming = false;
     
@@ -76,18 +76,21 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     {
         if (aiming && aimLine)
         {
-            RaycastHit hit;
             var eyePosition = aimLine.GetPosition(0);
-            if(Physics.Raycast(eyePosition, transform.forward, out hit, mDiff + hookRange * 1.1f))
-            {
-                var localHitPoint = transform.InverseTransformVector(hit.point);
-                localHitPoint.y = eyePosition.y;
-                aimLine.SetPosition(1, localHitPoint);
-            }
-            else
-            {
-                aimLine.SetPosition(1, eyePosition + Vector3.forward * (mDiff + hookRange * 1.1f) / transform.localScale.x);
-            }
+            aimLine.SetPosition(1, eyePosition + Vector3.forward * (mDiff + hookRange * 1.1f) / transform.localScale.x);
+
+            //RaycastHit hit;
+            //var eyePosition = aimLine.GetPosition(0);
+            //if (Physics.Raycast(eyePosition, transform.forward, out hit, mDiff + hookRange * 1.1f, (1<<LayerMask.NameToLayer("Player"))) )
+            //{
+            //    var localHitPoint = transform.InverseTransformVector(hit.point);
+            //    localHitPoint.y = eyePosition.y;
+            //    aimLine.SetPosition(1, localHitPoint);
+            //}
+            //else
+            //{
+            //    aimLine.SetPosition(1, eyePosition + Vector3.forward * (mDiff + hookRange * 1.1f) / transform.localScale.x);
+            //}
             
         }
     }

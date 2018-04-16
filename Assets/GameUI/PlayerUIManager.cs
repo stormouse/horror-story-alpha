@@ -11,6 +11,7 @@ public class PlayerUIManager : MonoBehaviour {
 
     public GameObject UIContainer;
     public GameObject objectivePanel;
+    public GameObject minimap;
 
     public Sprite[] hunterSkillSprites;
     public Sprite[] survivorSkillSprites;
@@ -72,6 +73,15 @@ public class PlayerUIManager : MonoBehaviour {
     public void Initialize()
     {
         playerTeam = LocalPlayerInfo.playerCharacter.Team;
+        var playerState = LocalPlayerInfo.playerCharacter.CurrentState;
+
+        if (playerTeam == GameEnum.TeamType.Spectator || playerState == CharacterState.Dead)
+        {
+            if (minimap)
+            {
+                minimap.SetActive(false);
+            }
+        }
 
         if (playerTeam == GameEnum.TeamType.Hunter)
         {
@@ -94,6 +104,7 @@ public class PlayerUIManager : MonoBehaviour {
         {
             UIContainer.SetActive(false);
         }
+
         foreach (var img in cooldownImage)
         {
             img.enabled = false;

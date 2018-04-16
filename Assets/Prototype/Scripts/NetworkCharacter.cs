@@ -92,8 +92,6 @@ public class NetworkCharacter : NetworkBehaviour {
         LocalPlayerInfo.playerCharacter = this;
         LocalPlayerInfo.playerObject = this.gameObject;
 
-        Debug.Log("New local NetworkCharacter here. I am a " + Team.ToString() + " and my status is " + currentState.ToString());
-
         if (PlayerUIManager.singleton && currentState != CharacterState.Dead)
         {
             // initialization of player UI will use LocalPlayerInfo - bad logic?
@@ -239,8 +237,6 @@ public class NetworkCharacter : NetworkBehaviour {
     // local implementation
     private void _StunMethod(float time)
     {
-        Debug.Log("Stunned " + this.gameObject.name);
-
         var ai = GetComponent<AIStateController>();
         if (ai) ai.DisableAI();
 
@@ -288,8 +284,6 @@ public class NetworkCharacter : NetworkBehaviour {
 
     private void _WakeMethod()
     {
-        Debug.Log("Wake up " + this.gameObject.name);
-
         var ai = GetComponent<AIStateController>();
         if (ai) ai.ResumeAI();
 
