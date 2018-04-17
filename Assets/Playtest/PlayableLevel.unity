@@ -360,6 +360,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &135047266 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114173020066849676, guid: 967bc75c1d88c244e8f7aad17c0f2345,
+    type: 2}
+  m_PrefabInternal: {fileID: 135047263}
+  m_Script: {fileID: 11500000, guid: 905a5451726fd464fbd52e9359b4d461, type: 3}
 --- !u!4 &135047268 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4814364212055610, guid: 967bc75c1d88c244e8f7aad17c0f2345,
@@ -5771,22 +5777,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Boat
-      value: 
-      objectReference: {fileID: 445034799}
-    - target: {fileID: 0}
-      propertyPath: m_Bridge
-      value: 
-      objectReference: {fileID: 445034797}
-    - target: {fileID: 0}
-      propertyPath: m_Bridge
-      value: 
-      objectReference: {fileID: 445034797}
-    - target: {fileID: 0}
-      propertyPath: m_Boat
-      value: 
-      objectReference: {fileID: 445034799}
     - target: {fileID: 114173020066849676, guid: 967bc75c1d88c244e8f7aad17c0f2345,
         type: 2}
       propertyPath: m_Boat
@@ -5800,6 +5790,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1487262286 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114173020066849676, guid: 967bc75c1d88c244e8f7aad17c0f2345,
+    type: 2}
+  m_PrefabInternal: {fileID: 1487262285}
+  m_Script: {fileID: 11500000, guid: 905a5451726fd464fbd52e9359b4d461, type: 3}
 --- !u!4 &1487262290 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4814364212055610, guid: 967bc75c1d88c244e8f7aad17c0f2345,
@@ -6009,12 +6005,17 @@ Prefab:
         type: 2}
       propertyPath: m_EscapeAreas.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1487262286}
     - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
         type: 2}
       propertyPath: m_EscapeAreas.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1716805103}
+    - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
+        type: 2}
+      propertyPath: m_EscapeAreas.Array.data[2]
+      value: 
+      objectReference: {fileID: 135047266}
     - target: {fileID: 114389499649640176, guid: e602f53c837581042bdc81c1a47b7525,
         type: 2}
       propertyPath: m_PowerSources.Array.data[0]
@@ -6939,6 +6940,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 967bc75c1d88c244e8f7aad17c0f2345, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1716805103 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114173020066849676, guid: 967bc75c1d88c244e8f7aad17c0f2345,
+    type: 2}
+  m_PrefabInternal: {fileID: 1716805102}
+  m_Script: {fileID: 11500000, guid: 905a5451726fd464fbd52e9359b4d461, type: 3}
 --- !u!4 &1716805107 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4814364212055610, guid: 967bc75c1d88c244e8f7aad17c0f2345,

@@ -9,6 +9,10 @@ public class EscapeArea : MonoBehaviour {
     public GameObject m_Stone;
     public GameObject m_Cave;
 
+    public Material m_CaveSeeThroughableMaterial;
+    public Material m_BridgeSeeThroughableMaterial;
+    public Material m_BoatSeeThroughableMaterial;
+
     public int m_NumberOfPowerSourceToOpen;
 
     List<GameObject> playerInside = new List<GameObject>();
@@ -21,10 +25,13 @@ public class EscapeArea : MonoBehaviour {
         if (m_Bridge)
         {
             m_Bridge.GetComponent<MeshRenderer>().enabled = true;
+            m_Bridge.GetComponent<MeshRenderer>().material = m_BridgeSeeThroughableMaterial;
+            m_Boat.GetComponent<MeshRenderer>().material = m_BoatSeeThroughableMaterial;
         }
         if (m_Stone)
         {
-            m_Bridge.GetComponent<MeshRenderer>().enabled = false;
+            m_Stone.GetComponent<MeshRenderer>().enabled = false;
+            m_Cave.GetComponent<MeshRenderer>().material = m_CaveSeeThroughableMaterial;
         }
     }
 
