@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4814364212055610}
   - component: {fileID: 65181900903276558}
-  - component: {fileID: 114955653750072138}
-  m_Layer: 0
+  - component: {fileID: 114173020066849676}
+  m_Layer: 9
   m_Name: EscapeArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,12 +39,12 @@ GameObject:
   - component: {fileID: 33960998713401458}
   - component: {fileID: 23776444825006614}
   - component: {fileID: 64477587825276774}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wood Wall Cross (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &1374228026167470
 GameObject:
@@ -57,12 +57,12 @@ GameObject:
   - component: {fileID: 33945519471052770}
   - component: {fileID: 23244181845044414}
   - component: {fileID: 64655215424460258}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wood Wall Corner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &1486022835480294
 GameObject:
@@ -75,12 +75,12 @@ GameObject:
   - component: {fileID: 33056254421814518}
   - component: {fileID: 23913538582866704}
   - component: {fileID: 64322468797241680}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wood Wall Cross (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &1631239626362750
 GameObject:
@@ -93,12 +93,12 @@ GameObject:
   - component: {fileID: 33662399597858064}
   - component: {fileID: 23009469990912550}
   - component: {fileID: 64720509636434588}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wood Wall Cross (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &1679376361520572
 GameObject:
@@ -111,12 +111,12 @@ GameObject:
   - component: {fileID: 33619028289587170}
   - component: {fileID: 23764220066533480}
   - component: {fileID: 64080815393872412}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wood Wall Cross
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &1686336179655728
 GameObject:
@@ -129,12 +129,12 @@ GameObject:
   - component: {fileID: 33529364909232200}
   - component: {fileID: 23143299277574348}
   - component: {fileID: 64788333966434590}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wood Wall Cross (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &1759000075590284
 GameObject:
@@ -147,12 +147,12 @@ GameObject:
   - component: {fileID: 33242284163552774}
   - component: {fileID: 23083609481161426}
   - component: {fileID: 64889004432120462}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wood Wall Cross (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &1904916320981106
 GameObject:
@@ -167,12 +167,12 @@ GameObject:
   - component: {fileID: 64578832763181478}
   - component: {fileID: 95126909279192274}
   - component: {fileID: 114083367612551866}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wood Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!1 &1923435685103624
 GameObject:
@@ -185,12 +185,12 @@ GameObject:
   - component: {fileID: 33841371660364594}
   - component: {fileID: 23082899726677770}
   - component: {fileID: 64252571953656710}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wood Wall Cross (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &4132373394788934
 Transform:
@@ -302,8 +302,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1026934688673950}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.94903094, z: -0, w: 0.3151829}
+  m_LocalPosition: {x: 48.23, y: -27.693659, z: 59.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4930015745650148}
@@ -317,7 +317,7 @@ Transform:
   - {fileID: 4690283085049282}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 143.25601, z: 0}
 --- !u!4 &4930015745650148
 Transform:
   m_ObjectHideFlags: 1
@@ -337,7 +337,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1631239626362750}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -373,7 +373,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1904916320981106}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -407,7 +407,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1923435685103624}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -443,7 +443,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1759000075590284}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -479,7 +479,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1686336179655728}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -515,7 +515,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1374228026167470}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -551,7 +551,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1679376361520572}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -587,7 +587,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1285094543776022}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -623,7 +623,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1486022835480294}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -724,7 +724,7 @@ MeshCollider:
   m_GameObject: {fileID: 1679376361520572}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -738,7 +738,7 @@ MeshCollider:
   m_GameObject: {fileID: 1923435685103624}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -752,7 +752,7 @@ MeshCollider:
   m_GameObject: {fileID: 1486022835480294}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -766,7 +766,7 @@ MeshCollider:
   m_GameObject: {fileID: 1285094543776022}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -780,7 +780,7 @@ MeshCollider:
   m_GameObject: {fileID: 1904916320981106}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -794,7 +794,7 @@ MeshCollider:
   m_GameObject: {fileID: 1374228026167470}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -808,7 +808,7 @@ MeshCollider:
   m_GameObject: {fileID: 1631239626362750}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -822,7 +822,7 @@ MeshCollider:
   m_GameObject: {fileID: 1686336179655728}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -836,7 +836,7 @@ MeshCollider:
   m_GameObject: {fileID: 1759000075590284}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -852,8 +852,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.0626273, y: 5.746563, z: 9.821359}
-  m_Center: {x: 3.774976, y: 1.6853275, z: -1.1599798}
+  m_Size: {x: 4.540991, y: 6.5699997, z: 5.56423}
+  m_Center: {x: 3.8305023, y: 1.6853275, z: -0.42676973}
 --- !u!95 &95126909279192274
 Animator:
   serializedVersion: 3
@@ -882,8 +882,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821d2c73fb1ad454cb4195fa4c041b80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_DoorAnimator: {fileID: 0}
---- !u!114 &114955653750072138
+  m_NumOfPowerToOpen: 3
+--- !u!114 &114173020066849676
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -891,7 +891,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1026934688673950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821d2c73fb1ad454cb4195fa4c041b80, type: 3}
+  m_Script: {fileID: 11500000, guid: 905a5451726fd464fbd52e9359b4d461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_DoorAnimator: {fileID: 0}
+  m_Boat: {fileID: 0}
+  m_Bridge: {fileID: 0}
+  m_Stone: {fileID: 0}
+  m_Cave: {fileID: 0}
+  m_NumberOfPowerSourceToOpen: 0
