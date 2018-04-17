@@ -29,18 +29,22 @@ public class LobbyPlayer : NetworkLobbyPlayer
     public Button readyBtn;
     public Image readyIndicator;
 
+    public bool m_ready;
+
 
     public override void OnStartLocalPlayer()
     {
-        s_localPlayer = this;
-        SetupUIComponents();
-        CmdGivePlayerName(LocalPlayerInfo.playerName);
+        if (s_localPlayer == null)
+        {
+            s_localPlayer = this;
+            SetupUIComponents();
+            CmdGivePlayerName(LocalPlayerInfo.playerName);
+        }
     }
 
 
     private void SetupUIComponents()
     {
-
         RoomUI.singleton.gameObject.SetActive(true);
 
         // fetch button references
@@ -154,32 +158,49 @@ public class LobbyPlayer : NetworkLobbyPlayer
 
     void OnClickReady()
     {
+        //SendReadyToBeginMessage();
         CmdSetReady(true);
-        SendReadyToBeginMessage();
     }
 
 
     void OnClickNotReady()
     {
+        //SendNotReadyToBeginMessage();
         CmdSetReady(false);
-        SendNotReadyToBeginMessage();
+    }
+
+    public void NotReady()
+    {
+        CmdSetReady(false);
     }
 
     [Command]
     void CmdSetReady(bool ready)
     {
-        readyToBegin = ready;
+        //readyToBegin = ready;
+        m_ready = ready;
         RpcSetReady(ready);
-        LobbyManager.Singleton.PushLobbyStateToClient();
+        
+        if (ready)
+        {
+            LobbyManager.Singleton.CustomServerCheckReadyState();
+        }
+        else
+        {
+            LobbyManager.Singleton.PushLobbyStateToClient();
+        }
     }
 
     [ClientRpc]
     void RpcSetReady(bool ready)
     {
-        readyToBegin = ready;
+        if (!isServer)
+        {
+            //readyToBegin = ready;
+            m_ready = ready;
+        }
     }
-
-
+    
 
     [Command]
     void CmdGivePlayerName(string name)

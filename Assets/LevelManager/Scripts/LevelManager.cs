@@ -243,7 +243,7 @@ public class LevelManager : NetworkBehaviour
     // server only
     private void ChangeToRoomScene()
     {
-        LobbyManager.Singleton.ServerChangeScene(LobbyManager.Singleton.lobbyScene);
+        LobbyManager.Singleton.ServerReturnToLobby(); //(LobbyManager.Singleton.lobbyScene);
     }
     
 
