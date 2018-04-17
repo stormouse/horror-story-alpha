@@ -15,7 +15,7 @@ public class GoToTargetAction : AIAction{
 
 	private void GoToTarget(AIStateController controller) {	
 		
-		if (controller.targetIndx == -1 || !controller.wayPointList [controller.targetIndx].gameObject.activeSelf) {
+		if (controller.targetIndx == -1 || !controller.wayPointList [controller.targetIndx].gameObject.activeSelf || controller.survivorBD.IsPSBlock(controller.targetIndx)) {
 			/*
 			float minDis = float.MaxValue;
 			for (int i = 0; i < controller.wayPointList.Count; i++) {
@@ -51,7 +51,7 @@ public class GoToTargetAction : AIAction{
 		int threshold = 0, ways = 0, plys = 0;
 		bool[] assigned = new bool[controller.wayPointList.Count];
 		for (int i = 0; i < controller.wayPointList.Count; i++) {
-			if (controller.wayPointList [i].gameObject.activeSelf) {
+			if (controller.wayPointList [i].gameObject.activeSelf && !controller.survivorBD.IsPSBlock(i)) {
 				ways++;
 				assigned [i] = false;
 			} else {

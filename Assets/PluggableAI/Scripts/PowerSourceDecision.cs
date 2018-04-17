@@ -13,7 +13,7 @@ public class PowerSourceDecision : AIDecision {
 		
 		SurvivorSkills skills = controller.survivorsk;
 		//Debug.Log (skills.m_InteractingPowerSource);
-		if (skills.m_InteractingPowerSource != null && skills.m_InteractingPowerSource.gameObject.activeSelf) {
+		if (skills.m_InteractingPowerSource != null && skills.m_InteractingPowerSource.gameObject.activeSelf && skills.m_InteractingPowerSource.gameObject == controller.wayPointList[controller.targetIndx].gameObject) {
 			controller.navMeshAgent.isStopped = true;
 			return true;
 		} else {

@@ -1356,6 +1356,9 @@ MonoBehaviour:
   wonderPoint: {x: 0, y: 0, z: 0}
   underInvokeList: []
   hskills: {fileID: 0}
+  stateForBlock:
+  - {fileID: 11400000, guid: eef8f0c2bf115e940b6b8c62d9038045, type: 2}
+  - {fileID: 11400000, guid: de03d1ec3a46a8744b2bf4a65b38fd7d, type: 2}
   currentState: {fileID: 11400000, guid: eef8f0c2bf115e940b6b8c62d9038045, type: 2}
   enemyStats: {fileID: 11400000, guid: e590306de9c33d64193eee4655f9eb46, type: 2}
   remainState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}
@@ -1380,6 +1383,7 @@ MonoBehaviour:
   players: []
   predictTargets: 
   playerIndex: 0
+  survivorBD: {fileID: 0}
 --- !u!114 &114998947372443030
 MonoBehaviour:
   m_ObjectHideFlags: 1

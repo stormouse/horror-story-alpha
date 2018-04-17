@@ -7,9 +7,12 @@ public class LookDecision : AIDecision {
 
 	public override bool Decide(AIStateController controller) {
 		bool targetVisible = Look (controller);
+		if (targetVisible && controller.IsValidState()) {
+			Debug.Log (controller.targetIndx);
+			controller.survivorBD.SetPSTimer (controller.targetIndx);
+		}
 		return targetVisible;
 	}
-
 
 	private bool Look(AIStateController controller) {
 		controller.visibleTargets.Clear ();
