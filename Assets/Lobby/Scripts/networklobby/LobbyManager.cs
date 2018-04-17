@@ -443,6 +443,10 @@ public class LobbyManager : NetworkLobbyManager {
             hunterSpawned = 0;
             survivorSpawned = 0;
             loadingPlayScene = false;
+
+            // reveal cursor
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 
@@ -522,6 +526,10 @@ public class LobbyManager : NetworkLobbyManager {
             OnLobbyClientSceneChanged(conn);
 
             LobbyPlayer.localPlayer.NotReady();
+
+            // reveal cursor
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         if (SceneManager.GetActiveScene().name == playScene)

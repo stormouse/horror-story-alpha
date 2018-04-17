@@ -66,6 +66,18 @@ public class LevelManager : NetworkBehaviour
 
     float sceneLoadTime;
     float roundStartTime;
+    float roundEndTime;
+    public float RoundRemainingTime {
+        get
+        {
+            if(gameState == GameState.Waiting) { return roundTimeInMinute * 60.0f; }
+            else if(gameState == GameState.Over) { return roundTimeInMinute * 60.0f - (roundEndTime - roundStartTime); }
+            else
+            {
+                return roundTimeInMinute * 60.0f - (Time.time - roundStartTime);
+            }
+        }
+    }
     bool m_PowerEnough = false;
     bool m_PowerFull = false;
     int m_EscapeCount = 0;
@@ -237,6 +249,7 @@ public class LevelManager : NetworkBehaviour
             Debug.Log("It's too late for humans to go.");
         }
 
+        roundEndTime = Time.time;
         if (isServer)
         {
             Invoke("ChangeToRoomScene", 3.0f);
