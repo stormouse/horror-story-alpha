@@ -18,6 +18,7 @@ public class PlayerControl : NetworkBehaviour {
     private Rigidbody m_Rigidbody;              // Reference used to move the tank.
     private NetworkCharacter character;
     private SpeedMultiplier speedMultiplier;
+    private CameraFollow m_CameraFollow;
 
     private string m_MovementAxisName;          // The name of the input axis for moving forward and back.
     private string m_TurnAxisName;              // The name of the input axis for turning.
@@ -43,6 +44,7 @@ public class PlayerControl : NetworkBehaviour {
         m_Rigidbody = GetComponent<Rigidbody>();
         speedMultiplier = GetComponent<SpeedMultiplier>();
         character = GetComponent<NetworkCharacter>();
+        m_CameraFollow = GetComponent<CameraFollow>();
         m_MovementAxisName = "Vertical";
         m_TurnAxisName = "Horizontal";
     }
@@ -66,10 +68,10 @@ public class PlayerControl : NetworkBehaviour {
         m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
         if (Input.GetMouseButton(1) || Input.GetMouseButton(2))
         {
-            m_MouseTurn = true;
+            m_MouseTurn = false;
         } else
         {
-            m_MouseTurn = false;
+            m_MouseTurn = true;
         }
     }
 
@@ -83,6 +85,10 @@ public class PlayerControl : NetworkBehaviour {
         Vector3 speed2d = transform.forward * m_MovementInputValue * m_Speed * speedMultiplier.value;
         if (m_MovementInputValue < .0f)
             speed2d = transform.forward * m_MovementInputValue * m_BackSpead * speedMultiplier.value;
+
+        //Vector3 speed2d = (transform.forward * m_MovementInputValue + transform.right * m_TurnInputValue).normalized * m_Speed * speedMultiplier.value;
+        //if (m_MovementInputValue < .0f)
+        //    speed2d = (transform.forward * m_MovementInputValue + transform.right * m_TurnInputValue).normalized * m_BackSpead * speedMultiplier.value;
         m_Rigidbody.velocity = new Vector3(speed2d.x, m_Rigidbody.velocity.y, speed2d.z);
     }
 
@@ -92,18 +98,20 @@ public class PlayerControl : NetworkBehaviour {
         if (character.CurrentState != CharacterState.Normal)
             return;
 
-        if (m_MouseTurn)
-        {
-            m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Camera.main.transform.rotation,
-                m_MouseRotationSmoothTime * Time.deltaTime));
-            return;
-        }
-
         // Determine the number of degrees to be turned based on the input, speed and time between frames.
         float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
 
         // Make this into a rotation in the y axis.
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
+
+        if (m_MouseTurn)
+        {
+            m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Camera.main.transform.rotation,
+                m_MouseRotationSmoothTime * Time.deltaTime));
+            if (m_CameraFollow)
+                m_CameraFollow.MoveRotate(turnRotation);
+            return;
+        }
 
         // Apply this rotation to the rigidbody's rotation.
         m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
