@@ -13,6 +13,7 @@ public class PlayerControl : NetworkBehaviour {
     public float m_RunSpead = 9.0f;
     public float m_BackSpead = 3.0f;
     public float m_TurnSpeed = 45.0f;
+    public float m_MouseRotationSmoothTime = 5.0f;
 
     private Rigidbody m_Rigidbody;              // Reference used to move the tank.
     private NetworkCharacter character;
@@ -23,6 +24,7 @@ public class PlayerControl : NetworkBehaviour {
     private float m_MovementInputValue;         // The current value of the movement input.
     private float m_TurnInputValue;             // The current value of the turn input.
 
+    private bool m_MouseTurn;
 
     // Use this for initialization
     void Start()
@@ -62,6 +64,13 @@ public class PlayerControl : NetworkBehaviour {
     {
         m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
         m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
+        if (Input.GetMouseButton(1) || Input.GetMouseButton(2))
+        {
+            m_MouseTurn = true;
+        } else
+        {
+            m_MouseTurn = false;
+        }
     }
 
 
@@ -82,6 +91,13 @@ public class PlayerControl : NetworkBehaviour {
     {
         if (character.CurrentState != CharacterState.Normal)
             return;
+
+        if (m_MouseTurn)
+        {
+            m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Camera.main.transform.rotation,
+                m_MouseRotationSmoothTime * Time.deltaTime));
+            return;
+        }
 
         // Determine the number of degrees to be turned based on the input, speed and time between frames.
         float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;

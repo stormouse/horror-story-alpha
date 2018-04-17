@@ -42,6 +42,11 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
     public GameObject trapPrefab;
 	public Transform trapSpawn;
 
+    public AudioSource deployAudio;
+    public AudioSource abilityNotReadyAudio;
+
+
+
     private Rigidbody m_rigidbody;
 	private NetworkCharacter character;
     private CameraFollow cameraFx;
@@ -107,7 +112,7 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 			m_Charging = false;
 		}
 
-        // look back
+        /* look back
         if (Input.GetMouseButton(1))
         {
             if (!lookingback)
@@ -127,12 +132,18 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
                 lookingback = false;
             }
         }
+        */
 
         if (Input.GetKeyDown(KeyCode.T))
         {
             if (SmokeReady)
             {
                 character.Perform("Smoke", this.gameObject, null);
+            }
+            else
+            {
+                if (abilityNotReadyAudio)
+                    abilityNotReadyAudio.Play();
             }
         }
         
@@ -143,6 +154,11 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
         if (TrapReady)
         {
             character.Perform("Deploy", gameObject, null);
+        }
+        else
+        {
+            if (abilityNotReadyAudio)
+                abilityNotReadyAudio.Play();
         }
 	}
 
@@ -158,19 +174,24 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 	[Command]
 	void CmdDeploy() {
 		RpcDeploy ();
-		_DeployMethodServer ();
-		//_DeployMethod ();
-	}
+		_DeployMethodServer();
+        _DeployMethodClient();
+    }
 
 	[ClientRpc]
 	void RpcDeploy() {
-		_DeployMethodClient (); 
+        if (!isServer)
+        {
+            _DeployMethodClient();
+        }
 	}
+
 	void _DeployMethodServer() {
 		trap = Instantiate (trapPrefab);
 		trap.transform.position = trapSpawn.position;
 		NetworkServer.Spawn (trap);
 	}
+
 	void _DeployMethodClient() {
 		character.Perform("StopMovement", gameObject, null);
 		character.Animator.SetTrigger ("Deploy");
@@ -187,6 +208,9 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
                 PlayerUIManager.singleton.EnterCooldown(trapSkillIndex, trapCooldown);
             }
         }
+
+        if (deployAudio)
+            deployAudio.Play();
 	}
 	IEnumerator _DeployAnimationDelay() {
 		float startTime = Time.time;

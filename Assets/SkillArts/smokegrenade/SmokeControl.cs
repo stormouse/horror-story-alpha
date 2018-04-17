@@ -10,7 +10,7 @@ public class SmokeControl : NetworkBehaviour, ISpeedEffectSource {
     public GameObject bulletBody;
     public Rigidbody m_rigidbody;
     public Collider influenceVolume;
-
+    public AudioSource explodeAudio;
 
     [HideInInspector]
     [SyncVar]
@@ -69,6 +69,9 @@ public class SmokeControl : NetworkBehaviour, ISpeedEffectSource {
         var particleMain = smokeParticles.main;
         particleMain.startLifetime = smokeEffectiveTime;
         smokeParticles.Play();
+
+        if (explodeAudio)
+            explodeAudio.Play();
         
     }
 

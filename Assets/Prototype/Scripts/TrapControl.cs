@@ -7,10 +7,7 @@ public class TrapControl : NetworkBehaviour {
 	public float trapStunTime = 3.0f;
     private bool triggered = false;
 
-    private void Start()
-    {
-        
-    }
+    public AudioSource trapActivateAudio;
 
     void OnTriggerEnter(Collider other) {
 		if (!isServer || triggered) {
@@ -22,17 +19,32 @@ public class TrapControl : NetworkBehaviour {
 			var args = new StunArgument ();
 			args.time = trapStunTime;
             otherCharacter.Perform("StopMovement", other.gameObject, null);
-            otherCharacter.Perform ("Stun", other.gameObject, args);
+            otherCharacter.Perform("Stun", other.gameObject, args);
             
 
             GetComponent<Animator> ().SetBool("close", true);
+            if (trapActivateAudio)
+                trapActivateAudio.Play();
 
+            RpcActivateTrap();
 
             Invoke("Byebye", trapStunTime);
             //NetworkServer.Destroy (gameObject);
 		}
-
 	}
+
+
+    [ClientRpc]
+    void RpcActivateTrap()
+    {
+        if (!isServer)
+        {
+            GetComponent<Animator>().SetBool("close", true);
+            if (trapActivateAudio)
+                trapActivateAudio.Play();
+        }
+    }
+
 
     void Byebye() {
         NetworkServer.Destroy(gameObject);

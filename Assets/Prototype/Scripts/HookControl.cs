@@ -6,6 +6,13 @@ using UnityEngine.Networking;
 [NetworkSettings(sendInterval = 0)]
 public class HookControl : NetworkBehaviour {
 
+
+    public AudioSource throwAudio;
+    public AudioSource hitObjectAudio;
+    public AudioSource hitSheepAudio;
+
+
+
     //private
     private Vector3 origin;
     [HideInInspector]
@@ -23,6 +30,10 @@ public class HookControl : NetworkBehaviour {
     void Start()
     {
         origin = transform.position;
+        if (throwAudio)
+        {
+            throwAudio.Play();
+        }
     }
     
 
@@ -39,7 +50,7 @@ public class HookControl : NetworkBehaviour {
         if (Vector3.SqrMagnitude(transform.position - origin) > hookRange * hookRange)
         {
             hunter.GetComponent<HunterSkills>().ReturnHook();
-            NetworkServer.Destroy(this.gameObject);
+            LevelManager.Singleton.DestoryNetworkObject(gameObject, 0.3f);
         }
     }
     
@@ -66,10 +77,43 @@ public class HookControl : NetworkBehaviour {
             args.time = duration + additionalStunTime;
             otherCharacter.Perform("Stun", gameObject, args);
             otherCharacter.MoveTo(hunter.transform.position + offset, MoveMethod.Tween, duration);
+
+            if(hitSheepAudio)
+                hitSheepAudio.Play();
+            RpcPlayHitSheepAudio();
         }
+        else
+        {
+            if (hitObjectAudio)
+                hitObjectAudio.Play();
+            RpcPlayHitObjectAudio();
+        }
+        
         hunter.GetComponent<HunterSkills>().ReturnHook();
-        NetworkServer.Destroy(gameObject);
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        LevelManager.Singleton.DestoryNetworkObject(gameObject, 0.3f);
+
+        //NetworkServer.Destroy(gameObject);
         //Destroy(gameObject);
+    }
+
+    [ClientRpc]
+    void RpcPlayHitObjectAudio()
+    {
+        if (!isServer && hitObjectAudio)
+        {
+            hitObjectAudio.Play();
+        }
+    }
+
+    [ClientRpc]
+    void RpcPlayHitSheepAudio()
+    {
+        if (!isServer && hitSheepAudio)
+        {
+            hitSheepAudio.Play();
+        }
     }
 
 }

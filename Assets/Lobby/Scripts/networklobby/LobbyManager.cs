@@ -47,6 +47,7 @@ public class LobbyManager : NetworkLobbyManager {
 
     /* lobby status */
     public bool hasConnection = false;
+    public bool loadingPlayScene = false;
 
     /* lobby data */
     // private LobbyPlayer[] lobbyPlayers; // use NetworkLobbyManager.lobbySlots;
@@ -129,7 +130,8 @@ public class LobbyManager : NetworkLobbyManager {
         summary.index = index;
         summary.name = player.playerName;
         summary.team = (int)player.team;
-        summary.ready = player.readyToBegin;
+        //summary.ready = player.readyToBegin;
+        summary.ready = player.m_ready;
         return summary;
     }
 
@@ -428,17 +430,48 @@ public class LobbyManager : NetworkLobbyManager {
 
 
     // Called when the scene changed on server
-    public override void OnServerSceneChanged(string sceneName)
+    public override void OnLobbyServerSceneChanged(string sceneName)
     {
-        base.OnServerSceneChanged(sceneName);
+        base.OnLobbyServerSceneChanged(sceneName); // comment this line to disable auto-ready
+
         if (sceneName == playScene)
         {
             InitializeServerOnlyObjects();
         }
-        else if(sceneName == lobbyScene)
+        else if (sceneName == lobbyScene)
         {
             hunterSpawned = 0;
             survivorSpawned = 0;
+            loadingPlayScene = false;
+        }
+    }
+
+
+    public void CustomServerCheckReadyState()
+    {
+        var players = FindObjectsOfType<LobbyPlayer>();
+        Debug.Log("Player Count: " + players.Length.ToString());
+        bool allReady = true;
+        for(int i = 0; i < players.Length; i++)
+        {
+            if(!players[i].m_ready)
+            {
+                allReady = false;
+                break;
+            }
+        }
+
+        if (!allReady)
+        {
+            PushLobbyStateToClient();
+        }
+        else
+        {
+            if (!loadingPlayScene)
+            {
+                loadingPlayScene = true;
+                OnLobbyServerPlayersReady();
+            }
         }
     }
     #endregion Server Callbacks
@@ -473,11 +506,10 @@ public class LobbyManager : NetworkLobbyManager {
         }
     }
 
-    public override void OnLobbyClientSceneChanged(NetworkConnection conn)
+    public override void OnClientSceneChanged(NetworkConnection conn)
     {
-        base.OnLobbyClientSceneChanged(conn);
-
-        if(SceneManager.GetActiveScene().name == lobbyScene)
+        base.OnClientSceneChanged(conn);
+        if (SceneManager.GetActiveScene().name == lobbyScene)
         {
             if (lobbyUIContainer)
             {
@@ -487,6 +519,9 @@ public class LobbyManager : NetworkLobbyManager {
             {
                 roomUIContainer.SetActive(hasConnection);
             }
+            OnLobbyClientSceneChanged(conn);
+
+            LobbyPlayer.localPlayer.NotReady();
         }
 
         if (SceneManager.GetActiveScene().name == playScene)
@@ -500,6 +535,12 @@ public class LobbyManager : NetworkLobbyManager {
                 roomUIContainer.SetActive(false);
             }
         }
+
+    }
+
+    public override void OnLobbyClientSceneChanged(NetworkConnection conn)
+    {
+        base.OnLobbyClientSceneChanged(conn); // comment this line to disable auto-ready
     }
     #endregion Client Callbacks
 
