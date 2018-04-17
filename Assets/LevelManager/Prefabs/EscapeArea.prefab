@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4814364212055610}
   - component: {fileID: 65181900903276558}
-  - component: {fileID: 114752296175274170}
+  - component: {fileID: 114173020066849676}
   m_Layer: 9
   m_Name: EscapeArea
   m_TagString: Untagged
@@ -302,8 +302,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1026934688673950}
-  m_LocalRotation: {x: -0, y: -0.39087707, z: -0, w: 0.9204429}
-  m_LocalPosition: {x: -128.43, y: -27.693659, z: -37.55}
+  m_LocalRotation: {x: -0, y: 0.94903094, z: -0, w: 0.3151829}
+  m_LocalPosition: {x: 48.23, y: -27.693659, z: 59.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4930015745650148}
@@ -317,7 +317,7 @@ Transform:
   - {fileID: 4690283085049282}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -128.10901, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 143.25601, z: 0}
 --- !u!4 &4930015745650148
 Transform:
   m_ObjectHideFlags: 1
@@ -852,8 +852,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.43, y: 6.57, z: 5.12}
-  m_Center: {x: 3.774983, y: 1.6853275, z: -0.64888513}
+  m_Size: {x: 4.540991, y: 6.5699997, z: 5.56423}
+  m_Center: {x: 3.8305023, y: 1.6853275, z: -0.42676973}
 --- !u!95 &95126909279192274
 Animator:
   serializedVersion: 3
@@ -883,7 +883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NumOfPowerToOpen: 3
---- !u!114 &114752296175274170
+--- !u!114 &114173020066849676
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

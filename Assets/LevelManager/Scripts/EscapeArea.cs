@@ -22,6 +22,10 @@ public class EscapeArea : MonoBehaviour {
         {
             m_Bridge.GetComponent<MeshRenderer>().enabled = true;
         }
+        if (m_Stone)
+        {
+            m_Bridge.GetComponent<MeshRenderer>().enabled = false;
+        }
     }
 
 
@@ -35,7 +39,8 @@ public class EscapeArea : MonoBehaviour {
             {
                 playerInside.Add(other.gameObject);
                 var character = other.GetComponent<NetworkCharacter>();
-                character.MoveTo(m_Boat.transform.position, MoveMethod.Teleport);
+                if (m_Boat)
+                    character.MoveTo(m_Boat.transform.position, MoveMethod.Teleport);
                 LevelManager.Singleton.PlayerEscape();
             }
         }
