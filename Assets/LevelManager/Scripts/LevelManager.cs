@@ -210,6 +210,8 @@ public class LevelManager : NetworkBehaviour
         roundStartTime = Time.time;
         gameState = GameState.Playing;
 
+        RpcSyncRoundStart();
+
         SetupAiMasterMinds();
     }
 
@@ -276,6 +278,13 @@ public class LevelManager : NetworkBehaviour
         }
     }
 
+
+    [ClientRpc]
+    void RpcSyncRoundStart()
+    {
+        gameState = GameState.Playing;
+        roundStartTime = Time.time;
+    }
 
 
     bool PowerEnough()

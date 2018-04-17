@@ -1572,7 +1572,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 81ebbfb7606fb9f439dd36ac00028a07, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2175,6 +2175,7 @@ MonoBehaviour:
   smooth: 1
   smoothTime: 5
   lockCursor: 1
+  YRotation: 0
   cameraOffset: {x: 0, y: 3, z: -5.5}
   targetHeight: 1
   smoothFactor: 0.1

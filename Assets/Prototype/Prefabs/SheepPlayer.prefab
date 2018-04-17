@@ -1135,7 +1135,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: dda04cfb4a46f334ab53d360dc7f3e69, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1567,6 +1567,7 @@ MonoBehaviour:
   m_RunSpead: 9
   m_BackSpead: 3
   m_TurnSpeed: 100
+  m_MouseRotationSmoothTime: 5
 --- !u!114 &114421091555428120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1633,6 +1634,7 @@ MonoBehaviour:
   smooth: 1
   smoothTime: 5
   lockCursor: 1
+  YRotation: 0
   cameraOffset: {x: 0, y: 2.5, z: -5.5}
   targetHeight: 1
   smoothFactor: 0.3

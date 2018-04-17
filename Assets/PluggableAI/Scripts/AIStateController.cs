@@ -10,6 +10,8 @@ public class AIStateController : MonoBehaviour {
 	public float hookRange;
 	public float navStopDistance;
 	public float pSStopDistance;
+    public float defaultMoveSpeed;
+
 	[HideInInspector] public List<NetworkCharacter> chaseTarget;
 	[HideInInspector] public Vector3 wonderPoint;
 	[HideInInspector] public List<Transform> underInvokeList;
@@ -20,6 +22,7 @@ public class AIStateController : MonoBehaviour {
 	public AIState currentState;
 	public EnemyStats enemyStats;
 	public AIState remainState;
+    public SpeedMultiplier speedMultiplier;
 
 
     public CharacterRole characterRole;
@@ -49,9 +52,9 @@ public class AIStateController : MonoBehaviour {
 		character = GetComponent<NetworkCharacter> ();
 		hskills = GetComponent<HunterSkills> ();
 		navMeshAgent.stoppingDistance = navStopDistance;
-
-
-	}
+        if(speedMultiplier == null)
+            speedMultiplier = GetComponent<SpeedMultiplier>();
+    }
 	public void SetupSurvivorBD(SurvivorBlackBoard sbd) {
 		survivorBD = sbd;
 	}
@@ -93,6 +96,10 @@ public class AIStateController : MonoBehaviour {
 			return;
 		}
 		currentState.UpdateState (this);
+        if (navMeshAgent && navMeshAgent.isActiveAndEnabled && speedMultiplier)
+        {
+            navMeshAgent.speed = defaultMoveSpeed * speedMultiplier.value;
+        }
 	}
     public void TransitionToState (AIState nextState) {
 		if (nextState != remainState) {

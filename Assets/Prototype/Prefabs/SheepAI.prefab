@@ -1057,7 +1057,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: dda04cfb4a46f334ab53d360dc7f3e69, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1377,7 +1377,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fe340b4c0b3e64747a0a68f542df6145, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1504,6 +1504,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625eb5d1d51bbb246aa69f320c1f61e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  XSensitivity: 2
+  smooth: 0
+  smoothTime: 5
+  lockCursor: 1
+  YRotation: 0
   cameraOffset: {x: 0, y: 0, z: 0}
   targetHeight: 1
   smoothFactor: 0.5
@@ -1654,6 +1659,7 @@ MonoBehaviour:
   m_RunSpead: 9
   m_BackSpead: 3
   m_TurnSpeed: 45
+  m_MouseRotationSmoothTime: 5
 --- !u!114 &114923774935751688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1682,6 +1688,7 @@ MonoBehaviour:
   hookRange: 0
   navStopDistance: 0
   pSStopDistance: 0
+  defaultMoveSpeed: 6.5
   chaseTarget: []
   wonderPoint: {x: 0, y: 0, z: 0}
   underInvokeList: []
@@ -1692,6 +1699,7 @@ MonoBehaviour:
   currentState: {fileID: 11400000, guid: eef8f0c2bf115e940b6b8c62d9038045, type: 2}
   enemyStats: {fileID: 11400000, guid: e590306de9c33d64193eee4655f9eb46, type: 2}
   remainState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}
+  speedMultiplier: {fileID: 0}
   characterRole: 0
   targetMask:
     serializedVersion: 2
