@@ -2170,7 +2170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625eb5d1d51bbb246aa69f320c1f61e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: {x: 1, y: 3, z: -4.5}
+  XSensitivity: 2
+  smooth: 1
+  smoothTime: 5
+  lockCursor: 1
+  cameraOffset: {x: 0, y: 3, z: -5.5}
   targetHeight: 1
   smoothFactor: 0.1
   focalDistance: 15
