@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 public class SurvivorBlackBoard : NetworkBehaviour {
-	public float blockTime = 8;
+	//public float blockTime = 8;
 	public int powerSourceNumber = 8;
 	private bool[] powerSourcesBlock;
 	private float[] powerSourcesTimer;
 	private bool flag = true;
-	private readonly object syncLock = new object();
 	void Start(){
 		powerSourcesTimer = new float[powerSourceNumber];
 		powerSourcesBlock = new bool[powerSourceNumber];
@@ -47,11 +46,9 @@ public class SurvivorBlackBoard : NetworkBehaviour {
 			}
 		}
 	}
-	public void SetPSTimer(int i) {
-		lock(syncLock) { 
+	public void SetPSTimer(int i, float blockTime) {
 			powerSourcesTimer [i] = blockTime;
 			powerSourcesBlock [i] = true;
-		}
 	}
 	public bool IsPSBlock(int i) {
 		return powerSourcesBlock [i];
