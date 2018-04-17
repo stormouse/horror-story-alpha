@@ -47,20 +47,55 @@ public class GoToTargetAction : AIAction{
 		for (int i = 0; i < controller.predictTargets.Length; i++) {
 			controller.predictTargets [i] = -1;
 		}
+		int sum = 0;
+		int threshold = 0, ways = 0, plys = 0;
+		bool[] assigned = new bool[controller.wayPointList.Count];
 		for (int i = 0; i < controller.wayPointList.Count; i++) {
-			float min = float.MaxValue;
 			if (controller.wayPointList [i].gameObject.activeSelf) {
-				int tempindx = -1;
-				for (int k = 0; k < controller.players.Count; k++) {
-					if (controller.players[k] != null && controller.predictTargets[k] == -1) {
-						float dis = Vector3.Distance(controller.players [k].transform.position, controller.wayPointList [i].position);
-						if (dis < min) {
-							tempindx = k;
+				ways++;
+				assigned [i] = false;
+			} else {
+				assigned [i] = true;
+			}
+		}
+		for (int i = 0; i < controller.players.Count; i++) {
+			if (controller.players [i] != null) {
+				plys++;
+			}
+		}
+		threshold = Mathf.Min (ways, plys);
+		while (sum < threshold) {
+			for (int i = 0; i < controller.wayPointList.Count; i++) {
+				if (!assigned[i]) {
+					float min = float.MaxValue;
+					int tempindx = -1;
+					for (int k = 0; k < controller.players.Count; k++) {
+						if (controller.players [k] != null && controller.predictTargets [k] == -1) {
+							float dis = Vector3.Distance (controller.players [k].transform.position, controller.wayPointList [i].position);
+							if (dis < min) {
+								min = dis;
+								tempindx = k;
+							}
 						}
 					}
-				}
-				if (tempindx != -1) {
-					controller.predictTargets [tempindx] = i;
+					min = float.MaxValue;
+					int tempi = -1;
+					if (tempindx != -1) {
+						for (int k = 0; k < controller.wayPointList.Count; k++) {
+							if (!assigned [k]) {
+								float dis = Vector3.Distance (controller.players [tempindx].transform.position, controller.wayPointList [k].position);
+								if (dis < min) {
+									min = dis;
+									tempi = k;
+								}
+							}
+						}
+						if (tempi == i) {
+							controller.predictTargets [tempindx] = i;
+							assigned [i] = true;
+							sum++;
+						}
+					}
 				}
 			}
 		}
