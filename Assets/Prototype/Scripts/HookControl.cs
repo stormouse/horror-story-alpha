@@ -81,17 +81,19 @@ public class HookControl : NetworkBehaviour {
             if(hitSheepAudio)
                 hitSheepAudio.Play();
             RpcPlayHitSheepAudio();
+            GetComponent<Rigidbody>().velocity = -GetComponent<Rigidbody>().velocity;
         }
         else
         {
             if (hitObjectAudio)
                 hitObjectAudio.Play();
             RpcPlayHitObjectAudio();
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
         
         hunter.GetComponent<HunterSkills>().ReturnHook();
         GetComponent<Collider>().enabled = false;
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        
         LevelManager.Singleton.DestoryNetworkObject(gameObject, 0.3f);
 
         //NetworkServer.Destroy(gameObject);
