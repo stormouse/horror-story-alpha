@@ -10,10 +10,23 @@ public struct CameraFollowParameters
     public float focalDistance;
 }
 
-
 [NetworkSettings(sendInterval = 0f)]
 public class CameraFollow : NetworkBehaviour {
-    
+
+    [Header("Mouse Variables")]
+    public float XSensitivity = 2f;
+    //public float YSensitivity = 2f;
+    //public bool clampVerticalRotation = true;
+    //public float MinimumX = -90F;
+    //public float MaximumX = 90F;
+    public bool smooth;
+    public float smoothTime = 5f;
+    public bool lockCursor = true;
+
+    private bool m_cursorIsLocked = true;
+    private Quaternion m_CameraTargetRot;
+
+    [Header("Camera Variables")]
     public Vector3 cameraOffset;
     public float targetHeight = 1.0f;
     [Range(0.01f, 1.0f)]
@@ -31,6 +44,8 @@ public class CameraFollow : NetworkBehaviour {
     private CameraFollowParameters frenzyParameters;
     private CameraFollowParameters lookbackParameters;
 
+    private Vector3 mouseForward;
+    private Vector3 mouseOffset;
 
     #region builtin functions
     private void Start()
@@ -44,8 +59,16 @@ public class CameraFollow : NetworkBehaviour {
         originalParameters = StoreCameraParameters();
         playerLayer = LayerMask.NameToLayer("Player");
         mainCamera = Camera.main.transform;
+        
+
+        mouseForward = transform.forward;
+        mouseOffset = cameraOffset;
+
         mainCamera.position = transform.position + cameraOffset;
-        mainCamera.LookAt(transform.position + focalDistance * transform.forward);
+        mainCamera.LookAt(transform.position + focalDistance * mouseForward);
+
+        m_CameraTargetRot = Quaternion.Euler(0f, 0f, 0f);
+
         CameraMove();
     }
 
@@ -54,9 +77,6 @@ public class CameraFollow : NetworkBehaviour {
         CameraMove();
     }
     #endregion Builtin functions
-
-
-
 
     #region publics
     
@@ -83,10 +103,27 @@ public class CameraFollow : NetworkBehaviour {
         ApplyCameraParameters(originalParameters);
     }
 
+    public void LookRoation()
+    {
+        float yRot = Input.GetAxis("Mouse X") * XSensitivity;
+        //float xRot = Input.GetAxis("Mouse Y") * YSensitivity;
+        m_CameraTargetRot *= Quaternion.Euler(0f, yRot, 0f);
+       
+        if (smooth)
+        {
+            mainCamera.localRotation = Quaternion.Slerp(mainCamera.localRotation, m_CameraTargetRot, smoothTime * Time.deltaTime);
+        } else
+        {
+            mainCamera.localRotation = m_CameraTargetRot;
+        }
+
+        mouseOffset = mainCamera.transform.TransformDirection(cameraOffset);
+        mouseForward = mainCamera.transform.forward;
+
+        UpdateCursorLock();
+    }
+
     #endregion publics
-
-
-
 
     #region privates
 
@@ -111,17 +148,16 @@ public class CameraFollow : NetworkBehaviour {
         //frenzyParameters;
     }
 
-
     void CameraMove()
     {
         // the final camera position
-        var targetCameraPosition = transform.position + transform.TransformDirection(cameraOffset);
+        var targetCameraPosition = transform.position + mouseOffset;
 
         // correct final camera position
         targetCameraPosition = GetUnblockedCameraPosition(targetCameraPosition, 1.0f);
 
         // the target focal point to look at
-        var targetFocalPoint = transform.position + focalDistance * transform.forward;
+        var targetFocalPoint = transform.position + focalDistance * mouseForward;
 
         // desired camera position after smoothing
         var desiredCameraPosition = Vector3.Slerp(mainCamera.position, targetCameraPosition, 1.0f / smoothFactor * Time.deltaTime);
@@ -131,7 +167,8 @@ public class CameraFollow : NetworkBehaviour {
 
         // update camera position
         mainCamera.position = desiredCameraPosition;
-        mainCamera.rotation = Quaternion.LookRotation(targetFocalPoint - desiredCameraPosition);
+        LookRoation();
+        //mainCamera.rotation = Quaternion.LookRotation(targetFocalPoint - desiredCameraPosition);
     }
 
     Vector3 GetUnblockedCameraPosition(Vector3 targetPosition, float skippingRadius)
@@ -168,6 +205,36 @@ public class CameraFollow : NetworkBehaviour {
         smoothFactor = parameters.smoothFactor;
         targetHeight = parameters.targetHeight;
     }
+
+    void UpdateCursorLock()
+    {
+        if (lockCursor)
+            InternalLockUpdate();
+    }
+
+    void InternalLockUpdate()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            m_cursorIsLocked = false;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            m_cursorIsLocked = true;
+        }
+
+        if (m_cursorIsLocked)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else if (!m_cursorIsLocked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
     #endregion privates
 
 }

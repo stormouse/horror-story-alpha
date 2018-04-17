@@ -112,7 +112,7 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 			m_Charging = false;
 		}
 
-        // look back
+        /* look back
         if (Input.GetMouseButton(1))
         {
             if (!lookingback)
@@ -132,6 +132,7 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
                 lookingback = false;
             }
         }
+        */
 
         if (Input.GetKeyDown(KeyCode.T))
         {
