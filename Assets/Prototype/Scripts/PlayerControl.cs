@@ -13,6 +13,7 @@ public class PlayerControl : NetworkBehaviour {
     public float m_RunSpead = 9.0f;
     public float m_BackSpead = 3.0f;
     public float m_TurnSpeed = 45.0f;
+    public float m_MouseRotationSmoothTime = 5.0f;
 
     private Rigidbody m_Rigidbody;              // Reference used to move the tank.
     private NetworkCharacter character;
@@ -93,7 +94,8 @@ public class PlayerControl : NetworkBehaviour {
 
         if (m_MouseTurn)
         {
-            m_Rigidbody.MoveRotation(Camera.main.transform.rotation);
+            m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Camera.main.transform.rotation,
+                m_MouseRotationSmoothTime * Time.deltaTime));
             return;
         }
 
