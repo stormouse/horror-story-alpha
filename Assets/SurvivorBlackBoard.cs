@@ -7,21 +7,24 @@ public class SurvivorBlackBoard : NetworkBehaviour {
 	public int powerSourceNumber = 8;
 	private bool[] powerSourcesBlock;
 	private float[] powerSourcesTimer;
-	private bool flag = true;
+
+    
 	void Start(){
+        if (!isServer)
+        {
+            Destroy(gameObject);
+        }
 		powerSourcesTimer = new float[powerSourceNumber];
 		powerSourcesBlock = new bool[powerSourceNumber];
+        SetupforAI();
+    }
 
 
-	}
-	
-
-	void Update () {
-		if (flag) {
-			SetupforAI ();
-		}
+    void Update () {
 		UpdateTimer ();
 	}
+
+
 	private void SetupforAI() {
 		GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
 		foreach (GameObject p in players) {
@@ -29,15 +32,16 @@ public class SurvivorBlackBoard : NetworkBehaviour {
 				AIStateController ai = p.GetComponent<AIStateController> ();
 				if (ai != null) {
 					ai.SetupSurvivorBD (this);
-					flag = false;
 					Debug.Log ("Here!!!!");
 				}
 			}
 		}
 	}
+
+
 	private void UpdateTimer () {
 		for (int i = 0; i < powerSourceNumber; i++) {
-			if (powerSourcesTimer[i] > 0 ) {
+			if (powerSourcesTimer[i] > 0) {
 				powerSourcesTimer[i] -= Time.deltaTime;
 				if (powerSourcesTimer [i] < 0) {
 					powerSourcesTimer [i] = 0;
@@ -46,10 +50,13 @@ public class SurvivorBlackBoard : NetworkBehaviour {
 			}
 		}
 	}
+
+
 	public void SetPSTimer(int i, float blockTime) {
 			powerSourcesTimer [i] = blockTime;
 			powerSourcesBlock [i] = true;
 	}
+
 	public bool IsPSBlock(int i) {
 		return powerSourcesBlock [i];
 	}
