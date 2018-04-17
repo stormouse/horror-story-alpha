@@ -437,16 +437,23 @@ public class NetworkCharacter : NetworkBehaviour {
 
     void UpdateMovementAudio()
     {
-        float speed = m_animator.GetFloat("Speed");
-        if(speed > 1.0f)
+        if (m_animator)
         {
-            if (moveAudio && !moveAudio.isPlaying)
-                moveAudio.Play();
+            float speed = m_animator.GetFloat("Speed");
+            if (speed > 1.0f)
+            {
+                if (moveAudio && !moveAudio.isPlaying)
+                    moveAudio.Play();
+            }
+            else
+            {
+                if (moveAudio && moveAudio.isPlaying)
+                    moveAudio.Pause();
+            }
         }
-        else
+        else if (moveAudio && moveAudio.isPlaying)
         {
-            if(moveAudio && moveAudio.isPlaying)
-                moveAudio.Pause();
+            moveAudio.Pause();
         }
     }
     
