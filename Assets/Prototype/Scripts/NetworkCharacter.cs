@@ -40,6 +40,8 @@ public class NetworkCharacter : NetworkBehaviour {
     public static readonly string Brake = "Brake";
 
     public string playerName;
+    
+
 
     /* Private Components */
     private Rigidbody m_rigidbody;
@@ -58,12 +60,19 @@ public class NetworkCharacter : NetworkBehaviour {
     [SerializeField]
     private GameEnum.TeamType team;
     public GameEnum.TeamType Team { get { return team; } }
-    
 
 
     /* Character State Machine */
     private Dictionary<CharacterState, Dictionary<string, ActionFunction>> actions;
     private Coroutine currentCoroutine;
+
+
+    /* Attached Components */
+    public AudioSource moveAudio;  // move audio should be set to 'loop' in the editor
+    public AudioSource stunAudio;
+    public AudioSource wakeAudio;
+    public AudioSource dieAudio;
+
 
 
     #region Builtin_Functions
@@ -85,6 +94,7 @@ public class NetworkCharacter : NetworkBehaviour {
     void Update()
     {
         UpdateAnimatorSpeed();
+        UpdateMovementAudio();
     }
 
     public override void OnStartLocalPlayer()
@@ -243,6 +253,11 @@ public class NetworkCharacter : NetworkBehaviour {
         Transit(CharacterState.Stunned);
         m_animator.SetBool("Stunned", true);
         currentCoroutine = StartCoroutine(StunCoroutine(time));
+
+        if (stunAudio)
+        {
+            stunAudio.Play();
+        }
     }
 
     // helper coroutine
@@ -289,6 +304,9 @@ public class NetworkCharacter : NetworkBehaviour {
 
         m_animator.SetBool("Stunned", false);
         Transit(CharacterState.Normal);
+
+        if (wakeAudio)
+            wakeAudio.Play();
     }
     #endregion Wake_Logic
 
@@ -353,6 +371,9 @@ public class NetworkCharacter : NetworkBehaviour {
         m_animator.SetTrigger("Die");
         
         Transit(CharacterState.Dead);
+
+        if (dieAudio)
+            dieAudio.Play();
     }
 
 
@@ -412,6 +433,25 @@ public class NetworkCharacter : NetworkBehaviour {
 	void RpcUpdateAIAnimatorSpeed(float speed) {
 		m_animator.SetFloat("Speed", speed);
 	}
+
+
+    void UpdateMovementAudio()
+    {
+        float speed = m_animator.GetFloat("Speed");
+        if(speed > 1.0f)
+        {
+            if (moveAudio && !moveAudio.isPlaying)
+                moveAudio.Play();
+        }
+        else
+        {
+            if(moveAudio && moveAudio.isPlaying)
+                moveAudio.Pause();
+        }
+    }
+    
+
+
     // only server can call this
     public void MoveTo(Vector3 destination, MoveMethod method, float duration = 0.0f)
     {

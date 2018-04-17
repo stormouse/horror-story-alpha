@@ -30,6 +30,7 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     public float warSenseRadius = 10.0f;
     private float lastWarSenseTime = -45.0f;
     public bool WarSenseReady { get { return Time.time - lastWarSenseTime > warSenseCooldown; } }
+    public AudioSource warSenseAudio;
 
     public float attackCooldown = 1.0f;
     public float attackRange = 5.0f;
@@ -38,6 +39,11 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     public float attackAnimationLength;
     public float lastAttackTime = -1.0f;
     public bool AttackReady { get { return Time.time - lastAttackTime > attackCooldown; } }
+    public AudioSource attackAudio;
+    public AudioSource attackHitAudio;
+    public AudioSource attackFeedbackAudio;
+
+    public AudioSource abilityNotReadyAudio;
 
     // components
     public GameObject hookPrefab;
@@ -132,6 +138,11 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
                 {
                     character.Perform("Hook", gameObject, null);
                 }
+                else
+                {
+                    if (abilityNotReadyAudio)
+                        abilityNotReadyAudio.Play();
+                }
             }
             else if (AttackReady)
             {
@@ -144,6 +155,11 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
             if (WarSenseReady)
             {
                 character.Perform("WarSense", gameObject, null);
+            }
+            else
+            {
+                if (abilityNotReadyAudio)
+                    abilityNotReadyAudio.Play();
             }
         }
 
@@ -202,12 +218,22 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     private void _DoDamage()
     {
         var survivors = LevelManager.Singleton.GetAllSurvivorsAlive();
+        bool hit = false;
         foreach (var survivor in survivors)
         {
             if (Reachable(survivor.transform.position))
             {
                 survivor.Perform("Die", gameObject, null);
+                hit = true;
             }
+        }
+
+        if (hit)
+        {
+            if(attackHitAudio)
+                attackHitAudio.Play();
+            if (attackFeedbackAudio)
+                attackFeedbackAudio.Play(4410);
         }
     }
 
@@ -238,6 +264,9 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
                 {
                     m_rigidbody.MovePosition(transform.position + transform.forward * Vector3.Dot(m_rigidbody.velocity, transform.forward) * 0.15f);
                     punched = true;
+
+                    if (attackAudio)
+                        attackAudio.Play();
                 }
             }
             else
@@ -479,6 +508,9 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
 
             if (PlayerUIManager.singleton != null)
                 PlayerUIManager.singleton.EnterCooldown(warSenseSkillIndex, warSenseCooldown);
+
+            if (warSenseAudio)
+                warSenseAudio.Play();
         }
     }
 

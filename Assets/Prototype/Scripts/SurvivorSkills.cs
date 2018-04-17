@@ -42,6 +42,11 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
     public GameObject trapPrefab;
 	public Transform trapSpawn;
 
+    public AudioSource deployAudio;
+    public AudioSource abilityNotReadyAudio;
+
+
+
     private Rigidbody m_rigidbody;
 	private NetworkCharacter character;
     private CameraFollow cameraFx;
@@ -134,6 +139,11 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
             {
                 character.Perform("Smoke", this.gameObject, null);
             }
+            else
+            {
+                if (abilityNotReadyAudio)
+                    abilityNotReadyAudio.Play();
+            }
         }
         
 	}
@@ -143,6 +153,11 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
         if (TrapReady)
         {
             character.Perform("Deploy", gameObject, null);
+        }
+        else
+        {
+            if (abilityNotReadyAudio)
+                abilityNotReadyAudio.Play();
         }
 	}
 
