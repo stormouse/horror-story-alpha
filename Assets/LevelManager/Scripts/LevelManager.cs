@@ -120,6 +120,9 @@ public class LevelManager : NetworkBehaviour
     {
         if (isServer)
         {
+			//GameObject survivorBD = GameObject.FindGameObjectWithTag ("SurvivorBD");
+			//survivorBD.GetComponent<SurvivorBlackBoard> ().SetUpSurvivorBD (m_PowerSources.Length);
+
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject p in players)
             {
@@ -475,6 +478,5 @@ public class LevelManager : NetworkBehaviour
     }
 
     #endregion Game_Control_Interface
-
 }
 

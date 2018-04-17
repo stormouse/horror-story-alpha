@@ -9,6 +9,7 @@ TagManager:
   - PowerSource
   - AreaVolume
   - Spectator
+  - SurvivorBD
   layers:
   - Default
   - TransparentFX

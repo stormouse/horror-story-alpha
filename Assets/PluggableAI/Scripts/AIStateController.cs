@@ -16,7 +16,7 @@ public class AIStateController : MonoBehaviour {
 	[HideInInspector] public HunterSkills hskills;
 
 
-
+	public List<AIState> stateForBlock;
 	public AIState currentState;
 	public EnemyStats enemyStats;
 	public AIState remainState;
@@ -42,14 +42,19 @@ public class AIStateController : MonoBehaviour {
 	[HideInInspector] public List<GameObject> players;
 	[HideInInspector] public int[] predictTargets;
 	[HideInInspector] public int playerIndex; //this index of this AI in players array
+	[HideInInspector] public SurvivorBlackBoard survivorBD;
 	void Awake() {
 		navMeshAgent = GetComponent<NavMeshAgent> ();
 		survivorsk = GetComponent<SurvivorSkills> ();
 		character = GetComponent<NetworkCharacter> ();
 		hskills = GetComponent<HunterSkills> ();
 		navMeshAgent.stoppingDistance = navStopDistance;
-	}
 
+
+	}
+	public void SetupSurvivorBD(SurvivorBlackBoard sbd) {
+		survivorBD = sbd;
+	}
 	public void SetupAI(bool aiActivationFromLevelManager, List<Transform> wayPointFromLevelManager, List<GameObject> playersFromLevelManager) {
 		wayPointList = wayPointFromLevelManager;
 		aiActive = aiActivationFromLevelManager;
@@ -106,8 +111,18 @@ public class AIStateController : MonoBehaviour {
 		if (survivorsk != null) {
 			survivorsk.m_Charging = false;
 		}
-		targetIndx = -1;
+		if (!IsValidState ()) {
+			targetIndx = -1;
+		}
 		navMeshAgent.isStopped = true;
 		fleeOffsetMultiplyBy = 0;
+	}
+	public bool IsValidState() {
+		foreach (AIState s in stateForBlock) {
+			if (currentState == s) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
