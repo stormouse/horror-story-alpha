@@ -22,6 +22,7 @@ public class CameraFollow : NetworkBehaviour {
     public bool smooth;
     public float smoothTime = 5f;
     public bool lockCursor = true;
+    public float YRotation = 0f;
 
     private bool m_cursorIsLocked = true;
     private Quaternion m_CameraTargetRot;
@@ -103,7 +104,7 @@ public class CameraFollow : NetworkBehaviour {
         ApplyCameraParameters(originalParameters);
     }
 
-    public void LookRoation()
+    public void LookRotation()
     {
         float yRot = Input.GetAxis("Mouse X") * XSensitivity;
         //float xRot = Input.GetAxis("Mouse Y") * YSensitivity;
@@ -121,6 +122,11 @@ public class CameraFollow : NetworkBehaviour {
         mouseForward = mainCamera.transform.forward;
 
         UpdateCursorLock();
+    }
+
+    public void MoveRotate(Quaternion rot)
+    {
+        m_CameraTargetRot *= rot;
     }
 
     #endregion publics
@@ -167,7 +173,7 @@ public class CameraFollow : NetworkBehaviour {
 
         // update camera position
         mainCamera.position = desiredCameraPosition;
-        LookRoation();
+        LookRotation();
         //mainCamera.rotation = Quaternion.LookRotation(targetFocalPoint - desiredCameraPosition);
     }
 

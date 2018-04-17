@@ -71,9 +71,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625eb5d1d51bbb246aa69f320c1f61e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: {x: 0, y: 20, z: 0}
+  XSensitivity: 2
+  smooth: 1
+  smoothTime: 5
+  lockCursor: 1
+  YRotation: 45
+  cameraOffset: {x: 0, y: 12, z: -10}
   targetHeight: 0
-  smoothFactor: 0.01
+  smoothFactor: 0.442
   focalDistance: 1
 --- !u!114 &114414206364116196
 MonoBehaviour:
@@ -152,5 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9c35929c331d349b5794e1c9c46f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: 
   currentState: 4
   team: 2
+  moveAudio: {fileID: 0}
+  stunAudio: {fileID: 0}
+  wakeAudio: {fileID: 0}
+  dieAudio: {fileID: 0}
