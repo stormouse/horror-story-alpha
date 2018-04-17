@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class EscapeArea : MonoBehaviour {
 
+    public GameObject m_Boat;
+    public GameObject m_Bridge;
+    public GameObject m_Stone;
+    public GameObject m_Cave;
 
-    public Transform boat;
+    public int m_NumberOfPowerSourceToOpen;
 
     List<GameObject> playerInside = new List<GameObject>();
     bool bActivated = false;
@@ -14,6 +18,10 @@ public class EscapeArea : MonoBehaviour {
     public void Activate()
     {
         bActivated = true;
+        if (m_Bridge)
+        {
+            m_Bridge.GetComponent<MeshRenderer>().enabled = true;
+        }
     }
 
 
@@ -27,7 +35,7 @@ public class EscapeArea : MonoBehaviour {
             {
                 playerInside.Add(other.gameObject);
                 var character = other.GetComponent<NetworkCharacter>();
-                character.MoveTo(boat.position, MoveMethod.Teleport);
+                character.MoveTo(m_Boat.transform.position, MoveMethod.Teleport);
                 LevelManager.Singleton.PlayerEscape();
             }
         }
