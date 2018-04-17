@@ -24,12 +24,12 @@ public class PlayerUIManager : MonoBehaviour {
     public Image[] skillKeyImage;
     public Text[] itemCount;
     public Text[] objectiveIndicator;
+    public Text timerText;
 
 
     public Color noPowerColor = new Color(0.97255f, 0.49412f, 0.49412f);
     public Color fullPowerColor = new Color(0.52941f, 0.97255f, 0.49412f);
-
-
+    
 
     bool bObjectivePanelActive;
 
@@ -67,6 +67,8 @@ public class PlayerUIManager : MonoBehaviour {
         {
             UpdateCompassOffset();
         }
+
+        UpdateTimer();
     }
 
 
@@ -120,6 +122,7 @@ public class PlayerUIManager : MonoBehaviour {
             UpdateItemCount(i, countableSlots.GetCountOfIndex(i));
         }
 
+        UpdateTimer();
         // UpdateToyCarCount(toyCarCount);
     }
 
@@ -193,6 +196,16 @@ public class PlayerUIManager : MonoBehaviour {
     }
 
 
+    void UpdateTimer()
+    {
+        int timeRemaining = (int)LevelManager.Singleton.RoundRemainingTime;
+        int minute = timeRemaining / 60;
+        int sec = timeRemaining % 60;
+        if (timerText)
+        {
+            timerText.text = minute.ToString() + ":" + sec.ToString("D2");
+        }
+    }
 
 
 

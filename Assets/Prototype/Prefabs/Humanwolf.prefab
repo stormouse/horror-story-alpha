@@ -2159,6 +2159,7 @@ MonoBehaviour:
   m_RunSpead: 9
   m_BackSpead: 3
   m_TurnSpeed: 80
+  m_MouseRotationSmoothTime: 5
 --- !u!114 &114399088762267046
 MonoBehaviour:
   m_ObjectHideFlags: 1
