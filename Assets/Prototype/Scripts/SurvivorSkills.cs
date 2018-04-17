@@ -173,19 +173,24 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 	[Command]
 	void CmdDeploy() {
 		RpcDeploy ();
-		_DeployMethodServer ();
-		//_DeployMethod ();
-	}
+		_DeployMethodServer();
+        _DeployMethodClient();
+    }
 
 	[ClientRpc]
 	void RpcDeploy() {
-		_DeployMethodClient (); 
+        if (!isServer)
+        {
+            _DeployMethodClient();
+        }
 	}
+
 	void _DeployMethodServer() {
 		trap = Instantiate (trapPrefab);
 		trap.transform.position = trapSpawn.position;
 		NetworkServer.Spawn (trap);
 	}
+
 	void _DeployMethodClient() {
 		character.Perform("StopMovement", gameObject, null);
 		character.Animator.SetTrigger ("Deploy");
@@ -202,6 +207,9 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
                 PlayerUIManager.singleton.EnterCooldown(trapSkillIndex, trapCooldown);
             }
         }
+
+        if (deployAudio)
+            deployAudio.Play();
 	}
 	IEnumerator _DeployAnimationDelay() {
 		float startTime = Time.time;
