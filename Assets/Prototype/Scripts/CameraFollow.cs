@@ -22,6 +22,7 @@ public class CameraFollow : NetworkBehaviour {
     public bool smooth;
     public float smoothTime = 5f;
     public bool lockCursor = true;
+    public float YRotation = 0f;
 
     private bool m_cursorIsLocked = true;
     private Quaternion m_CameraTargetRot;

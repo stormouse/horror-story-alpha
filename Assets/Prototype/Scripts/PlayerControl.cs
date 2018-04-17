@@ -66,7 +66,7 @@ public class PlayerControl : NetworkBehaviour {
     {
         m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
         m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
-        if (Input.GetMouseButton(1) || Input.GetMouseButton(2))
+        if (Input.GetMouseButton(2))
         {
             m_MouseTurn = false;
         } else
