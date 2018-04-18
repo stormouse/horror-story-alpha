@@ -11,6 +11,7 @@ public class HookControl : NetworkBehaviour {
     public AudioSource hitObjectAudio;
     public AudioSource hitSheepAudio;
 
+    public Renderer chainRenderer;
 
 
     //private
@@ -30,9 +31,16 @@ public class HookControl : NetworkBehaviour {
     void Start()
     {
         origin = transform.position;
+
         if (throwAudio)
         {
             throwAudio.Play();
+        }
+
+        if (chainRenderer)
+        {
+            chainRenderer.material.SetVector("_StartPoint", origin);
+            chainRenderer.material.SetVector("_ForwardVector", transform.forward);
         }
     }
     

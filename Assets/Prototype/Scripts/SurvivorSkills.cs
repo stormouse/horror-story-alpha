@@ -79,11 +79,20 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 			ReceivePlayerControl();
 		}
 	}
-	#endregion
+
+    public override void OnStartLocalPlayer()
+    {
+        if (PlayerUIManager.singleton)
+        {
+            PlayerUIManager.singleton.UpdateItemCount(trapSkillIndex, trapCount);
+            PlayerUIManager.singleton.UpdateItemCount(smokeSkillIndex, smokeCount);
+        }
+    }
+    #endregion
 
 
-	#region Setup_Skills
-	void SetupComponents()
+    #region Setup_Skills
+    void SetupComponents()
 	{
 		m_rigidbody = GetComponent<Rigidbody>();
 		character = GetComponent<NetworkCharacter>();
@@ -111,28 +120,6 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 		} else {
 			m_Charging = false;
 		}
-
-        /* look back
-        if (Input.GetMouseButton(1))
-        {
-            if (!lookingback)
-            {
-                if (cameraFx != null)
-                {
-                    cameraFx.ActiveLookbackPerspective();
-                }
-                lookingback = true;
-            }
-        }
-        else
-        {
-            if (lookingback)
-            {
-                cameraFx.Deactivate();
-                lookingback = false;
-            }
-        }
-        */
 
         if (Input.GetKeyDown(KeyCode.T))
         {
