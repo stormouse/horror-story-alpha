@@ -54,12 +54,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLobbyGUI: 1
   team: 0
-  name: 
+  playerName: 
   nameText: {fileID: 0}
-  selectSpectatorBtn: {fileID: 0}
-  selectHunterBtn: {fileID: 0}
-  selectSurvivorBtn: {fileID: 0}
+  joinSpectatorBtn: {fileID: 0}
+  joinHunterBtn: {fileID: 0}
+  joinSurvivorBtn: {fileID: 0}
+  addHunterAiBtn: {fileID: 0}
+  addSurvivorAiBtn: {fileID: 0}
+  removeHunterAiBtn: {fileID: 0}
+  removeSurvivorAiBtn: {fileID: 0}
   readyBtn: {fileID: 0}
+  readyIndicator: {fileID: 0}
+  m_ready: 0
 --- !u!114 &114851225416338054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,21 +80,21 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 225
-    i1: 246
-    i2: 94
-    i3: 115
-    i4: 52
-    i5: 233
-    i6: 92
-    i7: 164
-    i8: 26
-    i9: 203
-    i10: 242
-    i11: 243
-    i12: 122
-    i13: 8
-    i14: 85
-    i15: 190
+    i0: 124
+    i1: 35
+    i2: 139
+    i3: 204
+    i4: 148
+    i5: 163
+    i6: 44
+    i7: 132
+    i8: 106
+    i9: 144
+    i10: 90
+    i11: 169
+    i12: 48
+    i13: 212
+    i14: 30
+    i15: 192
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1

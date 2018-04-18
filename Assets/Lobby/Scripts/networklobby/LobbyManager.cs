@@ -382,9 +382,27 @@ public class LobbyManager : NetworkLobbyManager {
     // Auto assign a team for the new lobby player
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        if (connections.Contains(conn)) return;
+        //if (connections.Contains(conn)) return;
 
-        GameObject player = Instantiate(lobbyPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
+        //GameObject player = Instantiate(lobbyPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
+        //if (!TeamIsFull(TeamType.Hunter))
+        //{
+        //    player.GetComponent<LobbyPlayer>().team = TeamType.Hunter;
+        //    hunterPlayers.Add(player.GetComponent<LobbyPlayer>());
+        //}
+        //else
+        //{
+        //    player.GetComponent<LobbyPlayer>().team = TeamType.Survivor;
+        //    survivorPlayers.Add(player.GetComponent<LobbyPlayer>());
+        //}
+        //NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
+        //connections.Add(conn);
+
+
+        base.OnServerAddPlayer(conn, playerControllerId);
+
+
+        var player = conn.playerControllers[0].unetView.gameObject;
         if (!TeamIsFull(TeamType.Hunter))
         {
             player.GetComponent<LobbyPlayer>().team = TeamType.Hunter;
@@ -395,8 +413,7 @@ public class LobbyManager : NetworkLobbyManager {
             player.GetComponent<LobbyPlayer>().team = TeamType.Survivor;
             survivorPlayers.Add(player.GetComponent<LobbyPlayer>());
         }
-        NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
-        connections.Add(conn);
+
         PushLobbyStateToClient();
     }
 
@@ -405,15 +422,21 @@ public class LobbyManager : NetworkLobbyManager {
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
     {
         base.OnServerRemovePlayer(conn, player);
-        connections.Remove(conn);
-        PushLobbyStateToClient();
+        Invoke("UpdateSlots", 0.5f);
     }
+
+
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        base.OnServerDisconnect(conn);
+        Invoke("UpdateSlots", 0.5f);
+    }
+
 
     // Single player ready
     public override void OnServerReady(NetworkConnection conn)
     {
         base.OnServerReady(conn);
-        Debug.Log(conn.ToString() + " is ready");
         // PushLobbyStateToClient(); done by lobby player
     }
 
@@ -454,7 +477,6 @@ public class LobbyManager : NetworkLobbyManager {
     public void CustomServerCheckReadyState()
     {
         var players = FindObjectsOfType<LobbyPlayer>();
-        Debug.Log("Player Count: " + players.Length.ToString());
         bool allReady = true;
         for(int i = 0; i < players.Length; i++)
         {
