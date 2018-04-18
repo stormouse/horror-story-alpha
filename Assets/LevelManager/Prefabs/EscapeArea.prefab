@@ -302,8 +302,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1026934688673950}
-  m_LocalRotation: {x: -0, y: 0.94903094, z: -0, w: 0.3151829}
-  m_LocalPosition: {x: 48.23, y: -27.693659, z: 59.6}
+  m_LocalRotation: {x: -0, y: -0.8992116, z: -0, w: 0.43751404}
+  m_LocalPosition: {x: 2.29, y: -27.693659, z: -54.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4930015745650148}
@@ -898,4 +898,10 @@ MonoBehaviour:
   m_Bridge: {fileID: 0}
   m_Stone: {fileID: 0}
   m_Cave: {fileID: 0}
+  m_CaveSeeThroughableMaterial: {fileID: 2100000, guid: 6dcb929c9f75862488509be7f569310a,
+    type: 2}
+  m_BridgeSeeThroughableMaterial: {fileID: 2100000, guid: 6dcb929c9f75862488509be7f569310a,
+    type: 2}
+  m_BoatSeeThroughableMaterial: {fileID: 2100000, guid: e2f23552a0aef5b4b84d7714d7d58eab,
+    type: 2}
   m_NumberOfPowerSourceToOpen: 0
