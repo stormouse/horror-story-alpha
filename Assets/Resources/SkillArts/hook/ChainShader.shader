@@ -8,14 +8,13 @@
 		_ForwardVector ("Character Forward", Vector) = (0, 0, 1)
 	}
 	SubShader {
-		Tags { "Queue"="AlphaTest" "RenderType" = "Transparent" "CastShadows" = "False"}
-		LOD 100
-		Cull Back
-		ZWrite Off
+		Tags { "RenderType" = "AlphaTest" "Queue" = "AlphaTest" }
+		
 
 		CGPROGRAM
 		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard alphatest:_Cutoff
+		#pragma surface surf Standard
+		
 
 		// Use shader model 3.0 target, to get nicer looking lighting
 		#pragma target 3.0
@@ -48,9 +47,8 @@
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
 			float r = dot(IN.worldPos - _StartPoint, _ForwardVector);
-			float s = max(sign(r), 0);
-			//o.Alpha = c.a;
-			o.Alpha = s;
+			clip(r);
+			o.Alpha = c.a;
 		}
 		ENDCG
 	}

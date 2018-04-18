@@ -7,10 +7,10 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ChainMaterial
-  m_Shader: {fileID: 4800000, guid: 9b449c83ca8ffea47ae5f014830bb199, type: 3}
+  m_Shader: {fileID: 4800000, guid: edfa19c26d62c554a9f2a48accf99323, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}

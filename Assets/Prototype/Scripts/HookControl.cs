@@ -12,7 +12,7 @@ public class HookControl : NetworkBehaviour {
     public AudioSource hitSheepAudio;
 
     public Renderer chainRenderer;
-
+    public static Material chainMaterial = null;
 
     //private
     private Vector3 origin;
@@ -30,6 +30,10 @@ public class HookControl : NetworkBehaviour {
 
     void Start()
     {
+        if(chainMaterial == null)
+        {
+            chainMaterial = Resources.Load<Material>("SkillArts/hook/ChainMaterial");
+        }
         origin = transform.position;
 
         if (throwAudio)
@@ -39,6 +43,8 @@ public class HookControl : NetworkBehaviour {
 
         if (chainRenderer)
         {
+            chainRenderer.material = new Material(chainMaterial);
+            chainRenderer.material.SetColor("_Color", new Color(0.68f, 0.68f, 0.68f));
             chainRenderer.material.SetVector("_StartPoint", origin);
             chainRenderer.material.SetVector("_ForwardVector", transform.forward);
         }

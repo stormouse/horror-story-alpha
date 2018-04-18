@@ -67,7 +67,6 @@ GameObject:
   - component: {fileID: 4180334263298264}
   - component: {fileID: 33685302768933896}
   - component: {fileID: 23512238150820154}
-  - component: {fileID: 95073138196467270}
   m_Layer: 0
   m_Name: chain
   m_TagString: Untagged
@@ -171,7 +170,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1931548332930490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.3196554, y: 1.3992543, z: -14.867445}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4881945752249528}
@@ -342,7 +341,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 170a3eb0f72fcf3468b287404fbe6e04, type: 2}
+  - {fileID: 2100000, guid: 7b13d94a56ff1da4697d8633cf0661d9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -650,23 +649,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!95 &95073138196467270
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1187506888794756}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 7b4e284478c97804c8dbb05ca1af62d5, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!96 &96660512168542840
 TrailRenderer:
   serializedVersion: 2
@@ -892,7 +874,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 683812366
+  randomSeed: 602011634
   InitialModule:
     serializedVersion: 3
     enabled: 1
