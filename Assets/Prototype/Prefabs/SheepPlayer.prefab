@@ -302,7 +302,6 @@ GameObject:
   - component: {fileID: 114301131013027422}
   - component: {fileID: 114646484409573822}
   - component: {fileID: 114363727126470414}
-  - component: {fileID: 82915295758878938}
   - component: {fileID: 136169458721457634}
   - component: {fileID: 114217121557829546}
   - component: {fileID: 82135248358784116}
@@ -1364,86 +1363,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!82 &82915295758878938
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1565856081478446}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fe340b4c0b3e64747a0a68f542df6145, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.8
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!95 &95611338698351140
 Animator:
   serializedVersion: 3
@@ -1526,7 +1445,7 @@ MonoBehaviour:
   smokeTimeInTheAir: 0.5
   smokeDecelerationFactor: 0.45
   trapSkillIndex: 1
-  deployAnimationLength: 1
+  deployAnimationLength: 0.8125
   trapCooldown: 5
   trapCount: 10
   camouflageAnimationLength: 1
@@ -1637,7 +1556,7 @@ MonoBehaviour:
   YRotation: 0
   cameraOffset: {x: 0, y: 2.5, z: -5.5}
   targetHeight: 1
-  smoothFactor: 0.3
+  smoothFactor: 0.1
   focalDistance: 12
 --- !u!114 &114902942418579264
 MonoBehaviour:

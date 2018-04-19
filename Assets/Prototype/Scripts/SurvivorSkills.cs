@@ -5,9 +5,9 @@ using UnityEngine.Networking;
 
 [NetworkSettings(sendInterval = 0)]
 public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
-	
+
     // properties
-	public string m_InteractionButtonName = "Interaction";
+    public string m_InteractionButtonName = "Interaction";
 
     // skills
     public int smokeSkillIndex = 0;
@@ -40,7 +40,7 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 
     // components
     public GameObject trapPrefab;
-	public Transform trapSpawn;
+    public Transform trapSpawn;
 
     public AudioSource deployAudio;
     public AudioSource abilityNotReadyAudio;
@@ -48,37 +48,37 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 
 
     private Rigidbody m_rigidbody;
-	private NetworkCharacter character;
+    private NetworkCharacter character;
     private CameraFollow cameraFx;
-    
 
 
-	[HideInInspector] public bool m_Charging = false;
-	[HideInInspector] public PowerSourceController m_InteractingPowerSource;
 
-	private GameObject trap;
+    [HideInInspector] public bool m_Charging = false;
+    [HideInInspector] public PowerSourceController m_InteractingPowerSource;
 
-	private float angle = 0f;
-	private int freshCounter = 0;
+    private GameObject trap;
+
+    private float angle = 0f;
+    private int freshCounter = 0;
     private bool lookingback = false;
 
 
     #region Builtin_Functions
     void Start()
-	{
-		SetupComponents();
-		AttachSkillsToCharacter();
-	}
+    {
+        SetupComponents();
+        AttachSkillsToCharacter();
+    }
 
 
-	void Update()
-	{
-		ChargePowerSource (); //Maybe a little problem about server side?
-		if (isLocalPlayer)
-		{
-			ReceivePlayerControl();
-		}
-	}
+    void Update()
+    {
+        ChargePowerSource(); //Maybe a little problem about server side?
+        if (isLocalPlayer)
+        {
+            ReceivePlayerControl();
+        }
+    }
 
     public override void OnStartLocalPlayer()
     {
@@ -93,33 +93,33 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 
     #region Setup_Skills
     void SetupComponents()
-	{
-		m_rigidbody = GetComponent<Rigidbody>();
-		character = GetComponent<NetworkCharacter>();
+    {
+        m_rigidbody = GetComponent<Rigidbody>();
+        character = GetComponent<NetworkCharacter>();
         cameraFx = GetComponent<CameraFollow>();
     }
 
-	void AttachSkillsToCharacter()
-	{
-		character.Register(CharacterState.Normal, "Deploy", DeployMethod);
-		character.Register(CharacterState.Normal, "Charge", ChargeMethod);
+    void AttachSkillsToCharacter()
+    {
+        character.Register(CharacterState.Normal, "Deploy", DeployMethod);
+        character.Register(CharacterState.Normal, "Charge", ChargeMethod);
         character.Register(CharacterState.Normal, "Smoke", SmokeMethod);
-	}
-	#endregion
+    }
+    #endregion
 
 
-	void ReceivePlayerControl()
-	{
-		if (Input.GetKeyDown(KeyCode.G))
-		{
-			DeployPerform ();
-		}
+    void ReceivePlayerControl()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            DeployPerform();
+        }
 
-		if (Input.GetButton (m_InteractionButtonName)) {  //Logic problem!!
-			ChargePerform();
-		} else {
-			m_Charging = false;
-		}
+        if (Input.GetButton(m_InteractionButtonName)) {  //Logic problem!!
+            ChargePerform();
+        } else {
+            m_Charging = false;
+        }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -133,11 +133,11 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
                     abilityNotReadyAudio.Play();
             }
         }
-        
-	}
+
+    }
 
 
-	public void DeployPerform() {
+    public void DeployPerform() {
         if (TrapReady)
         {
             character.Perform("Deploy", gameObject, null);
@@ -147,21 +147,21 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
             if (abilityNotReadyAudio)
                 abilityNotReadyAudio.Play();
         }
-	}
+    }
 
-	public void ChargePerform() {
-		character.Perform ("Charge", gameObject, null);
-	}
+    public void ChargePerform() {
+        character.Perform("Charge", gameObject, null);
+    }
 
 
-	#region DeployTrap
-	void DeployMethod(GameObject sender, ActionArgument args) {
-		CmdDeploy ();
-	}
-	[Command]
-	void CmdDeploy() {
-		RpcDeploy ();
-		_DeployMethodServer();
+    #region DeployTrap
+    void DeployMethod(GameObject sender, ActionArgument args) {
+        CmdDeploy();
+    }
+    [Command]
+    void CmdDeploy() {
+        RpcDeploy();
+        //Invoke("_DeployMethodServer", deployAnimationLength);
         _DeployMethodClient();
     }
 
@@ -210,10 +210,18 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 			}
 			else break;
 		}
+
 		character.SwitchCoroutine(null);
-		// do not directly transit: Transit(CharacterState.Normal); 
-		// be ready for counter-skill that can stun hunters while they attack
-		character.Perform("EndCasting", gameObject, null);
+        // do not directly transit: Transit(CharacterState.Normal); 
+        // be ready for counter-skill that can stun hunters while they attack
+        if (deployAudio)
+            deployAudio.Stop();
+        if (isServer)
+        {
+            _DeployMethodServer();
+        }
+
+        character.Perform("EndCasting", gameObject, null);
 	}
 	#endregion
 

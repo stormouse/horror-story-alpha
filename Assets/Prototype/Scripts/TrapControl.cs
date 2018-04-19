@@ -6,8 +6,19 @@ public class TrapControl : NetworkBehaviour {
 
 	public float trapStunTime = 3.0f;
     private bool triggered = false;
+    public float m_StartSprintForceFactor = 10.0f;
 
     public AudioSource trapActivateAudio;
+
+    private void Start()
+    {
+        //GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.back * m_StartSprintForceFactor));
+    }
+
+    private void Update()
+    {
+        
+    }
 
     void OnTriggerEnter(Collider other) {
 		if (!isServer || triggered) {

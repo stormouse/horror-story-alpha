@@ -25,6 +25,7 @@ ModelImporter:
     4300004: Torus_001
     7400000: Default Take
     7400002: act
+    7400004: put
     9500000: //RootNode
     13700000: Cylinder
     13700002: Torus_000
