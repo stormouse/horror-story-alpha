@@ -13,8 +13,13 @@ public class _PatrolAction : AIAction {
 
 		//check valid
 		foreach (Transform ps in controller.wayPointList) {
+			/*
 			PowerSourceController psc = ps.GetComponent<PowerSourceController> ();
 			if (null == psc || psc.Charged) {
+				controller.wayPointList.Remove (ps);
+			}
+			*/
+			if (!ps.gameObject.activeSelf) {
 				controller.wayPointList.Remove (ps);
 			}
 		}

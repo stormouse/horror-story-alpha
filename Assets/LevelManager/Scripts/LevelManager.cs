@@ -303,11 +303,15 @@ public class LevelManager : NetworkBehaviour
             bool power = (num >= numBetteriesToOpenDoor);
             if (power)
             {
+				List<Transform> escapeTargets = new List<Transform>();
                 m_PowerEnough = true;
                 for (int i = 0; i < m_EscapeAreas.Length; i++)
                 {
+					
                     m_EscapeAreas[i].Activate();
+					escapeTargets.Add (m_EscapeAreas[i].transform);
                 }
+				SetupAINextPhase (escapeTargets);
             }
 
             //// old doors
@@ -328,6 +332,22 @@ public class LevelManager : NetworkBehaviour
 
         return m_PowerEnough;
     }
+	void SetupAINextPhase(List<Transform> escapeTargets) {
+		Debug.Log ("Next Step Start!!!");
+		foreach (GameObject p in survivors) {
+			var ai = p.GetComponent<AIStateController> ();
+			if (ai != null) {
+				ai.SetupAI (true, escapeTargets, survivors);
+			}
+		}
+
+		foreach (GameObject p in hunters) { 	
+			var ai = p.GetComponent<AIStateController> ();
+			if (ai != null) {
+				ai.SetupAI (true, escapeTargets, null);
+			}
+		}
+	}
     #endregion Game_Progress_Control
 
 

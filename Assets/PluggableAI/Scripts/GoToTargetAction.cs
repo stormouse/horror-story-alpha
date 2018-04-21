@@ -15,7 +15,7 @@ public class GoToTargetAction : AIAction{
 
 	private void GoToTarget(AIStateController controller) {	
 		
-		if (controller.targetIndx == -1 || !controller.wayPointList [controller.targetIndx].gameObject.activeSelf) {
+		if (controller.targetIndx == -1 || controller.targetIndx >= controller.wayPointList.Count || !controller.wayPointList [controller.targetIndx].gameObject.activeSelf) {
 			/*
 			float minDis = float.MaxValue;
 			for (int i = 0; i < controller.wayPointList.Count; i++) {
