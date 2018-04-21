@@ -45,10 +45,9 @@ public class FleeAction : AIAction {
 
     // Deprecated by Shawnc 4/12. Replaced with EscapePlanner system.
 	private void Flee_DirectOpposite(AIStateController controller) {
+		/*
 		Vector3 runDir = new Vector3 (0, 0, 0);
 		foreach (Transform hunters in controller.visibleTargets) {
-			//Debug.Log (controller.transform.position.x - hunters.position.x);
-			//Debug.Log (controller.transform.position.z - hunters.position.z);
 			runDir += (10 / Vector3.Distance (hunters.position, controller.transform.position)) * (new Vector3(controller.transform.position.x - hunters.position.x, 0, controller.transform.position.z - hunters.position.z)).normalized;
 		}
 	
@@ -57,8 +56,38 @@ public class FleeAction : AIAction {
 
 		controller.navMeshAgent.destination = runTo;
 		controller.navMeshAgent.isStopped = false;
+		*/
+		Vector3 runDir = new Vector3 (0, 0, 0);
+		foreach (Transform hunters in controller.visibleTargets) {
+			runDir += (10 / Vector3.Distance (hunters.position, controller.transform.position)) * (new Vector3(controller.transform.position.x - hunters.position.x, 0, controller.transform.position.z - hunters.position.z)).normalized;
+		}
+		float max = float.MinValue;
+		int pwrsrcIndex = -1;
+		for (int i = 0; i < controller.wayPointList.Count; i++) {
+			if (controller.wayPointList [i].gameObject.activeSelf) {
+				float tempDis = Vector3.Distance(controller.wayPointList [i].position, controller.transform.position);
+				if (max < tempDis) {
+					max = tempDis;
+					pwrsrcIndex = i;
+				}
+			}
+		}
+		if (pwrsrcIndex != -1) {
+			runDir += (max / 20) * (new Vector3 (controller.wayPointList [pwrsrcIndex].position.x - controller.transform.position.x, 0, controller.wayPointList [pwrsrcIndex].position.z - controller.transform.position.z)).normalized * controller.fleeOffsetMultiplyBy;
+		}
+
+		Vector3 runTo = controller.transform.position + runDir.normalized * fleeDisMultiplyBy + CalRunOffset (controller, runDir) * controller.fleeOffsetMultiplyBy;
+
+		controller.fleeDest = runTo;
+		controller.navMeshAgent.destination = runTo;
+		controller.navMeshAgent.isStopped = false;
 	}
-	//Boarder Check
+	//calculate rundir offset
+	private Vector3 CalRunOffset(AIStateController controller, Vector3 runDir) {
+		Vector3 offsetDir = new Vector3 (Random.Range(-1.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f));
+		return offsetDir;
+	}
+		//Boarder Check
 	private Vector3 BoarderRunOffset(AIStateController controller, Vector3 runDir) {
 		Vector3 offsetDir = new Vector3 (0, 0, 0);
 		if (runDir.x >= 0 && runDir.z >= 0) {
