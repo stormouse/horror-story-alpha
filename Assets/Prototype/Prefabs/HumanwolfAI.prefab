@@ -2158,7 +2158,7 @@ MonoBehaviour:
   hookRange: 10
   navStopDistance: 2
   pSStopDistance: 10
-  defaultMoveSpeed: 6.6
+  defaultMoveSpeed: 6.2
   chaseTarget: []
   wonderPoint: {x: 0, y: 0, z: 0}
   underInvokeList: []
@@ -2168,6 +2168,7 @@ MonoBehaviour:
   enemyStats: {fileID: 11400000, guid: e590306de9c33d64193eee4655f9eb46, type: 2}
   remainState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}
   speedMultiplier: {fileID: 0}
+  lastTimeInDanger: 0
   characterRole: 0
   targetMask:
     serializedVersion: 2
@@ -2203,9 +2204,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hookSkillIndex: 0
   hookCooldown: 8
-  hookRange: 15
-  hookSpeed: 70
-  hookSpellTime: 0.2
+  hookRange: 12
+  hookSpeed: 80
+  hookSpellTime: 0.25
   hasHook: 1
   wardCooldown: 5
   wardCount: 2
@@ -2217,8 +2218,8 @@ MonoBehaviour:
   warSenseRadius: 40
   warSenseAudio: {fileID: 82863393209795970}
   attackCooldown: 1
-  attackRange: 1.8
-  attackAngle: 120
+  attackRange: 1.2
+  attackAngle: 90
   attackSpellTime: 0.17
   attackAnimationLength: 1
   lastAttackTime: -1

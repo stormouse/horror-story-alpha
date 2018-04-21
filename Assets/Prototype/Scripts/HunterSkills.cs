@@ -15,12 +15,12 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     public float hookSpellTime = 0.4f;
     public bool hasHook = true;
     public bool HookReady { get { return Time.time - lastHookTime > hookCooldown; } }
-    private float lastHookTime = 0.0f;
+    private float lastHookTime = -1000.0f;
 
     public float wardCooldown = 5.0f;
     public float wardCount = 2;
     public float wardAnimationLength = 2.0f;
-    private float lastWardTime = 0.0f;
+    private float lastWardTime = -1000.0f;
     public bool WardReady { get { return Time.time - lastWardTime > wardCooldown && wardCount > 0; } }
 
     public int warSenseSkillIndex = 1;
@@ -28,7 +28,7 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     public float warSenseTimeLength = 6.0f;
     public int warSenseScanPass = 3;
     public float warSenseRadius = 10.0f;
-    private float lastWarSenseTime = -45.0f;
+    private float lastWarSenseTime = -1000.0f;
     public bool WarSenseReady { get { return Time.time - lastWarSenseTime > warSenseCooldown; } }
     public AudioSource warSenseAudio;
 
@@ -37,7 +37,7 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     public float attackAngle = 90.0f;
     public float attackSpellTime = 0.17f;
     public float attackAnimationLength;
-    public float lastAttackTime = -1.0f;
+    public float lastAttackTime = -1000.0f;
     public bool AttackReady { get { return Time.time - lastAttackTime > attackCooldown; } }
     public AudioSource attackAudio;
     public AudioSource attackHitAudio;

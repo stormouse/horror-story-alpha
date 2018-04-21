@@ -19,17 +19,25 @@ public class FleeAction : AIAction {
 
     private void Flee(AIStateController controller)
     {
+        controller.Look();
+
         bool fallback = false;
         var planner = controller.GetComponent<EscapePlanner>();
 
         if (planner && EscapeGraph.Initialized)
         {
-            Vector3 dest = EscapeGraph.GetDestination(controller.transform.position, controller.visibleTargets, planner.areaName);
-            if (Vector3.SqrMagnitude(dest - controller.transform.position) > 16.0f)
+            //Vector3 prevDest = controller.navMeshAgent.destination;
+            Vector3 dest = EscapeGraph.GetDestination(controller.transform.position, controller.transform.forward, controller.visibleTargets, planner.areaName);
+            if (Vector3.SqrMagnitude(dest - controller.transform.position) > 1.0f)
             {
-                // Debug.Log("Recommended Exit Location: " + dest);
+                Debug.Log("Recommended Exit Location: " + dest);
                 controller.navMeshAgent.destination = dest;
+                controller.navMeshAgent.stoppingDistance = 1e-3f;
                 controller.navMeshAgent.isStopped = false; // is this safe?
+            }
+            else if(controller.navMeshAgent.pathStatus != UnityEngine.AI.NavMeshPathStatus.PathComplete)
+            {
+                // continue
             }
             else fallback = true;
         }

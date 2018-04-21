@@ -3,7 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ExitMarker : MonoBehaviour {
-
-    public string areaName;
-
+    public string[] areaNames;
 }

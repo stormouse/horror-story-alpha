@@ -24,6 +24,7 @@ public class AIStateController : MonoBehaviour {
 	public AIState remainState;
     public SpeedMultiplier speedMultiplier;
 
+    public float lastTimeInDanger;
 
     public CharacterRole characterRole;
 
@@ -89,6 +90,7 @@ public class AIStateController : MonoBehaviour {
 		aiActive = true;
 		navMeshAgent.enabled = true;
 	}
+    
 
 
 	void Update() {
@@ -132,4 +134,38 @@ public class AIStateController : MonoBehaviour {
 		}
 		return false;
 	}
+
+    
+
+    public bool Look()
+    {
+        visibleTargets.Clear();
+
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, enemyStats.lookRange, targetMask);
+
+        for (int i = 0; i < targetsInViewRadius.Length; i++)
+        {
+            if (targetsInViewRadius[i].GetComponent<NetworkCharacter>().Team == GameEnum.TeamType.Hunter)
+            {
+                Transform target = targetsInViewRadius[i].transform;
+                Vector3 dirToTarget = (target.position - transform.position).normalized;
+                float dstToTarget = Vector3.Distance(transform.position, target.position);
+                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                {
+                    visibleTargets.Add(target);
+                }
+            }
+        }
+
+        if (visibleTargets.Count > 0)
+        {
+            lastTimeInDanger = Time.time;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
 }

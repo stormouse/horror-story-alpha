@@ -141,10 +141,10 @@ public class LobbyPlayer : NetworkLobbyPlayer
     [Command]
     void CmdSwitchTeam(TeamType _team)
     {
-        Debug.Log("Change " + team.ToString() + " to " + _team.ToString());
         if (team == _team) return;
         if (!LobbyManager.Singleton.TeamIsFull(_team))
         {
+            Debug.Log("Change " + team.ToString() + " to " + _team.ToString());
             LobbyManager.Singleton.SwitchToTeam(this, _team);
         }
     }

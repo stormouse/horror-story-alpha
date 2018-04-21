@@ -22,36 +22,18 @@ public class LookDecision : AIDecision {
 			if (targetsInViewRadius [i].GetComponent<NetworkCharacter>().Team == GameEnum.TeamType.Hunter) {
 				Transform target = targetsInViewRadius [i].transform;
 				Vector3 dirToTarget = (target.position - controller.transform.position).normalized;
-				//if (Vector3.Angle (controller.transform.forward, dirToTarget) < controller.enemyStats.fov.viewAngle / 2) {
-					float dstToTarget = Vector3.Distance (controller.transform.position, target.position);
-					if (!Physics.Raycast (controller.transform.position, dirToTarget, dstToTarget, controller.obstacleMask)) {
-
-						controller.visibleTargets.Add (target);
-					}
-				//}
-			} 
+                float dstToTarget = Vector3.Distance(controller.transform.position, target.position);
+                //if (!Physics.Raycast(controller.transform.position, dirToTarget, dstToTarget, controller.obstacleMask))
+                controller.visibleTargets.Add(target);
+                
+            }
 		}
-			
-		/*
-		List<Transform> tempNearTargets = controller.GetComponent<FieldOfViewNearby> ().visibleTargets;
-		foreach (Transform target in tempNearTargets) {
-			controller.visibleTargets.Add (target);
-		}
-
-		FieldOfView tempFOV = controller.GetComponent<FieldOfView> ();
-		if (tempFOV != null) {
-			List<Transform> tempTargets = tempFOV.visibleTargets;
-			foreach (Transform target in tempTargets) {
-				controller.visibleTargets.Add (target);
-			}
-		}
-		*/
+		
 		if (controller.visibleTargets.Count > 0) {
 			return true;
 		} else {
 			return false;
 		}
-
-
+        
 	}
 }

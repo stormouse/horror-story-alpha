@@ -29,7 +29,7 @@ public class CameraFollow : NetworkBehaviour {
 
     [Header("Camera Variables")]
     public Vector3 cameraOffset;
-    public float targetHeight = 1.0f;
+    public float targetHeight = 2.5f;
     [Range(0.01f, 1.0f)]
     public float smoothFactor = 0.5f;
     [Range(1.0f, 20.0f)]
@@ -181,13 +181,16 @@ public class CameraFollow : NetworkBehaviour {
     {
         RaycastHit hit;
         var objectCenter = (transform.position + Vector3.up * targetHeight);
-        var rayDirectionFromTarget = (targetPosition - objectCenter).normalized;
+        var rayDirectionFromTarget = (targetPosition + Vector3.up * targetHeight - objectCenter).normalized;
         var rayFromTarget = new Ray(objectCenter, rayDirectionFromTarget);
         var distance = Vector3.Distance(objectCenter, targetPosition);
         if (Physics.Raycast(rayFromTarget, out hit, distance, ~(1<<playerLayer)))
         {
-            var extension = 0.1f;
-            targetPosition = hit.point + hit.normal * extension;
+            if (hit.collider.tag != "PowerSource")
+            {
+                var extension = 0.1f;
+                targetPosition = hit.point + hit.normal * extension;
+            }
         }
         return targetPosition;
     }

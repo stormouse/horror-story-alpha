@@ -243,9 +243,6 @@ public static class TacticalGraph
     #endregion Graph maintenance
 
 
-
-
-
     //#region Hunter Common
     //public static bool ShouldUseHook(HunterRole me) { return false; }
     //public static Vector3 GetBestChokepoint(HunterRole me) { return Vector3.zero; }

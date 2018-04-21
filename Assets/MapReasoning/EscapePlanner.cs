@@ -57,11 +57,16 @@ public static class EscapeGraph
         var exits = GameObject.FindObjectsOfType<ExitMarker>();
         for(int i = 0; i < exits.Length; i++)
         {
-            Exits[exits[i].areaName].Add(exits[i].transform.position);
+            for (int j = 0; j < exits[i].areaNames.Length; j++)
+            {
+                Exits[exits[i].areaNames[j]].Add(exits[i].transform.position);
+            }
             AllExits.Add(exits[i].transform.position);
         }
 
         Initialized = true;
+
+        Debug.Log("Escape Planner Initialized.");
     }
 
 
@@ -88,41 +93,13 @@ public static class EscapeGraph
     }
 
 
-    public static Vector3 GetDestination(Vector3 myPos, List<Transform> enemies, string areaName)
+    public static Vector3 GetDestination(Vector3 myPos, Vector3 myForward, List<Transform> enemies, string areaName)
     {
         Vector3 bestExit = myPos;
 
         if (areaName == "")
         {
-            int n = AllExits.Count;
-            float bestScore = -2000.0f;
-            for(int i = 0; i < n; i++)
-            {
-                // waypoint too far away, move it out of consideration
-                if(Vector3.Distance(myPos, AllExits[i]) > 100.0f)
-                {
-                    if(bestScore < -1000.0f)
-                    {
-                        bestScore = -1000.0f;
-                        bestExit = AllExits[i];
-                    }
-                    continue;
-                }
-
-                float convenience = (1000.0f - Vector3.Distance(myPos, AllExits[i]));
-                float danger = 0.0f;
-                for (int j = 0; j < enemies.Count; j++)
-                {
-                    danger -= Vector3.Distance(enemies[j].position, AllExits[i]);
-                }
-
-                float score = convenience - danger;
-                if(score > bestScore)
-                {
-                    bestScore = score;
-                    bestExit = AllExits[i];
-                }
-            }
+            return myPos;
         }
         
         else
@@ -137,29 +114,46 @@ public static class EscapeGraph
                     if (bestScore < -1000.0f)
                     {
                         bestScore = -1000.0f;
-                        bestExit = AllExits[i];
+                        bestExit = Exits[areaName][i];
+                    }
+                    continue;
+                }
+                
+                if(Vector3.Dot(myForward, (Exits[areaName][i] - myPos).normalized) < 0.0f)
+                {
+                    if (bestScore < -1000.0f)
+                    {
+                        bestScore = -1000.0f;
+                        bestExit = Exits[areaName][i];
                     }
                     continue;
                 }
 
-                float convenience = (1000.0f - Vector3.Distance(myPos, Exits[areaName][i]));
-                float danger = 0.0f;
+                float d_me = Vector3.Distance(myPos, Exits[areaName][i]);
+                float d_wolf = 1000.0f;
                 for (int j = 0; j < enemies.Count; j++)
                 {
-                    danger -= Vector3.Distance(enemies[j].position, Exits[areaName][i]);
+                    d_wolf = Mathf.Min(Vector3.Distance(enemies[j].position, Exits[areaName][i]), d_wolf);
                 }
 
-                float score = convenience - danger;
+                if(enemies.Count == 0)
+                {
+                    d_wolf = Vector3.Distance(myPos - myForward * 10.0f, Exits[areaName][i]);
+                }
+
+                float score = d_wolf - d_me;
                 if (score > bestScore)
                 {
                     bestScore = score;
                     bestExit = Exits[areaName][i];
                 }
             }
+
         }
 
         return bestExit;
     }
+
 }
 
 
@@ -185,13 +179,13 @@ public class EscapePlanner : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.tag == "AreaVolume")
-        {
-            if(areaName == other.GetComponent<AreaVolume>().areaName)
-            {
-                areaName = "";
-            }
-        }
+        //if(other.tag == "AreaVolume")
+        //{
+        //    if(areaName == other.GetComponent<AreaVolume>().areaName)
+        //    {
+        //        areaName = "";
+        //    }
+        //}
     }
 
 }

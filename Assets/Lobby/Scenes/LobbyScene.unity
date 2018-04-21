@@ -152,6 +152,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114150776271452776, guid: e3c0a239c2e10904ba9b8f10d843bc26,
+        type: 2}
+      propertyPath: maxSpectatorPlayers
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e3c0a239c2e10904ba9b8f10d843bc26, type: 2}
   m_IsPrefabParent: 0
