@@ -186,7 +186,7 @@ public class CameraFollow : NetworkBehaviour {
         var distance = Vector3.Distance(objectCenter, targetPosition);
         if (Physics.Raycast(rayFromTarget, out hit, distance, ~(1<<playerLayer)))
         {
-            if (hit.collider.tag != "PowerSource")
+            if (hit.collider.tag != "PowerSource" && hit.collider.tag != "AreaVolume")
             {
                 var extension = 0.1f;
                 targetPosition = hit.point + hit.normal * extension;

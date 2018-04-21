@@ -118,16 +118,7 @@ public static class EscapeGraph
                     }
                     continue;
                 }
-                
-                if(Vector3.Dot(myForward, (Exits[areaName][i] - myPos).normalized) < 0.0f)
-                {
-                    if (bestScore < -1000.0f)
-                    {
-                        bestScore = -1000.0f;
-                        bestExit = Exits[areaName][i];
-                    }
-                    continue;
-                }
+
 
                 float d_me = Vector3.Distance(myPos, Exits[areaName][i]);
                 float d_wolf = 1000.0f;
@@ -141,7 +132,9 @@ public static class EscapeGraph
                     d_wolf = Vector3.Distance(myPos - myForward * 10.0f, Exits[areaName][i]);
                 }
 
-                float score = d_wolf - d_me;
+                float score = (d_wolf - d_me);
+
+
                 if (score > bestScore)
                 {
                     bestScore = score;
