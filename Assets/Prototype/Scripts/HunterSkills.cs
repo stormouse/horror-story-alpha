@@ -46,6 +46,8 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
 
     public AudioSource abilityNotReadyAudio;
 
+    public AudioSource heartbeatAudio;
+
     // components
     public GameObject hookPrefab;
     public LineRenderer aimLine;
@@ -65,6 +67,7 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     #region Builtin_Functions
     void Start()
     {
+        SetupAudio();
         SetupComponents();
         AttachSkillsToCharacter();
     }
@@ -110,6 +113,16 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
         m_rigidbody = GetComponent<Rigidbody>();
         cameraFx = GetComponent<CameraFollow>();
         character = GetComponent<NetworkCharacter>();
+    }
+
+    private void SetupAudio()
+    {
+        if (isLocalPlayer || LocalPlayerInfo.playerCharacter.Team != GameEnum.TeamType.Survivor)
+        {
+            if (heartbeatAudio != null)
+                heartbeatAudio.Stop();
+        }
+        
     }
 
     void AttachSkillsToCharacter()

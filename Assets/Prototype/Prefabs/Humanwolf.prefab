@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 82674535633129676}
   - component: {fileID: 82309383666335046}
   - component: {fileID: 82142077967617298}
+  - component: {fileID: 82162758634985874}
   m_Layer: 8
   m_Name: Humanwolf
   m_TagString: Player
@@ -1721,6 +1722,86 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!82 &82162758634985874
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1401743979559124}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c352d2b56dd7e594d81a7915322c08df, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.913
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 114
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 24
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0.06445007
+      value: 0.81666946
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: -4.781662
+      outSlope: -4.781662
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0.99573517
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!82 &82309383666335046
 AudioSource:
   m_ObjectHideFlags: 1
@@ -2088,8 +2169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hookSkillIndex: 0
   hookCooldown: 6
-  hookRange: 8
-  hookSpeed: 70
+  hookRange: 15
+  hookSpeed: 60
   hookSpellTime: 0.25
   hasHook: 1
   wardCooldown: 5
@@ -2112,6 +2193,7 @@ MonoBehaviour:
   attackHitAudio: {fileID: 82674535633129676}
   attackFeedbackAudio: {fileID: 82309383666335046}
   abilityNotReadyAudio: {fileID: 82142077967617298}
+  heartbeatAudio: {fileID: 82162758634985874}
   hookPrefab: {fileID: 1931548332930490, guid: aeaeb2ab19d4548a5aac130f6e417a16, type: 2}
   aimLine: {fileID: 120118662913672090}
 --- !u!114 &114216731761836294
