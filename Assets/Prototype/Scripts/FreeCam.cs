@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking
+using UnityEngine.Networking;
 
 public class FreeCam : NetworkBehaviour
 {
