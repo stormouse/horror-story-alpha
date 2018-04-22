@@ -1643,6 +1643,8 @@ MonoBehaviour:
   UIContainer: {fileID: 1893452020415340}
   objectivePanel: {fileID: 1075066994973284}
   minimap: {fileID: 1030981670050066}
+  SkillPanel: {fileID: 1075571900816770}
+  Compass: {fileID: 1873793403995086}
   hunterSkillSprites:
   - {fileID: 21300000, guid: a89599598c5b1c540b3938332ee9ac0b, type: 3}
   - {fileID: 21300000, guid: 991fb06284e09ad44b7eab619204bc98, type: 3}

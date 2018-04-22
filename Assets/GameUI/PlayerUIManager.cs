@@ -12,6 +12,8 @@ public class PlayerUIManager : MonoBehaviour {
     public GameObject UIContainer;
     public GameObject objectivePanel;
     public GameObject minimap;
+    public GameObject SkillPanel;
+    public GameObject Compass;
 
     public Sprite[] hunterSkillSprites;
     public Sprite[] survivorSkillSprites;
@@ -107,7 +109,9 @@ public class PlayerUIManager : MonoBehaviour {
         }
         else
         {
-            UIContainer.SetActive(false);
+            //UIContainer.SetActive(false);
+            SkillPanel.SetActive(false);
+            Compass.SetActive(false);
         }
 
         foreach (var img in cooldownImage)
@@ -118,17 +122,18 @@ public class PlayerUIManager : MonoBehaviour {
         UpdateSurvivorCount(LevelManager.Singleton.SurvivorCount);
         UpdateBatteryCount(LevelManager.Singleton.PowerSourceCount);
         UpdateOpenExitCount(0, 3);
+        UpdateTimer();
+        gameOverImage.enabled = false;
 
         var countableSlots = LocalPlayerInfo.playerObject.GetComponent<ICountableSlots>();
-        for (int i = 0; i < 4; i++)
-        {
-            UpdateItemCount(i, countableSlots.GetCountOfIndex(i));
-        }
+        if (countableSlots != null)
+            for (int i = 0; i < 4; i++)
+            {
+                UpdateItemCount(i, countableSlots.GetCountOfIndex(i));
+            }
 
-        UpdateTimer();
+        
         // UpdateToyCarCount(toyCarCount);
-
-        gameOverImage.enabled = false;
     }
 
 
