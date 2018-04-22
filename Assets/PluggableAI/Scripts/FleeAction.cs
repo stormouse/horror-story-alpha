@@ -40,10 +40,6 @@ public class FleeAction : AIAction {
                 controller.navMeshAgent.stoppingDistance = 1e-3f;
                 controller.navMeshAgent.isStopped = false; // is this safe?
             }
-            else if(controller.navMeshAgent.pathStatus != UnityEngine.AI.NavMeshPathStatus.PathComplete)
-            {
-                // continue
-            }
             else fallback = true;
         }
         else fallback = true;

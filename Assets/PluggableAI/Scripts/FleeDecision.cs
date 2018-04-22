@@ -5,29 +5,18 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "PluggableAI/Decision/Flee")]
 public class FleeDecision : AIDecision {
 
-	public override bool Decide (AIStateController controller) {
-        
-        if (controller.navMeshAgent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathComplete) {
-            controller.Look();
-            if (controller.visibleTargets.Count == 0 && Time.time - controller.lastTimeInDanger > 10.0f)
-            {
-                Debug.Log("Time till last followed time: " + (Time.time - controller.lastTimeInDanger).ToString());
-                controller.fleeOffsetMultiplyBy = 0;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-		} else {
-			//controller.fleeOffsetMultiplyBy += 5;
-			//Debug.Log (controller.fleeOffsetMultiplyBy);
-			return false;
-		}
-	}
-
-
-
+    public override bool Decide(AIStateController controller)
+    {
+        controller.Look();
+        if (controller.visibleTargets.Count == 0 && Time.time - controller.lastTimeInDanger > 10.0f)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 
 
     private bool IfFleeTimeElapsed(AIStateController controller) {
