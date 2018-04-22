@@ -62,6 +62,7 @@ public class AIStateController : MonoBehaviour {
 	public void SetupAI(bool aiActivationFromLevelManager, List<Transform> wayPointFromLevelManager, List<GameObject> playersFromLevelManager) {
 		wayPointList = wayPointFromLevelManager;
 		aiActive = aiActivationFromLevelManager;
+		targetIndx = -1;
 		if (playersFromLevelManager != null) {
 			players = playersFromLevelManager;
 			predictTargets = new int[players.Count];

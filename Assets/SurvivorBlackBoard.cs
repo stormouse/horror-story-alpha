@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class SurvivorBlackBoard : NetworkBehaviour {
 	//public float blockTime = 8;
-	public int powerSourceNumber = 8;
+	public int targetsNumber = 8;
 	private bool[] powerSourcesBlock;
 	private float[] powerSourcesTimer;
 
@@ -14,8 +14,8 @@ public class SurvivorBlackBoard : NetworkBehaviour {
         {
             Destroy(gameObject);
         }
-		powerSourcesTimer = new float[powerSourceNumber];
-		powerSourcesBlock = new bool[powerSourceNumber];
+		powerSourcesTimer = new float[targetsNumber];
+		powerSourcesBlock = new bool[targetsNumber];
         SetupforAI();
     }
 
@@ -24,7 +24,11 @@ public class SurvivorBlackBoard : NetworkBehaviour {
 		UpdateTimer ();
 	}
 
-
+	public void ResetBD(int targetsNum) {
+		powerSourcesTimer = new float[targetsNum];
+		powerSourcesBlock = new bool[targetsNum];
+		targetsNumber = targetsNum;
+	}
 	private void SetupforAI() {
 		GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
 		foreach (GameObject p in players) {
@@ -40,7 +44,7 @@ public class SurvivorBlackBoard : NetworkBehaviour {
 
 
 	private void UpdateTimer () {
-		for (int i = 0; i < powerSourceNumber; i++) {
+		for (int i = 0; i < targetsNumber; i++) {
 			if (powerSourcesTimer[i] > 0) {
 				powerSourcesTimer[i] -= Time.deltaTime;
 				if (powerSourcesTimer [i] < 0) {

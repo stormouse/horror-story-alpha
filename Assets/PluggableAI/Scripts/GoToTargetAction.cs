@@ -64,6 +64,7 @@ public class GoToTargetAction : AIAction{
 			}
 		}
 		threshold = Mathf.Min (ways, plys);
+
 		while (sum < threshold) {
 			for (int i = 0; i < controller.wayPointList.Count; i++) {
 				if (!assigned[i]) {
@@ -80,6 +81,7 @@ public class GoToTargetAction : AIAction{
 					}
 					min = float.MaxValue;
 					int tempi = -1;
+					//Debug.Log (controller.playerIndex + "  Distance(player):" + tempindx);
 					if (tempindx != -1) {
 						for (int k = 0; k < controller.wayPointList.Count; k++) {
 							if (!assigned [k]) {
@@ -90,6 +92,7 @@ public class GoToTargetAction : AIAction{
 								}
 							}
 						}
+						//Debug.Log (controller.playerIndex + "  Distance(powerSource):" + tempi);
 						if (tempi == i) {
 							controller.predictTargets [tempindx] = i;
 							assigned [i] = true;
@@ -100,6 +103,7 @@ public class GoToTargetAction : AIAction{
 			}
 		}
 		if (controller.predictTargets [controller.playerIndex] == -1) {
+			Debug.Log (controller.playerIndex + ": Here!!");
 			for (int i = 0; i < controller.players.Count; i++) {
 				if (controller.players [i] != null && controller.predictTargets [i] != -1) {
 					controller.predictTargets [controller.playerIndex] = controller.predictTargets [i];
@@ -108,6 +112,10 @@ public class GoToTargetAction : AIAction{
 			}
 		}
 		controller.targetIndx = controller.predictTargets [controller.playerIndex];
+		controller.survivorBD.SetPSTimer (controller.targetIndx, 8);
+		//for (int k = 0; k < controller.players.Count; k++) {
+			//Debug.Log (controller.playerIndex + ":" + controller.targetIndx + ":" + k + ":"+ Vector3.Distance (controller.players[k].transform.position, controller.wayPointList [controller.targetIndx].position));
+		//}	
 	}
 	/*
 	private bool IsSuitableWayPoint(AIStateController controller, int i) {
