@@ -629,6 +629,12 @@ public class LobbyManager : NetworkLobbyManager {
         {
             var newPlayer = Instantiate(spectatorPrefab);
             newPlayer.transform.position = Vector3.up * 5.0f;
+            if (spManager != null)
+            {
+                newPlayer.transform.position = spManager.spectatorSpwanpoints[0].transform.position;
+                newPlayer.transform.localRotation = spManager.spectatorSpwanpoints[0].transform.localRotation ;
+
+            }
             NetworkServer.Spawn(newPlayer);
             NetworkServer.Destroy(gamePlayer);
             NetworkServer.ReplacePlayerForConnection(lobbyPlayer.GetComponent<NetworkIdentity>().connectionToClient, newPlayer, 0);

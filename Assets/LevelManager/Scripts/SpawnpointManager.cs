@@ -5,4 +5,5 @@ using UnityEngine;
 public class SpawnpointManager : MonoBehaviour {
     public Transform[] hunterSpawnpoints;
     public Transform[] survivorSpawnpoints;
+    public Transform[] spectatorSpwanpoints;
 }
