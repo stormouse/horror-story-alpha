@@ -199,9 +199,11 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     [Command]
     private void CmdAttack()
     {
-        ServerAttack();
-        RpcAttack();
-        _AttackMethod();
+        if (AttackReady && character.CurrentState == CharacterState.Normal)
+        {
+            _AttackMethod();
+            RpcAttack();
+        }
     }
 
     [ClientRpc]
@@ -211,36 +213,10 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
         _AttackMethod();
     }
 
-    private void ServerAttack()
-    {
-        Invoke("_DoDamage", attackSpellTime);
-    }
-
-    private void _DoDamage()
-    {
-        var survivors = LevelManager.Singleton.GetAllSurvivorsAlive();
-        bool hit = false;
-        foreach (var survivor in survivors)
-        {
-            if (Reachable(survivor.transform.position))
-            {
-                survivor.Perform("Die", gameObject, null);
-                hit = true;
-            }
-        }
-
-        if (hit)
-        {
-            if(attackHitAudio)
-                attackHitAudio.Play();
-            if (attackFeedbackAudio)
-                attackFeedbackAudio.Play(4410);
-        }
-    }
-
 
     private void _AttackMethod()
     {
+        // assert characterState == Normal
         lastAttackTime = Time.time;
         character.Transit(CharacterState.Casting);
         character.SwitchCoroutine(StartCoroutine(AttackCoroutine()));
@@ -266,6 +242,8 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
                     m_rigidbody.MovePosition(transform.position + transform.forward * Vector3.Dot(m_rigidbody.velocity, transform.forward) * 0.15f);
                     punched = true;
 
+                    DoAttackDamage();
+
                     if (attackAudio)
                         attackAudio.Play();
                 }
@@ -281,11 +259,44 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
             }
             else break;
         }
-        character.SwitchCoroutine(null);
-        // do not directly transit: Transit(CharacterState.Normal); 
-        // be ready for counter-skill that can stun hunters while they attack
-        character.Perform("EndCasting", gameObject, null);
+
+        if (character.CurrentState == CharacterState.Casting)
+        {
+            // character.SwitchCoroutine(null); --> necessary?
+            // do not directly transit: Transit(CharacterState.Normal); 
+            // be ready for counter-skill that can stun hunters while they attack
+            character.Perform("EndCasting", gameObject, null);
+        }
     }
+
+
+    private void DoAttackDamage()
+    {
+        var survivors = LevelManager.Singleton.GetAllSurvivorsAlive();
+        bool hit = false;
+        foreach (var survivor in survivors)
+        {
+            if (Reachable(survivor.transform.position))
+            {
+                if (isServer)
+                {
+                    survivor.Perform("Die", gameObject, null);
+                }
+
+                hit = true;
+            }
+        }
+
+
+        if (hit)
+        {
+            if (attackHitAudio)
+                attackHitAudio.Play();
+            if (attackFeedbackAudio)
+                attackFeedbackAudio.PlayDelayed(0.1f);
+        }
+    }
+
 
 
     bool Reachable(Vector3 position)
@@ -322,21 +333,8 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
         {
             CmdHook(transform.forward);
 
-            // flicking support for human players
+            // was implemented to add flicking support for human players
             character.SwitchCoroutine(StartCoroutine(_ThrowHookDelayPlayer(transform.forward, hookSpellTime)));
-
-            //Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //RaycastHit info;
-            //if (Physics.Raycast(mouseRay, out info))
-            //{
-            //    Vector3 dest = Vector3.Scale(info.point, new Vector3(1, 0, 1));
-            //    Vector3 origin = Vector3.Scale(transform.position, new Vector3(1, 0, 1));
-            //    Vector3 dir = dest - origin;
-            //    CmdHook(dir.normalized);
-
-            //    // flicking support for human players
-            //    character.SwitchCoroutine(StartCoroutine(_ThrowHookDelayPlayer(dir, hookSpellTime)));
-            //}
         }
     }
 
@@ -398,7 +396,7 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     {
         yield return new WaitForSeconds(delay);
         CmdSpawnHook(transform.forward);
-        /* no flicking anymore
+        /* ------- no flicking anymore -------
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit info;
         if (Physics.Raycast(mouseRay, out info))
@@ -446,17 +444,29 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     public void ReturnHook()
     {
         if (!isServer) return;
-        if (hasHook) return;
-        hasHook = true;
+        _ReturnHook();
         RpcReturnHook();
     }
 
     [ClientRpc]
     void RpcReturnHook()
     {
+        if (!isServer)
+        {
+            _ReturnHook();
+        }
+    }
+
+    void _ReturnHook()
+    {
         hasHook = true;
         character.Animator.SetBool("Throwing", false);
-        character.Perform("EndCasting", gameObject, null);
+        if (character.CurrentState == CharacterState.Casting)
+        {
+            // do not directly transit: Transit(CharacterState.Normal); 
+            // be ready for counter-skill that can stun hunters while they attack
+            character.Perform("EndCasting", gameObject, null);
+        }
     }
     #endregion Hook_Return
 
@@ -555,7 +565,8 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
 
     private bool InLineOfSight(Transform t)
     {
-        if(Physics.Raycast(transform.position, t.position, Vector3.Distance(transform.position, t.position), ~(1 << LayerMask.NameToLayer("Player"))))
+        Vector3 srcPosition = Camera.main.transform.position; // not transform.position
+        if(Physics.Raycast(srcPosition, t.position, Vector3.Distance(srcPosition, t.position), ~(1 << LayerMask.NameToLayer("Player"))))
         { 
             return false;
         }

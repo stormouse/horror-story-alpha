@@ -39,13 +39,13 @@ public class EscapeArea : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         if (!bActivated) return;
+        var character = other.GetComponent<NetworkCharacter>();
 
-        if (other.tag == "Player")
+        if (other.tag == "Player" && character != null && character.Team == GameEnum.TeamType.Hunter)
         {
             if (!playerInside.Contains(other.gameObject))
             {
                 playerInside.Add(other.gameObject);
-                var character = other.GetComponent<NetworkCharacter>();
                 if (m_Boat)
                     character.MoveTo(m_Boat.transform.position, MoveMethod.Teleport);
                 LevelManager.Singleton.PlayerEscape();

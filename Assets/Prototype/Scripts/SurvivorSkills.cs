@@ -158,11 +158,14 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
     void DeployMethod(GameObject sender, ActionArgument args) {
         CmdDeploy();
     }
+
     [Command]
     void CmdDeploy() {
-        RpcDeploy();
-        //Invoke("_DeployMethodServer", deployAnimationLength);
-        _DeployMethodClient();
+        if (TrapReady && character.CurrentState == CharacterState.Normal)
+        {
+            RpcDeploy();
+            _DeployMethodClient();
+        }
     }
 
 	[ClientRpc]
@@ -199,6 +202,7 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
         if (deployAudio)
             deployAudio.Play();
 	}
+
 	IEnumerator _DeployAnimationDelay() {
 		float startTime = Time.time;
 		while (true)
@@ -211,7 +215,7 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 			else break;
 		}
 
-		character.SwitchCoroutine(null);
+		// character.SwitchCoroutine(null); --> necessary?
         // do not directly transit: Transit(CharacterState.Normal); 
         // be ready for counter-skill that can stun hunters while they attack
         if (deployAudio)
@@ -220,10 +224,11 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
         {
             _DeployMethodServer();
         }
-
+        
         character.Perform("EndCasting", gameObject, null);
 	}
 	#endregion
+
 
 	#region ChargePowerSource
 	void ChargePowerSource() {
@@ -283,7 +288,6 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 
     void SmokeMethod(GameObject sender, ActionArgument args)
     {
-        if (!SmokeReady) return;
         CmdThrowSmoke();
     }
 
