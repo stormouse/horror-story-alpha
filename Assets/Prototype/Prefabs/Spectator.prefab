@@ -159,6 +159,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraSensitivity: 90
   climbSpeed: 4
-  normalMoveSpeed: 10
+  normalMoveSpeed: 15
   slowMoveFactor: 0.25
   fastMoveFactor: 3
