@@ -26,6 +26,9 @@ public class PlayerUIManager : MonoBehaviour {
     public Text[] objectiveIndicator;
     public Text timerText;
 
+    public Image gameOverImage;
+    public Sprite sheepWinSprite;
+    public Sprite werewolfWinSprite;
 
     public Color noPowerColor = new Color(0.97255f, 0.49412f, 0.49412f);
     public Color fullPowerColor = new Color(0.52941f, 0.97255f, 0.49412f);
@@ -124,6 +127,8 @@ public class PlayerUIManager : MonoBehaviour {
 
         UpdateTimer();
         // UpdateToyCarCount(toyCarCount);
+
+        gameOverImage.enabled = false;
     }
 
 
@@ -206,6 +211,20 @@ public class PlayerUIManager : MonoBehaviour {
             timerText.text = minute.ToString() + ":" + sec.ToString("D2");
         }
     }
+
+
+    public void SheepWin()
+    {
+        gameOverImage.sprite = sheepWinSprite;
+        gameOverImage.enabled = true;
+    }
+
+    public void WerewolfWin()
+    {
+        gameOverImage.sprite = werewolfWinSprite;
+        gameOverImage.enabled = true;
+    }
+
 
 
 

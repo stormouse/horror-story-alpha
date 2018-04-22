@@ -241,16 +241,29 @@ public class LevelManager : NetworkBehaviour
         if(gameOverReason == GameOverReason.Elimination)
         {
             Debug.Log("All sheep are eliminated.");
+            if (PlayerUIManager.singleton)
+            {
+                PlayerUIManager.singleton.WerewolfWin();
+            }
         }
         else if(gameOverReason == GameOverReason.Breakout)
         {
             Debug.Log("Someone escaped from the island.");
+            if (PlayerUIManager.singleton)
+            {
+                PlayerUIManager.singleton.SheepWin();
+            }
         }
         else if(gameOverReason == GameOverReason.TimeOut)
         {
             Debug.Log("It's too late for humans to go.");
+            if (PlayerUIManager.singleton)
+            {
+                PlayerUIManager.singleton.WerewolfWin();
+            }
         }
 
+        
         roundEndTime = Time.time;
         if (isServer)
         {
@@ -332,6 +345,8 @@ public class LevelManager : NetworkBehaviour
 
         return m_PowerEnough;
     }
+
+
 	void SetupAINextPhase(List<Transform> escapeTargets) {
 		Debug.Log ("Next Step Start!!!");
 		foreach (GameObject p in survivors) {

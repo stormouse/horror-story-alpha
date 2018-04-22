@@ -2102,7 +2102,7 @@ MonoBehaviour:
   warSenseRadius: 40
   warSenseAudio: {fileID: 82654414442377072}
   attackCooldown: 1
-  attackRange: 0.8
+  attackRange: 1.2
   attackAngle: 90
   attackSpellTime: 0.17
   attackAnimationLength: 1
