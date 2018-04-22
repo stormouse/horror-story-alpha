@@ -369,6 +369,7 @@ public class NetworkCharacter : NetworkBehaviour {
         BrakeMethod(null, args);
         m_rigidbody.isKinematic = true;
         m_animator.SetTrigger("Die");
+        GetComponent<AIStateController>().DisableAI();
         
         Transit(CharacterState.Dead);
 
