@@ -48,6 +48,10 @@ public class CameraFollow : NetworkBehaviour {
     private Vector3 mouseForward;
     private Vector3 mouseOffset;
 
+    public float camDistanceRecoveryRate = 2.0f;
+    private float originalCameraDistance;
+    private float currentCameraDistance;
+
     #region builtin functions
     private void Start()
     {
@@ -61,14 +65,18 @@ public class CameraFollow : NetworkBehaviour {
         playerLayer = LayerMask.NameToLayer("Player");
         mainCamera = Camera.main.transform;
         
-
         mouseForward = transform.forward;
         mouseOffset = cameraOffset;
 
-        mainCamera.position = transform.position + cameraOffset;
-        mainCamera.LookAt(transform.position + focalDistance * mouseForward);
+        var origin = transform.position + targetHeight * Vector3.up;
+
+        mainCamera.position = origin + cameraOffset;
+        mainCamera.LookAt(origin + focalDistance * mouseForward);
 
         m_CameraTargetRot = Quaternion.Euler(0f, 0f, 0f);
+
+        originalCameraDistance = cameraOffset.magnitude;
+        currentCameraDistance = originalCameraDistance;
 
         CameraMove();
     }
@@ -156,20 +164,42 @@ public class CameraFollow : NetworkBehaviour {
 
     void CameraMove()
     {
+        var origin = transform.position + targetHeight * Vector3.up;
+
         // the final camera position
-        var targetCameraPosition = transform.position + mouseOffset;
+        var targetCameraPosition = origin + mouseOffset;
 
         // correct final camera position
-        targetCameraPosition = GetUnblockedCameraPosition(targetCameraPosition, 1.0f);
+        targetCameraPosition = GetUnblockedCameraPosition(origin, targetCameraPosition, 1.0f);
+
+        // limit camera distance change to avoid shaking
+        float td = Vector3.Distance(origin, targetCameraPosition);
+        if(td > currentCameraDistance)
+        {
+            targetCameraPosition = origin + (targetCameraPosition - origin).normalized * currentCameraDistance;
+        }
 
         // the target focal point to look at
-        var targetFocalPoint = transform.position + focalDistance * mouseForward;
+        var targetFocalPoint = origin + focalDistance * mouseForward;
 
         // desired camera position after smoothing
         var desiredCameraPosition = Vector3.Slerp(mainCamera.position, targetCameraPosition, 1.0f / smoothFactor * Time.deltaTime);
 
         // correct desired camera position
-        desiredCameraPosition = GetUnblockedCameraPosition(desiredCameraPosition, 1.0f);
+        desiredCameraPosition = GetUnblockedCameraPosition(origin, desiredCameraPosition, 1.0f);
+        float rd = Vector3.Distance(origin, desiredCameraPosition);
+        if(rd < currentCameraDistance - 0.2f)
+        {
+            currentCameraDistance = rd;
+        }
+        else if(currentCameraDistance < originalCameraDistance)
+        {
+            currentCameraDistance += camDistanceRecoveryRate * Time.deltaTime;
+        }
+        else if(currentCameraDistance > originalCameraDistance)
+        {
+            currentCameraDistance = originalCameraDistance;
+        }
 
         // update camera position
         mainCamera.position = desiredCameraPosition;
@@ -177,13 +207,12 @@ public class CameraFollow : NetworkBehaviour {
         //mainCamera.rotation = Quaternion.LookRotation(targetFocalPoint - desiredCameraPosition);
     }
 
-    Vector3 GetUnblockedCameraPosition(Vector3 targetPosition, float skippingRadius)
+    Vector3 GetUnblockedCameraPosition(Vector3 origin, Vector3 targetPosition, float skippingRadius)
     {
         RaycastHit hit;
-        var objectCenter = (transform.position + Vector3.up * targetHeight);
-        var rayDirectionFromTarget = (targetPosition + Vector3.up * targetHeight - objectCenter).normalized;
-        var rayFromTarget = new Ray(objectCenter, rayDirectionFromTarget);
-        var distance = Vector3.Distance(objectCenter, targetPosition);
+        var rayDirectionFromTarget = (targetPosition - origin).normalized;
+        var rayFromTarget = new Ray(origin, rayDirectionFromTarget);
+        var distance = Vector3.Distance(origin, targetPosition);
         if (Physics.Raycast(rayFromTarget, out hit, distance, ~(1<<playerLayer)))
         {
             if (hit.collider.tag != "PowerSource" && hit.collider.tag != "AreaVolume")

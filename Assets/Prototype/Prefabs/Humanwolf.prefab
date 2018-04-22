@@ -2177,10 +2177,11 @@ MonoBehaviour:
   smoothTime: 5
   lockCursor: 1
   YRotation: 0
-  cameraOffset: {x: 0, y: 3, z: -5.5}
-  targetHeight: 1.5
+  cameraOffset: {x: 0, y: 1, z: -5.5}
+  targetHeight: 2
   smoothFactor: 0.1
   focalDistance: 15
+  camDistanceRecoveryRate: 2
 --- !u!114 &114425332238405704
 MonoBehaviour:
   m_ObjectHideFlags: 1
