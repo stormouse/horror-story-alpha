@@ -20,13 +20,14 @@ public class HookControl : NetworkBehaviour {
     public float hookSpeed;
     [HideInInspector]
     public float hookRange;
-    
 
     public float additionalStunTime = 0.8f;
 
     //public hunter
     public GameObject hunter;
-    
+
+    private bool hitable;
+
 
     void Start()
     {
@@ -48,6 +49,8 @@ public class HookControl : NetworkBehaviour {
             chainRenderer.material.SetVector("_StartPoint", origin);
             chainRenderer.material.SetVector("_ForwardVector", transform.forward);
         }
+
+        hitable = true;
     }
     
 
@@ -61,8 +64,9 @@ public class HookControl : NetworkBehaviour {
     {
         if (!isServer) return;
 
-        if (Vector3.SqrMagnitude(transform.position - origin) > hookRange * hookRange)
+        if (Vector3.Distance(transform.position, origin) > hookRange)
         {
+            GetComponent<Rigidbody>().velocity = -GetComponent<Rigidbody>().velocity;
             hunter.GetComponent<HunterSkills>().ReturnHook();
             LevelManager.Singleton.DestoryNetworkObject(gameObject, 0.3f);
         }
@@ -81,11 +85,13 @@ public class HookControl : NetworkBehaviour {
             return;
 
         var otherCharacter = other.GetComponent<NetworkCharacter>();
+        var duration = 0.3f;
+
         if (otherCharacter && otherCharacter.Team == GameEnum.TeamType.Survivor)
         {
             var dir = (transform.position - origin).normalized;
             var offset = dir * 1.5f;
-            var duration = Vector3.Distance(transform.position, origin) / hookSpeed;
+            duration = Mathf.Min(Vector3.Distance(transform.position, origin) / hookSpeed, duration);
 
             var args = new StunArgument();
             args.time = duration + additionalStunTime;
@@ -108,7 +114,7 @@ public class HookControl : NetworkBehaviour {
         hunter.GetComponent<HunterSkills>().ReturnHook();
         GetComponent<Collider>().enabled = false;
         
-        LevelManager.Singleton.DestoryNetworkObject(gameObject, 0.3f);
+        LevelManager.Singleton.DestoryNetworkObject(gameObject, duration);
 
         //NetworkServer.Destroy(gameObject);
         //Destroy(gameObject);

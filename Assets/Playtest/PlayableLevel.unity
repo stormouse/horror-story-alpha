@@ -6186,6 +6186,36 @@ Prefab:
       propertyPath: areaNames.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114178809162723422, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114443164240104288, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114297670774612518, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114024962229752212, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114170868852237530, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114574038020586742, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4848696233784492, guid: bcc16273a0128c3438167ed80e8cd6fa, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6322,6 +6352,36 @@ Prefab:
         type: 2}
       propertyPath: areaNames.Array.data[2]
       value: GrayStones
+      objectReference: {fileID: 0}
+    - target: {fileID: 114178809162723422, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.data[3]
+      value: Logs
+      objectReference: {fileID: 0}
+    - target: {fileID: 114443164240104288, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.data[2]
+      value: GrayStones
+      objectReference: {fileID: 0}
+    - target: {fileID: 114297670774612518, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.data[2]
+      value: FishBones
+      objectReference: {fileID: 0}
+    - target: {fileID: 114024962229752212, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.data[4]
+      value: FishBones
+      objectReference: {fileID: 0}
+    - target: {fileID: 114170868852237530, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.data[2]
+      value: Logs
+      objectReference: {fileID: 0}
+    - target: {fileID: 114574038020586742, guid: bcc16273a0128c3438167ed80e8cd6fa,
+        type: 2}
+      propertyPath: areaNames.Array.data[2]
+      value: Logs
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bcc16273a0128c3438167ed80e8cd6fa, type: 2}
@@ -8216,7 +8276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e6b261e285fd64984f77305d14ff71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerSourceNumber: 8
+  targetsNumber: 8
 --- !u!4 &1819115774
 Transform:
   m_ObjectHideFlags: 0

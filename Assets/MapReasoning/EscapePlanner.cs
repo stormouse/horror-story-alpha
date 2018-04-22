@@ -106,34 +106,44 @@ public static class EscapeGraph
         {
             int n = Exits[areaName].Count;
             float bestScore = -2000.0f;
+
+            Vector3 iDir = Vector3.zero;
+
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                Vector3 diff = myPos - enemies[i].transform.position;
+                float l = diff.magnitude;
+                iDir += (1.0f / l) * diff.normalized;
+            }
+
+            if (enemies.Count == 0)
+            {
+                iDir = myForward;
+            }
+            else
+            {
+                iDir = iDir.normalized;
+            }
+
+
             for (int i = 0; i < n; i++)
             {
-                // waypoint too far away, move it out of consideration
-                if (Vector3.Distance(myPos, Exits[areaName][i]) > 30.0f)
-                {
-                    if (bestScore < -1000.0f)
-                    {
-                        bestScore = -1000.0f;
-                        bestExit = Exits[areaName][i];
-                    }
-                    continue;
-                }
+                Vector3 tDir = (Exits[areaName][i] - myPos).normalized;
 
 
-                float d_me = Vector3.Distance(myPos, Exits[areaName][i]);
-                float d_wolf = 1000.0f;
-                for (int j = 0; j < enemies.Count; j++)
-                {
-                    d_wolf = Mathf.Min(Vector3.Distance(enemies[j].position, Exits[areaName][i]), d_wolf);
-                }
+                //float d_me = Vector3.Distance(myPos, Exits[areaName][i]);
+                //float d_wolf = 1000.0f;
+                //for (int j = 0; j < enemies.Count; j++)
+                //{
+                //    d_wolf = Mathf.Min(Vector3.Distance(enemies[j].position, Exits[areaName][i]), d_wolf);
+                //}
 
-                if(enemies.Count == 0)
-                {
-                    d_wolf = Vector3.Distance(myPos - myForward * 10.0f, Exits[areaName][i]);
-                }
+                //if(enemies.Count == 0)
+                //{
+                //    d_wolf = Vector3.Distance(myPos - myForward * 10.0f, Exits[areaName][i]);
+                //}
 
-                float score = (d_wolf - d_me);
-
+                float score = Vector3.Dot(tDir, iDir);
 
                 if (score > bestScore)
                 {
@@ -163,6 +173,14 @@ public class EscapePlanner : MonoBehaviour {
     }
     
     private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "AreaVolume")
+        {
+            areaName = other.GetComponent<AreaVolume>().areaName;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "AreaVolume")
         {

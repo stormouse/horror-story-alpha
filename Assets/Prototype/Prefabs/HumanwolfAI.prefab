@@ -2158,7 +2158,7 @@ MonoBehaviour:
   hookRange: 10
   navStopDistance: 2
   pSStopDistance: 10
-  defaultMoveSpeed: 6.2
+  defaultMoveSpeed: 6.6
   chaseTarget: []
   wonderPoint: {x: 0, y: 0, z: 0}
   underInvokeList: []
@@ -2203,9 +2203,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookSkillIndex: 0
-  hookCooldown: 8
-  hookRange: 12
-  hookSpeed: 80
+  hookCooldown: 10
+  hookRange: 8
+  hookSpeed: 70
   hookSpellTime: 0.25
   hasHook: 1
   wardCooldown: 5
@@ -2217,8 +2217,9 @@ MonoBehaviour:
   warSenseScanPass: 3
   warSenseRadius: 40
   warSenseAudio: {fileID: 82863393209795970}
+  warSenseWarningAudio: {fileID: 0}
   attackCooldown: 1
-  attackRange: 1.2
+  attackRange: 1
   attackAngle: 90
   attackSpellTime: 0.17
   attackAnimationLength: 1

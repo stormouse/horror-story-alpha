@@ -1617,7 +1617,7 @@ MonoBehaviour:
   smokeEffectiveTime: 12
   smokeFlySpeed: 5
   smokeTimeInTheAir: 0.5
-  smokeDecelerationFactor: 0.8
+  smokeDecelerationFactor: 0.2
   trapSkillIndex: 1
   deployAnimationLength: 1
   trapCooldown: 5

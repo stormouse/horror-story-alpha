@@ -283,6 +283,7 @@ public class SurvivorSkills : NetworkBehaviour, ICountableSlots {
 
     void SmokeMethod(GameObject sender, ActionArgument args)
     {
+        if (!SmokeReady) return;
         CmdThrowSmoke();
     }
 

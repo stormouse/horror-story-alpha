@@ -25,7 +25,16 @@ public class _PatrolAction : AIAction {
 		}
 
 		if (controller.nextWayPoint >= controller.wayPointList.Count) {
-			return;
+            // Get next waypoint
+            if (controller.wayPointList.Count > 0)
+            {
+                controller.nextWayPoint = Random.Range(0, controller.wayPointList.Count);
+            }
+            else
+            {
+                Debug.Log("Should be wandering here.");
+                return;
+            }
 		}
 
 		if (controller.character.CurrentState == CharacterState.Normal) {

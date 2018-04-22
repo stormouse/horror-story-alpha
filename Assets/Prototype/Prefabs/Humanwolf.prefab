@@ -2087,9 +2087,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookSkillIndex: 0
-  hookCooldown: 8
-  hookRange: 12
-  hookSpeed: 80
+  hookCooldown: 6
+  hookRange: 8
+  hookSpeed: 70
   hookSpellTime: 0.25
   hasHook: 1
   wardCooldown: 5
@@ -2101,6 +2101,7 @@ MonoBehaviour:
   warSenseScanPass: 3
   warSenseRadius: 40
   warSenseAudio: {fileID: 82654414442377072}
+  warSenseWarningAudio: {fileID: 0}
   attackCooldown: 1
   attackRange: 1.2
   attackAngle: 90
@@ -2155,7 +2156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
-  m_Speed: 6.4
+  m_Speed: 6.6
   m_RunSpead: 9
   m_BackSpead: 3
   m_TurnSpeed: 80

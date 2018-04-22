@@ -47,6 +47,7 @@ public class AIStateController : MonoBehaviour {
 	[HideInInspector] public int[] predictTargets;
 	[HideInInspector] public int playerIndex; //this index of this AI in players array
 	[HideInInspector] public SurvivorBlackBoard survivorBD;
+
 	void Awake() {
 		navMeshAgent = GetComponent<NavMeshAgent> ();
 		survivorsk = GetComponent<SurvivorSkills> ();

@@ -6,14 +6,12 @@ using UnityEngine;
 public class FleeDecision : AIDecision {
 
 	public override bool Decide (AIStateController controller) {
-		/*
-		bool isFleeTimeElapsed = IfFleeTimeElapsed (controller);
-		return isFleeTimeElapsed;
-		*/
-		if (controller.navMeshAgent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathComplete) {
+        
+        if (controller.navMeshAgent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathComplete) {
             controller.Look();
             if (controller.visibleTargets.Count == 0 && Time.time - controller.lastTimeInDanger > 10.0f)
             {
+                Debug.Log("Time till last followed time: " + (Time.time - controller.lastTimeInDanger).ToString());
                 controller.fleeOffsetMultiplyBy = 0;
                 return true;
             }

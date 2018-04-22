@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114089206895529900}
   - component: {fileID: 82452981916271324}
   - component: {fileID: 82849542460019132}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SmokeGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 4241950254235870}
   - component: {fileID: 198039061675557342}
   - component: {fileID: 199936152258944508}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SmokeParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 136108712736594000}
   - component: {fileID: 23260029573878506}
   - component: {fileID: 54311858804318050}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

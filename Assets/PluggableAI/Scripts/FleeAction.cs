@@ -13,6 +13,12 @@ public class FleeAction : AIAction {
 		if (controller.character.CurrentState != CharacterState.Normal) {
 			return;
 		}
+
+        if(controller.CheckIfCountDownElapsed(3.5f) && !controller.CheckIfCountDownElapsed(4.0f))
+        {
+            controller.character.Perform("Smoke", controller.gameObject, null);
+        }
+
 		Flee (controller);
 	}
 
@@ -30,7 +36,6 @@ public class FleeAction : AIAction {
             Vector3 dest = EscapeGraph.GetDestination(controller.transform.position, controller.transform.forward, controller.visibleTargets, planner.areaName);
             if (Vector3.SqrMagnitude(dest - controller.transform.position) > 1.0f)
             {
-                Debug.Log("Recommended Exit Location: " + dest);
                 controller.navMeshAgent.destination = dest;
                 controller.navMeshAgent.stoppingDistance = 1e-3f;
                 controller.navMeshAgent.isStopped = false; // is this safe?
