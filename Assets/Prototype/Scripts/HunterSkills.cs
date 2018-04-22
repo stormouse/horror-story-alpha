@@ -31,6 +31,7 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
     private float lastWarSenseTime = -1000.0f;
     public bool WarSenseReady { get { return Time.time - lastWarSenseTime > warSenseCooldown; } }
     public AudioSource warSenseAudio;
+    public AudioSource warSenseWarningAudio;
 
     public float attackCooldown = 1.0f;
     public float attackRange = 5.0f;
@@ -511,7 +512,8 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
 
             if (warSenseAudio)
                 warSenseAudio.Play();
-        }
+        } else if (warSenseWarningAudio && LocalPlayerInfo.playerCharacter.Team == GameEnum.TeamType.Survivor)
+            warSenseWarningAudio.Play();
     }
 
 
