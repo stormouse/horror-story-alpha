@@ -36,7 +36,8 @@ public class FreeCam : NetworkBehaviour
         {
             Destroy(this);
         }
-        Screen.lockCursor = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
