@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Networking
 
-public class FreeCam : MonoBehaviour
+public class FreeCam : NetworkBehaviour
 {
 
     /*
@@ -33,6 +32,10 @@ public class FreeCam : MonoBehaviour
 
     void Start()
     {
+        if (!isLocalPlayer)
+        {
+            Destroy(this);
+        }
         Screen.lockCursor = true;
     }
 
