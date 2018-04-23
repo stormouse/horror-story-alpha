@@ -154,10 +154,10 @@ public class AIStateController : MonoBehaviour {
                 Transform target = targetsInViewRadius[i].transform;
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
-                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
-                {
+                //if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+               // {
                     visibleTargets.Add(target);
-                }
+               // }
             }
         }
 
