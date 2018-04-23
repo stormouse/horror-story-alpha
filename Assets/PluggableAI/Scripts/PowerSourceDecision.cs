@@ -13,7 +13,7 @@ public class PowerSourceDecision : AIDecision {
 		
 		SurvivorSkills skills = controller.survivorsk;
 		//Debug.Log (skills.m_InteractingPowerSource);
-		if (controller.targetIndx < controller.wayPointList.Count
+		if (controller.targetIndx >= 0 && controller.targetIndx < controller.wayPointList.Count
             && skills.m_InteractingPowerSource != null 
             && skills.m_InteractingPowerSource.gameObject.activeSelf 
             && skills.m_InteractingPowerSource.gameObject == controller.wayPointList[controller.targetIndx].gameObject) {

@@ -47,6 +47,7 @@ public class AIStateController : MonoBehaviour {
 	[HideInInspector] public int[] predictTargets;
 	[HideInInspector] public int playerIndex; //this index of this AI in players array
 	[HideInInspector] public SurvivorBlackBoard survivorBD;
+	[HideInInspector] public float SmokeUsageCooldownMultiply = 0;
 
 	void Awake() {
 		navMeshAgent = GetComponent<NavMeshAgent> ();
@@ -127,6 +128,7 @@ public class AIStateController : MonoBehaviour {
 		}
 		navMeshAgent.isStopped = true;
 		fleeOffsetMultiplyBy = 0;
+		SmokeUsageCooldownMultiply = 0;
 	}
 	public bool IsValidState() {
 		foreach (AIState s in stateForBlock) {
