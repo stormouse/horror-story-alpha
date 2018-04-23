@@ -554,6 +554,7 @@ public class NetworkCharacter : NetworkBehaviour {
     private void StopMovementMethod(GameObject sender, ActionArgument args)
     {
         m_rigidbody.velocity = Vector3.zero;
+        RpcStopMovement();
     }
 
     [ClientRpc]
