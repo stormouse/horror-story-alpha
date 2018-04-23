@@ -11,6 +11,10 @@ public class NameTagController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //nametag.text = this.name;
+        if (this.GetComponent<NetworkCharacter>())
+        {
+            SetUpNameTag(this.GetComponent<NetworkCharacter>().playerName);
+        }
 	}
 	
 	// Update is called once per frame

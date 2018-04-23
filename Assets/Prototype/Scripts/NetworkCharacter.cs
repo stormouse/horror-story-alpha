@@ -38,7 +38,7 @@ public class NetworkCharacter : NetworkBehaviour {
     public static readonly string EndCasting = "EndCasting";
     public static readonly string StopMovement = "StopMovement";
     public static readonly string Brake = "Brake";
-
+    [SyncVar]
     public string playerName;
     
 

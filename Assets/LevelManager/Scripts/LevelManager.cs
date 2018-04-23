@@ -303,6 +303,15 @@ public class LevelManager : NetworkBehaviour
         roundStartTime = Time.time;
     }
 
+    [ClientRpc]
+    void RpcActivateEscapeAreas()
+    {
+        for (int i = 0; i < m_EscapeAreas.Length; i++)
+        {
+
+            m_EscapeAreas[i].Activate();
+        }
+    }
 
     bool PowerEnough()
     {
@@ -328,6 +337,7 @@ public class LevelManager : NetworkBehaviour
                     m_EscapeAreas[i].Activate();
 					escapeTargets.Add (m_EscapeAreas[i].transform);
                 }
+                RpcActivateEscapeAreas();
 				SetupAINextPhase (escapeTargets);
             }
 
