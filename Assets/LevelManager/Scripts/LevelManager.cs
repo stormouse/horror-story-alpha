@@ -64,6 +64,10 @@ public class LevelManager : NetworkBehaviour
     List<GameObject> survivors = new List<GameObject>();
     List<GameObject> hunters = new List<GameObject>();
 
+    private Dictionary<uint, GameObject> netPlayerObject = new Dictionary<uint, GameObject>();
+    private bool netPlayerObjectInitialized = false;
+
+
     float sceneLoadTime;
     float roundStartTime;
     float roundEndTime;
@@ -519,6 +523,38 @@ public class LevelManager : NetworkBehaviour
     public TreeControl[] GetTrees()
     {
         return m_Trees;
+    }
+
+
+    public GameObject GetPlayerObjectByNetId(uint nid)
+    {
+        if (netPlayerObjectInitialized && netPlayerObject.ContainsKey(nid))
+        {
+            return netPlayerObject[nid];
+        }
+        else
+        {
+            netPlayerObject.Clear();
+            var objs = GameObject.FindGameObjectsWithTag("Player");
+            for(int i = 0; i < objs.Length; i++)
+            {
+                var netIdObj = objs[i].GetComponent<NetworkIdentity>();
+                if (netIdObj)
+                {
+                    netPlayerObject[netIdObj.netId.Value] = objs[i];
+                }
+            }
+        }
+
+        if (netPlayerObject.ContainsKey(nid))
+        {
+            return netPlayerObject[nid];
+        }
+        else
+        {
+            Debug.LogWarning(string.Format("Trying to access object with invalid netId {0}", nid));
+            return null; // or throw exception?
+        }
     }
 
     #endregion Game_Control_Interface

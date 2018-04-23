@@ -369,7 +369,9 @@ public class NetworkCharacter : NetworkBehaviour {
         BrakeMethod(null, args);
         m_rigidbody.isKinematic = true;
         m_animator.SetTrigger("Die");
-        GetComponent<AIStateController>().DisableAI();
+
+        if(GetComponent<AIStateController>())
+            GetComponent<AIStateController>().DisableAI();
         
         Transit(CharacterState.Dead);
 
@@ -554,7 +556,10 @@ public class NetworkCharacter : NetworkBehaviour {
     private void StopMovementMethod(GameObject sender, ActionArgument args)
     {
         m_rigidbody.velocity = Vector3.zero;
-        RpcStopMovement();
+        if (isServer)
+        {
+            RpcStopMovement();
+        }
     }
 
     [ClientRpc]

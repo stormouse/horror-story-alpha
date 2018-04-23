@@ -146,15 +146,15 @@ public class CameraFollow : NetworkBehaviour {
         defaultParameters = StoreCameraParameters();
 
         // aiming
-        aimingParameters.cameraOffset = new Vector3(0.6f, 2.0f, -0.5f);
+        aimingParameters.cameraOffset = new Vector3(0.6f, 0.5f, -0.5f);
         aimingParameters.focalDistance = 20.0f;
-        aimingParameters.targetHeight = 1.0f;
+        aimingParameters.targetHeight = 2.0f;
         aimingParameters.smoothFactor = 0.1f;
 
         // lookback
-        lookbackParameters.cameraOffset = new Vector3(0.2f, 2.0f, 4.0f);
+        lookbackParameters.cameraOffset = new Vector3(0.2f, 0.5f, 4.0f);
         lookbackParameters.focalDistance = -10.0f;
-        lookbackParameters.targetHeight = 1.0f;
+        lookbackParameters.targetHeight = 2.0f;
         lookbackParameters.smoothFactor = 0.2f;
 
 

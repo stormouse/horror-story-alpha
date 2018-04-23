@@ -5,20 +5,11 @@ using UnityEngine.Networking;
 public class TrapControl : NetworkBehaviour {
 
 	public float trapStunTime = 3.0f;
-    private bool triggered = false;
     public float m_StartSprintForceFactor = 10.0f;
 
     public AudioSource trapActivateAudio;
 
-    private void Start()
-    {
-        //GetComponent<Rigidbody>().AddForce(transform.TransformDirection(Vector3.back * m_StartSprintForceFactor));
-    }
-
-    private void Update()
-    {
-        
-    }
+    private bool triggered = false;
 
     void OnTriggerEnter(Collider other) {
 		if (!isServer || triggered) {
@@ -33,26 +24,42 @@ public class TrapControl : NetworkBehaviour {
             otherCharacter.Perform("StopMovement", other.gameObject, null);
             otherCharacter.Perform("Stun", other.gameObject, args);
 
-            GetComponent<Animator> ().SetBool("close", true);
-            if (trapActivateAudio)
-                trapActivateAudio.Play();
-
-            RpcActivateTrap();
+            ActivateTrap(otherCharacter.gameObject);
+            RpcActivateTrap(otherCharacter.netId);
 
             Invoke("Byebye", trapStunTime);
-            //NetworkServer.Destroy (gameObject);
 		}
 	}
 
     
     [ClientRpc]
-    void RpcActivateTrap()
+    void RpcActivateTrap(NetworkInstanceId hitId)
     {
         if (!isServer)
         {
-            GetComponent<Animator>().SetBool("close", true);
-            if (trapActivateAudio)
-                trapActivateAudio.Play();
+            var victim = LevelManager.Singleton.GetPlayerObjectByNetId(hitId.Value);
+            ActivateTrap(victim);
+        }
+    }
+
+
+    void ActivateTrap(GameObject victim)
+    {
+        GetComponent<Animator>().SetBool("close", true);
+        if (trapActivateAudio)
+            trapActivateAudio.Play();
+
+        if (victim != null)
+        {
+            var snappables = victim.GetComponents<ISnappable>();
+            for(int i = 0; i < snappables.Length; i++)
+            {
+                if(snappables[i].ParentName() == SnappableParts.Leg)
+                {
+                    transform.SetParent(snappables[i].ParentTransform());
+                    transform.localPosition = Vector3.zero;
+                }
+            }
         }
     }
 

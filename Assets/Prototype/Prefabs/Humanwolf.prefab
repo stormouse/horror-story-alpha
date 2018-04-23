@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 82674535633129676}
   - component: {fileID: 82309383666335046}
   - component: {fileID: 82142077967617298}
+  - component: {fileID: 114882738861093930}
   m_Layer: 8
   m_Name: Humanwolf
   m_TagString: Player
@@ -935,7 +936,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1401743979559124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -68.87673, y: 20.527645, z: -13.368399}
+  m_LocalPosition: {x: -11.152828, y: 18.33797, z: -47.471485}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children:
   - {fileID: 4010838103157636}
@@ -2226,6 +2227,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0084d3b5c867544a4ae5c32ff7acfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114882738861093930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1401743979559124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a769cf56be50394db8a3aef920a01eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  legTransform: {fileID: 4550269892123172}
 --- !u!114 &114929979931833966
 MonoBehaviour:
   m_ObjectHideFlags: 1
