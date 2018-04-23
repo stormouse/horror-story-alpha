@@ -15,7 +15,7 @@ public class FleeAction : AIAction {
 			return;
 		}
 
-		if(controller.CheckIfCountDownElapsed(controller.SmokeUsageCooldownMultiply * smokeUsageInterval + 3.5f) && !controller.CheckIfCountDownElapsed(controller.SmokeUsageCooldownMultiply * smokeUsageInterval + 4.0f))
+		if(controller.visibleTargets.Count > 0 && controller.CheckIfCountDownElapsed(controller.SmokeUsageCooldownMultiply * smokeUsageInterval + 3.5f) && !controller.CheckIfCountDownElapsed(controller.SmokeUsageCooldownMultiply * smokeUsageInterval + 4.0f))
         {
             controller.character.Perform("Smoke", controller.gameObject, null);
 			controller.SmokeUsageCooldownMultiply++;

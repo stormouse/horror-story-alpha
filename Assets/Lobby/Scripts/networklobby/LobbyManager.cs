@@ -602,6 +602,10 @@ public class LobbyManager : NetworkLobbyManager {
                 character.SetTeam(TeamType.Hunter);
                 character.playerName = lobbyPlayer.GetComponent<LobbyPlayer>().playerName;
                 newPlayer.name = character.playerName;
+                if (newPlayer.GetComponent<NameTagController>() != null)
+                {
+                    newPlayer.GetComponent<NameTagController>().SetUpNameTag(newPlayer.name);
+                }
                 hunterSpawned++;
             }
             NetworkServer.Spawn(newPlayer);
@@ -621,6 +625,10 @@ public class LobbyManager : NetworkLobbyManager {
                 character.SetTeam(TeamType.Survivor);
                 character.playerName = lobbyPlayer.GetComponent<LobbyPlayer>().playerName;
                 newPlayer.name = character.playerName;
+                if (newPlayer.GetComponent<NameTagController>() != null)
+                {
+                    newPlayer.GetComponent<NameTagController>().SetUpNameTag(newPlayer.name);
+                }
                 survivorSpawned++;
             }
             NetworkServer.Spawn(newPlayer);
@@ -659,6 +667,10 @@ public class LobbyManager : NetworkLobbyManager {
             character.SetTeam(TeamType.Hunter);
             character.playerName = ai;
             newPlayer.name = character.playerName;
+            if (newPlayer.GetComponent<NameTagController>() != null)
+            {
+                newPlayer.GetComponent<NameTagController>().SetUpNameTag(newPlayer.name);
+            }
             hunterSpawned++;
             NetworkServer.Spawn(newPlayer);
         }
@@ -673,6 +685,10 @@ public class LobbyManager : NetworkLobbyManager {
             character.SetTeam(TeamType.Survivor);
             character.playerName = ai;
             newPlayer.name = character.playerName;
+            if (newPlayer.GetComponent<NameTagController>() != null)
+            {
+                newPlayer.GetComponent<NameTagController>().SetUpNameTag(newPlayer.name);
+            }
             survivorSpawned++;
             NetworkServer.Spawn(newPlayer);
         }

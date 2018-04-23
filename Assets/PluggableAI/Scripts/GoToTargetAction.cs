@@ -64,7 +64,7 @@ public class GoToTargetAction : AIAction{
 			}
 		}
 		threshold = Mathf.Min (ways, plys);
-		Debug.Log (threshold);
+		//Debug.Log (threshold);
 		while (sum < threshold) {
 			for (int i = 0; i < controller.wayPointList.Count; i++) {
 				if (!assigned[i]) {
@@ -94,7 +94,7 @@ public class GoToTargetAction : AIAction{
 						}
 						//Debug.Log (controller.playerIndex + "  Distance(powerSource):" + tempi);
 						if (tempi == i) {
-							Debug.Log (controller.playerIndex + ":" + tempindx + "::" + i);
+							//Debug.Log (controller.playerIndex + ":" + tempindx + "::" + i);
 							controller.predictTargets [tempindx] = i;
 							assigned [i] = true;
 							sum++;
@@ -103,9 +103,7 @@ public class GoToTargetAction : AIAction{
 				}
 			}
 		}
-		for (int i = 0; i < controller.players.Count; i++) {
-			Debug.Log (controller.playerIndex + ":" + i + "--->" + controller.predictTargets [i]);
-		}
+	
 		/*
 		if (controller.predictTargets [controller.playerIndex] == -1) {
 			
@@ -124,7 +122,7 @@ public class GoToTargetAction : AIAction{
 			controller.predictTargets [controller.playerIndex] = Random.Range (0, controller.wayPointList.Count);
 		}
 			
-		Debug.Log ("Out Break");
+		//Debug.Log ("Out Break");
 		controller.targetIndx = controller.predictTargets [controller.playerIndex];
 
 		controller.survivorBD.SetPSTimer (controller.targetIndx, 8, controller.playerIndex);
