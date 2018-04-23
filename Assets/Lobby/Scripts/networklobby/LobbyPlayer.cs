@@ -13,6 +13,7 @@ public class LobbyPlayer : NetworkLobbyPlayer
     /* player public properties */
     [SyncVar(hook = "OnSwitchTeam")]
     public TeamType team;
+    [SyncVar]
     public string playerName;
 
     [Space]

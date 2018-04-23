@@ -604,7 +604,7 @@ public class LobbyManager : NetworkLobbyManager {
                 newPlayer.name = character.playerName;
                 if (newPlayer.GetComponent<NameTagController>() != null)
                 {
-                    newPlayer.GetComponent<NameTagController>().SetUpNameTag(newPlayer.name);
+                    newPlayer.GetComponent<NameTagController>().SetUpNameTag(character.playerName);
                 }
                 hunterSpawned++;
             }
@@ -627,7 +627,7 @@ public class LobbyManager : NetworkLobbyManager {
                 newPlayer.name = character.playerName;
                 if (newPlayer.GetComponent<NameTagController>() != null)
                 {
-                    newPlayer.GetComponent<NameTagController>().SetUpNameTag(newPlayer.name);
+                    newPlayer.GetComponent<NameTagController>().SetUpNameTag(character.playerName);
                 }
                 survivorSpawned++;
             }
@@ -669,7 +669,7 @@ public class LobbyManager : NetworkLobbyManager {
             newPlayer.name = character.playerName;
             if (newPlayer.GetComponent<NameTagController>() != null)
             {
-                newPlayer.GetComponent<NameTagController>().SetUpNameTag(newPlayer.name);
+                newPlayer.GetComponent<NameTagController>().SetUpNameTag(character.playerName);
             }
             hunterSpawned++;
             NetworkServer.Spawn(newPlayer);
@@ -687,7 +687,7 @@ public class LobbyManager : NetworkLobbyManager {
             newPlayer.name = character.playerName;
             if (newPlayer.GetComponent<NameTagController>() != null)
             {
-                newPlayer.GetComponent<NameTagController>().SetUpNameTag(newPlayer.name);
+                newPlayer.GetComponent<NameTagController>().SetUpNameTag(character.playerName);
             }
             survivorSpawned++;
             NetworkServer.Spawn(newPlayer);
