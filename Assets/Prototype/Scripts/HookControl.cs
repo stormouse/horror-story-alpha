@@ -14,6 +14,7 @@ public class HookControl : NetworkBehaviour {
     public Renderer chainRenderer;
     public static Material chainMaterial = null;
 
+    public float HookedObjectDestinationOffsetRatio = 2.0f;
     //private
     private Vector3 origin;
     [HideInInspector]
@@ -93,7 +94,7 @@ public class HookControl : NetworkBehaviour {
         if (otherCharacter && otherCharacter.Team == GameEnum.TeamType.Survivor)
         {
             var dir = (transform.position - origin).normalized;
-            var offset = dir * 1.5f;
+            var offset = dir * HookedObjectDestinationOffsetRatio;
             duration = Mathf.Min(Vector3.Distance(transform.position, origin) / hookSpeed, duration);
 
             var args = new StunArgument();
