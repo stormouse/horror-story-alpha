@@ -41,7 +41,7 @@ public class EscapeArea : MonoBehaviour {
         if (!bActivated) return;
         var character = other.GetComponent<NetworkCharacter>();
 
-        if (other.tag == "Player" && character != null && character.Team == GameEnum.TeamType.Hunter)
+        if (other.tag == "Player" && character != null && character.Team == GameEnum.TeamType.Survivor)
         {
             if (!playerInside.Contains(other.gameObject))
             {

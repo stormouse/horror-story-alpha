@@ -2366,7 +2366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hookSkillIndex: 0
   hookCooldown: 10
-  hookRange: 12
+  hookRange: 15
   hookSpeed: 55
   hookSpellTime: 0.25
   hasHook: 1
@@ -2468,6 +2468,7 @@ MonoBehaviour:
   targetHeight: 1
   smoothFactor: 0.5
   focalDistance: 5
+  camDistanceRecoveryRate: 2
 --- !u!114 &114859384451683764
 MonoBehaviour:
   m_ObjectHideFlags: 1
