@@ -170,7 +170,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1931548332930490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.8221807, y: -0.00001001358, z: -3.7761137}
+  m_LocalPosition: {x: 98.68514, y: 141.83821, z: -86.13133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4881945752249528}
@@ -407,8 +407,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4093833, y: 0.39731932, z: 1.2826233}
-  m_Center: {x: -0.19752955, y: 1.2690932, z: 0.11010361}
+  m_Size: {x: 0.66683006, y: 0.39731932, z: 1.0654793}
+  m_Center: {x: -0.32625294, y: 1.2690932, z: 0.21867561}
 --- !u!82 &82512642182372102
 AudioSource:
   m_ObjectHideFlags: 1
@@ -810,6 +810,7 @@ MonoBehaviour:
   hitObjectAudio: {fileID: 82512642182372102}
   hitSheepAudio: {fileID: 82890366788081132}
   chainRenderer: {fileID: 23512238150820154}
+  HookedObjectDestinationOffsetRatio: 2
   hookSpeed: 0
   hookRange: 0
   additionalStunTime: 0.8
