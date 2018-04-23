@@ -174,7 +174,7 @@ public class EscapePlanner : MonoBehaviour {
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "AreaVolume")
+        if (other && other.tag == "AreaVolume")
         {
             areaName = other.GetComponent<AreaVolume>().areaName;
         }
@@ -182,7 +182,7 @@ public class EscapePlanner : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "AreaVolume")
+        if (other && other.tag == "AreaVolume")
         {
             areaName = other.GetComponent<AreaVolume>().areaName;
         }
