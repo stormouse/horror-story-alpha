@@ -31,6 +31,7 @@ public class EscapeArea : MonoBehaviour {
         if (m_Stone)
         {
             m_Stone.GetComponent<MeshRenderer>().enabled = false;
+            m_Stone.GetComponent<MeshCollider>().enabled = false;
             m_Cave.GetComponent<MeshRenderer>().material = m_CaveSeeThroughableMaterial;
         }
     }
