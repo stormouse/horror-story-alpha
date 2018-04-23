@@ -74,8 +74,8 @@ public class LobbyManager : NetworkLobbyManager {
     int survivorSpawned = 0;
     int hunterSpawned = 0;
 
-    private string[] survivorFunnyNames = new string[] { "TRAJAN", "HADRIAN", "ANTONINUS", "MARCUS" };
-    private string[] hunterFunnyNames = new string[] { "COMMODUS", "NERO" };
+    private string[] survivorFunnyNames = new string[] { "TRAJAN_AI", "HADRIAN_AI", "ANTONINUS_AI", "MARCUS_AI" };
+    private string[] hunterFunnyNames = new string[] { "COMMODUS_AI", "NERO_AI" };
 
     private void Start()
     {
@@ -601,6 +601,7 @@ public class LobbyManager : NetworkLobbyManager {
                 var character = newPlayer.GetComponent<NetworkCharacter>();
                 character.SetTeam(TeamType.Hunter);
                 character.playerName = lobbyPlayer.GetComponent<LobbyPlayer>().playerName;
+                newPlayer.name = character.playerName;
                 hunterSpawned++;
             }
             NetworkServer.Spawn(newPlayer);
@@ -619,6 +620,7 @@ public class LobbyManager : NetworkLobbyManager {
                 var character = newPlayer.GetComponent<NetworkCharacter>();
                 character.SetTeam(TeamType.Survivor);
                 character.playerName = lobbyPlayer.GetComponent<LobbyPlayer>().playerName;
+                newPlayer.name = character.playerName;
                 survivorSpawned++;
             }
             NetworkServer.Spawn(newPlayer);
@@ -656,6 +658,7 @@ public class LobbyManager : NetworkLobbyManager {
             var character = newPlayer.GetComponent<NetworkCharacter>();
             character.SetTeam(TeamType.Hunter);
             character.playerName = ai;
+            newPlayer.name = character.playerName;
             hunterSpawned++;
             NetworkServer.Spawn(newPlayer);
         }
@@ -669,6 +672,7 @@ public class LobbyManager : NetworkLobbyManager {
             var character = newPlayer.GetComponent<NetworkCharacter>();
             character.SetTeam(TeamType.Survivor);
             character.playerName = ai;
+            newPlayer.name = character.playerName;
             survivorSpawned++;
             NetworkServer.Spawn(newPlayer);
         }

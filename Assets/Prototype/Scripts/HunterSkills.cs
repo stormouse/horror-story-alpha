@@ -120,7 +120,7 @@ public class HunterSkills : NetworkBehaviour, ICountableSlots
         if (isLocalPlayer || LocalPlayerInfo.playerCharacter.Team != GameEnum.TeamType.Survivor)
         {
             if (heartbeatAudio != null)
-                heartbeatAudio.Stop();
+                heartbeatAudio.enabled = false;
         }
         
     }
