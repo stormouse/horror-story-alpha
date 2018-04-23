@@ -8,7 +8,8 @@ public class LookDecision : AIDecision {
 	public override bool Decide(AIStateController controller) {
 		bool targetVisible = Look (controller);
 		if (targetVisible && controller.IsValidState()) {
-			controller.survivorBD.SetPSTimer (controller.targetIndx, 100.0f / (Vector3.Distance(controller.wayPointList[controller.targetIndx].transform.position, controller.transform.position) + 10.0f));
+			controller.survivorBD.SetPSTimer (controller.targetIndx, 100.0f / (Vector3.Distance(controller.wayPointList[controller.targetIndx].transform.position, controller.transform.position) + 10.0f), controller.playerIndex);
+			controller.targetIndx = -1;
 		}
 		return targetVisible;
 	}

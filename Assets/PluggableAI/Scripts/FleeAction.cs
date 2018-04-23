@@ -9,14 +9,16 @@ public class FleeAction : AIAction {
 	private float northBoarder = 63;
 	private float southBoarder = 65;
 	public float fleeDisMultiplyBy = 10;
+	private float smokeUsageInterval = 10.0f;
 	public override void Act(AIStateController controller) {
 		if (controller.character.CurrentState != CharacterState.Normal) {
 			return;
 		}
 
-        if(controller.CheckIfCountDownElapsed(3.5f) && !controller.CheckIfCountDownElapsed(4.0f))
+		if(controller.CheckIfCountDownElapsed(controller.SmokeUsageCooldownMultiply * smokeUsageInterval + 3.5f) && !controller.CheckIfCountDownElapsed(controller.SmokeUsageCooldownMultiply * smokeUsageInterval + 4.0f))
         {
             controller.character.Perform("Smoke", controller.gameObject, null);
+			controller.SmokeUsageCooldownMultiply++;
         }
 
 		Flee (controller);

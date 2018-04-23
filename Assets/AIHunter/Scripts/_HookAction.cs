@@ -13,8 +13,15 @@ public class _HookAction : AIAction {
 	public void lunchHook(AIStateController controller){
 		//lunch hook here
 		DirectionArgument dir = new DirectionArgument();
-		dir.direction = controller.chaseTarget [0].transform.position - controller.transform.position;
-		dir.direction.y = 0;
-		controller.character.Perform ("Hook", controller.gameObject, dir);
+		Vector3 target = controller.chaseTarget [0].transform.position;
+		target.y = 1.0f;
+		Vector3 selfpos = controller.transform.position;
+		selfpos.y = 1.0f;
+		Vector3 dirToTarget = (target - selfpos).normalized;
+		float dstToTarget = Vector3.Distance(selfpos, target);
+		if (!Physics.Raycast (controller.transform.position, dirToTarget, dstToTarget)) {
+			dir.direction = target - selfpos;
+			controller.character.Perform ("Hook", controller.gameObject, dir);
+		}
 	}
 }

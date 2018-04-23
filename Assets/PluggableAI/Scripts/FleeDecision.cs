@@ -7,7 +7,8 @@ public class FleeDecision : AIDecision {
 
     public override bool Decide(AIStateController controller)
     {
-        controller.Look();
+        //controller.Look();
+
         if (controller.visibleTargets.Count == 0 && Time.time - controller.lastTimeInDanger > 10.0f)
         {
             return false;
