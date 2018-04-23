@@ -1706,7 +1706,7 @@ MonoBehaviour:
   smokeEffectiveTime: 12
   smokeFlySpeed: 5
   smokeTimeInTheAir: 0.5
-  smokeDecelerationFactor: 0.2
+  smokeDecelerationFactor: 0.5
   trapSkillIndex: 1
   deployAnimationLength: 1
   trapCooldown: 5
@@ -1831,6 +1831,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 513
+  defaultDeployedUsageCooldown: 6
   fleeDest: {x: 0, y: 0, z: 0}
   fleeOffsetMultiplyBy: 0
   navMeshAgent: {fileID: 0}
@@ -1840,6 +1841,7 @@ MonoBehaviour:
   targetIndx: -1
   survivorsk: {fileID: 0}
   timeElapsed: 0
+  deployedTimer: 0
   aiActive: 0
   character: {fileID: 0}
   players: []

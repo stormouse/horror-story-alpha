@@ -84,6 +84,9 @@ public class HookControl : NetworkBehaviour {
         if (other.gameObject.tag == "AreaVolume")
             return;
 
+        if (other.gameObject.tag == "Smoke")
+            return;
+
         var otherCharacter = other.GetComponent<NetworkCharacter>();
         var duration = 0.3f;
 

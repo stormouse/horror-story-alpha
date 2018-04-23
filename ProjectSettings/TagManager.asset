@@ -10,6 +10,7 @@ TagManager:
   - AreaVolume
   - Spectator
   - SurvivorBD
+  - Smoke
   layers:
   - Default
   - TransparentFX

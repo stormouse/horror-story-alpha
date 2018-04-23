@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 82849542460019132}
   m_Layer: 2
   m_Name: SmokeGrenade
-  m_TagString: Untagged
+  m_TagString: Smoke
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 199936152258944508}
   m_Layer: 2
   m_Name: SmokeParticles
-  m_TagString: Untagged
+  m_TagString: Smoke
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 54311858804318050}
   m_Layer: 2
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Smoke
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1071767384830490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -69.01, y: 22.211243, z: -9.576412}
+  m_LocalPosition: {x: 34.607567, y: -0.25739145, z: 8.560092}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4241950254235870}
@@ -191,8 +191,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 9.208788, y: 1, z: 10.193018}
-  m_Center: {x: -0.07176685, y: 0, z: 0.97652245}
+  m_Size: {x: 8.628195, y: 1, z: 9.660319}
+  m_Center: {x: -0.1977911, y: 0, z: 0.90241385}
 --- !u!82 &82452981916271324
 AudioSource:
   m_ObjectHideFlags: 1
@@ -493,7 +493,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1248951111
+  randomSeed: 970513453
   InitialModule:
     serializedVersion: 3
     enabled: 1
