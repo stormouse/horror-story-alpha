@@ -20,7 +20,18 @@ public class _HookDecision : AIDecision {
 		float distance = (controller.chaseTarget [0].transform.position - controller.transform.position).magnitude;
 		if (distance <= controller.hookRange && controller.character.CurrentState == CharacterState.Normal
 			&& controller.hskills.HookReady) {
-			return true;
+			/* dont hook when facing obstacles*/
+			Vector3 target = controller.chaseTarget [0].transform.position;
+			target.y = 1.0f;
+			Vector3 selfpos = controller.transform.position;
+			selfpos.y = 1.0f;
+			Vector3 dirToTarget = (target - selfpos).normalized;
+			float dstToTarget = Vector3.Distance(selfpos, target);
+			if (!Physics.Raycast (controller.transform.position, dirToTarget, dstToTarget)) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 		else
 			return false;
