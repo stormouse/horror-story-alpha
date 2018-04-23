@@ -29,9 +29,9 @@ public class TrapControl : NetworkBehaviour {
             triggered = true;
 			var args = new StunArgument ();
 			args.time = trapStunTime;
+
             otherCharacter.Perform("StopMovement", other.gameObject, null);
             otherCharacter.Perform("Stun", other.gameObject, args);
-            
 
             GetComponent<Animator> ().SetBool("close", true);
             if (trapActivateAudio)
@@ -44,7 +44,7 @@ public class TrapControl : NetworkBehaviour {
 		}
 	}
 
-
+    
     [ClientRpc]
     void RpcActivateTrap()
     {

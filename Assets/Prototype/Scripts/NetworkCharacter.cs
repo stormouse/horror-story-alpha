@@ -556,6 +556,15 @@ public class NetworkCharacter : NetworkBehaviour {
         m_rigidbody.velocity = Vector3.zero;
     }
 
+    [ClientRpc]
+    void RpcStopMovement()
+    {
+        if (!isServer)
+        {
+            m_rigidbody.velocity = Vector3.zero;
+        }
+    }
+
     private void BrakeMethod(GameObject sender, ActionArgument args)
     {
         BrakeArgument brakeArgs = args as BrakeArgument;
