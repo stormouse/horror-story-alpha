@@ -1715,7 +1715,7 @@ MonoBehaviour:
   camouflageCooldown: 20
   camouflageCount: 2
   toyCarCount: 1
-  trapPrefab: {fileID: 1065511799908946, guid: 2f3a1300ce544c7438e8947424fc7148, type: 2}
+  trapPrefab: {fileID: 1650290433295440, guid: 0c116cf178e0eff4c8548c4caf3f3745, type: 2}
   trapSpawn: {fileID: 4205913955450716}
   deployAudio: {fileID: 82417260165598322}
   abilityNotReadyAudio: {fileID: 82218578842940378}
@@ -1818,6 +1818,7 @@ MonoBehaviour:
   stateForBlock:
   - {fileID: 11400000, guid: eef8f0c2bf115e940b6b8c62d9038045, type: 2}
   - {fileID: 11400000, guid: de03d1ec3a46a8744b2bf4a65b38fd7d, type: 2}
+  - {fileID: 11400000, guid: 344aeac2c32e2b54da84201da66f8771, type: 2}
   currentState: {fileID: 11400000, guid: eef8f0c2bf115e940b6b8c62d9038045, type: 2}
   enemyStats: {fileID: 11400000, guid: e590306de9c33d64193eee4655f9eb46, type: 2}
   remainState: {fileID: 11400000, guid: b937cb2f4bfd22749b85155385fcff81, type: 2}

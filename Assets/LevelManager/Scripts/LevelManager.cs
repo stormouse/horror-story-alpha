@@ -364,9 +364,11 @@ public class LevelManager : NetworkBehaviour
 	void SetupAINextPhase(List<Transform> escapeTargets) {
 		Debug.Log ("Next Step Start!!!");
 		foreach (GameObject p in survivors) {
-			var ai = p.GetComponent<AIStateController> ();
-			if (ai != null) {
-				ai.SetupAI (true, escapeTargets, survivors);
+			if (p != null) {
+				var ai = p.GetComponent<AIStateController> ();
+				if (ai != null) {
+					ai.SetupAI (true, escapeTargets, survivors);
+				}
 			}
 		}
 

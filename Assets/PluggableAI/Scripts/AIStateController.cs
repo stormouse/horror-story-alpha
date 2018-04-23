@@ -30,6 +30,7 @@ public class AIStateController : MonoBehaviour {
 
 	public LayerMask targetMask;
 	public LayerMask obstacleMask;
+	public float defaultDeployedUsageCooldown = 6.0f;
 
 	[HideInInspector] public Vector3 fleeDest;
 	[HideInInspector] public float fleeOffsetMultiplyBy;
@@ -40,6 +41,7 @@ public class AIStateController : MonoBehaviour {
 	[HideInInspector] public int targetIndx = -1;
 	[HideInInspector] public SurvivorSkills survivorsk;
 	[HideInInspector] public float timeElapsed;
+	[HideInInspector] public float deployedTimer;
 
 	[HideInInspector] public bool aiActive;
 	[HideInInspector] public NetworkCharacter character;
@@ -49,6 +51,7 @@ public class AIStateController : MonoBehaviour {
 	[HideInInspector] public SurvivorBlackBoard survivorBD;
 	[HideInInspector] public float SmokeUsageCooldownMultiply = 0;
 
+
 	void Awake() {
 		navMeshAgent = GetComponent<NavMeshAgent> ();
 		survivorsk = GetComponent<SurvivorSkills> ();
@@ -57,12 +60,15 @@ public class AIStateController : MonoBehaviour {
 		navMeshAgent.stoppingDistance = navStopDistance;
         if(speedMultiplier == null)
             speedMultiplier = GetComponent<SpeedMultiplier>();
+		deployedTimer = defaultDeployedUsageCooldown;
+		
     }
 	public void SetupSurvivorBD(SurvivorBlackBoard sbd) {
 		survivorBD = sbd;
 	}
 	public void SetupAI(bool aiActivationFromLevelManager, List<Transform> wayPointFromLevelManager, List<GameObject> playersFromLevelManager) {
 		wayPointList = wayPointFromLevelManager;
+
 		aiActive = aiActivationFromLevelManager;
 		targetIndx = -1;
 		if (playersFromLevelManager != null) {
@@ -76,8 +82,13 @@ public class AIStateController : MonoBehaviour {
 				break;
 			}
 		}
+		if (wayPointList.Count < 8 && players.Count > 0) {
+			Debug.Log (playerIndex + "Setup Escap");
+		}
+
 		if (aiActive) {
 			navMeshAgent.enabled = true;
+			navMeshAgent.isStopped = true;
 		} else {
 			navMeshAgent.enabled = false;
 		}
@@ -100,7 +111,9 @@ public class AIStateController : MonoBehaviour {
 		if (!aiActive) {
 			return;
 		}
+		UpdateTimer ();
 		currentState.UpdateState (this);
+
         if (navMeshAgent && navMeshAgent.isActiveAndEnabled && speedMultiplier)
         {
             navMeshAgent.speed = defaultMoveSpeed * speedMultiplier.value;
@@ -112,9 +125,17 @@ public class AIStateController : MonoBehaviour {
 			OnExitState ();
 		}
 	}
-
-	public bool CheckIfCountDownElapsed(float duration) {
+	private void UpdateTimer() {
+		if (IsValidState ()) {
+			deployedTimer += Time.deltaTime;
+		}
 		timeElapsed += Time.deltaTime;
+	}
+	public bool CheckDeployUsageCooldown(float duration) {
+		return (deployedTimer >= duration);
+	}
+	public bool CheckIfCountDownElapsed(float duration) {
+		
 		return (timeElapsed >= duration);
 	}
 
@@ -125,6 +146,7 @@ public class AIStateController : MonoBehaviour {
 		}
 		if (!IsValidState ()) {
 			targetIndx = -1;
+			deployedTimer = defaultDeployedUsageCooldown;
 		}
 		navMeshAgent.isStopped = true;
 		fleeOffsetMultiplyBy = 0;
