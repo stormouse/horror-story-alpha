@@ -113,6 +113,74 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &906676164
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4375373350604712, guid: bcf33c8506891c34eb2b6d2f4f0eb154, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 77.188484
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375373350604712, guid: bcf33c8506891c34eb2b6d2f4f0eb154, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 78.730804
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375373350604712, guid: bcf33c8506891c34eb2b6d2f4f0eb154, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -8.765114
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375373350604712, guid: bcf33c8506891c34eb2b6d2f4f0eb154, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375373350604712, guid: bcf33c8506891c34eb2b6d2f4f0eb154, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375373350604712, guid: bcf33c8506891c34eb2b6d2f4f0eb154, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375373350604712, guid: bcf33c8506891c34eb2b6d2f4f0eb154, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375373350604712, guid: bcf33c8506891c34eb2b6d2f4f0eb154, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: bcf33c8506891c34eb2b6d2f4f0eb154, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1 &906676165 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1787868669199264, guid: bcf33c8506891c34eb2b6d2f4f0eb154,
+    type: 2}
+  m_PrefabInternal: {fileID: 906676164}
+--- !u!114 &906676166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 906676165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625eb5d1d51bbb246aa69f320c1f61e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XSensitivity: 2
+  smooth: 1
+  smoothTime: 5
+  lockCursor: 1
+  YRotation: 0
+  cameraOffset: {x: 0, y: 4, z: -15}
+  targetHeight: 2.5
+  smoothFactor: 0.5
+  focalDistance: 5
+  camDistanceRecoveryRate: 2
 --- !u!1001 &1482344821
 Prefab:
   m_ObjectHideFlags: 0

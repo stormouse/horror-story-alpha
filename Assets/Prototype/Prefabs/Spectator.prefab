@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114902761310533772}
   - component: {fileID: 54191597570546670}
   - component: {fileID: 114178372631119470}
+  - component: {fileID: 114974939596338288}
   m_Layer: 0
   m_Name: Spectator
   m_TagString: Spectator
@@ -162,3 +163,24 @@ MonoBehaviour:
   normalMoveSpeed: 15
   slowMoveFactor: 0.25
   fastMoveFactor: 3
+--- !u!114 &114974939596338288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1787868669199264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625eb5d1d51bbb246aa69f320c1f61e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XSensitivity: 2
+  smooth: 1
+  smoothTime: 5
+  lockCursor: 1
+  YRotation: 0
+  cameraOffset: {x: 0, y: 4, z: -15}
+  targetHeight: 2.5
+  smoothFactor: 0.5
+  focalDistance: 12
+  camDistanceRecoveryRate: 2

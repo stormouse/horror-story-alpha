@@ -30,6 +30,9 @@ public class FreeCam : NetworkBehaviour
     private float rotationX = 0.0f;
     private float rotationY = 0.0f;
 
+    private bool m_LockOnPlayer = false;
+    private int m_CurrentPlayerIndex = 0;
+
     void Start()
     {
         if (!isLocalPlayer)
@@ -49,32 +52,68 @@ public class FreeCam : NetworkBehaviour
         transform.localRotation = Quaternion.AngleAxis(rotationX, Vector3.up);
         transform.localRotation *= Quaternion.AngleAxis(rotationY, Vector3.left);
 
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+
+        if (!m_LockOnPlayer)
         {
-            transform.position += transform.forward * (normalMoveSpeed * fastMoveFactor) * Input.GetAxis("Vertical") * Time.deltaTime;
-            transform.position += transform.right * (normalMoveSpeed * fastMoveFactor) * Input.GetAxis("Horizontal") * Time.deltaTime;
-        }
-        else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-        {
-            transform.position += transform.forward * (normalMoveSpeed * slowMoveFactor) * Input.GetAxis("Vertical") * Time.deltaTime;
-            transform.position += transform.right * (normalMoveSpeed * slowMoveFactor) * Input.GetAxis("Horizontal") * Time.deltaTime;
-        }
-        else
-        {
-            transform.position += transform.forward * normalMoveSpeed * Input.GetAxis("Vertical") * Time.deltaTime;
-            transform.position += transform.right * normalMoveSpeed * Input.GetAxis("Horizontal") * Time.deltaTime;
-        }
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
+                transform.position += transform.forward * (normalMoveSpeed * fastMoveFactor) * Input.GetAxis("Vertical") * Time.deltaTime;
+                transform.position += transform.right * (normalMoveSpeed * fastMoveFactor) * Input.GetAxis("Horizontal") * Time.deltaTime;
+            }
+            else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+            {
+                transform.position += transform.forward * (normalMoveSpeed * slowMoveFactor) * Input.GetAxis("Vertical") * Time.deltaTime;
+                transform.position += transform.right * (normalMoveSpeed * slowMoveFactor) * Input.GetAxis("Horizontal") * Time.deltaTime;
+            }
+            else
+            {
+                transform.position += transform.forward * normalMoveSpeed * Input.GetAxis("Vertical") * Time.deltaTime;
+                transform.position += transform.right * normalMoveSpeed * Input.GetAxis("Horizontal") * Time.deltaTime;
+            }
 
 
-        if (Input.GetKey(KeyCode.Q)) { transform.position += transform.up * climbSpeed * Time.deltaTime; }
-        if (Input.GetKey(KeyCode.E)) { transform.position -= transform.up * climbSpeed * Time.deltaTime; }
+            if (Input.GetKey(KeyCode.Q)) { transform.position += transform.up * climbSpeed * Time.deltaTime; }
+            if (Input.GetKey(KeyCode.E)) { transform.position -= transform.up * climbSpeed * Time.deltaTime; }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        } else
         {
-            Screen.lockCursor = (Screen.lockCursor == false) ? true : false;
+            GameObject[] players = LevelManager.GetLoadedPlayers();
+            if (players.Length > 0)
+            {
+                transform.position = players[m_CurrentPlayerIndex].transform.position;
+
+                if (Input.GetKey(KeyCode.A))
+                {
+                    m_CurrentPlayerIndex -= 1;
+                    if (m_CurrentPlayerIndex < 0)
+                    {
+                        m_CurrentPlayerIndex = players.Length - 1;
+                    }
+                }
+                if (Input.GetKey(KeyCode.D)) {
+                    m_CurrentPlayerIndex += 1;
+                    if (m_CurrentPlayerIndex == players.Length)
+                    {
+                        m_CurrentPlayerIndex = 0;
+                    }
+                }
+            } else
+            {
+                m_LockOnPlayer = !m_LockOnPlayer;
+            }
+
+        }
+        
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            m_LockOnPlayer = !m_LockOnPlayer;
         }
 
-        Camera.main.transform.position = transform.position;
+        
         Camera.main.transform.rotation = transform.rotation;
     }
+
+
+
 }
