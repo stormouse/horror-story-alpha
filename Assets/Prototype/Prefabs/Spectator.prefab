@@ -163,19 +163,21 @@ MonoBehaviour:
   normalMoveSpeed: 15
   slowMoveFactor: 0.25
   fastMoveFactor: 3
+  offsetX: 15
+  offsetY: 7
 --- !u!114 &114974939596338288
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1787868669199264}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 625eb5d1d51bbb246aa69f320c1f61e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   XSensitivity: 2
-  smooth: 1
+  smooth: 0
   smoothTime: 5
   lockCursor: 1
   YRotation: 0

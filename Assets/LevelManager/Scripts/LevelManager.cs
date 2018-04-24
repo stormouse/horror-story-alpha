@@ -27,13 +27,7 @@ public class LevelManager : NetworkBehaviour
 
     protected static LevelManager _singleton = null;
     public static LevelManager Singleton { get { return _singleton; } }
-    private static GameObject[] loadedPlayers;
-    public static GameObject[] GetLoadedPlayers()
-    {
-        if (loadedPlayers == null)
-            loadedPlayers = GameObject.FindGameObjectsWithTag("Player");
-        return loadedPlayers;
-    }
+
 
     /* character resources */
     private GameObject hunterPrefab;

@@ -26,12 +26,16 @@ public class FreeCam : NetworkBehaviour
     public float normalMoveSpeed = 10;
     public float slowMoveFactor = 0.25f;
     public float fastMoveFactor = 3;
+    public float offsetX = 10.0f;
+    public float offsetY = 10.0f;
 
     private float rotationX = 0.0f;
     private float rotationY = 0.0f;
 
     private bool m_LockOnPlayer = false;
     private int m_CurrentPlayerIndex = 0;
+    private GameObject focusedPlayer;
+    private GameObject[] loadedPlayers;
 
     void Start()
     {
@@ -77,40 +81,67 @@ public class FreeCam : NetworkBehaviour
 
         } else
         {
-            GameObject[] players = LevelManager.GetLoadedPlayers();
-            if (players.Length > 0)
+            
+            if (focusedPlayer != null)
             {
-                transform.position = players[m_CurrentPlayerIndex].transform.position;
+                transform.position = focusedPlayer.transform.position;
 
-                if (Input.GetKey(KeyCode.A))
+                if (Input.GetKeyDown(KeyCode.A))
                 {
+                    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
                     m_CurrentPlayerIndex -= 1;
                     if (m_CurrentPlayerIndex < 0)
                     {
                         m_CurrentPlayerIndex = players.Length - 1;
                     }
-                }
-                if (Input.GetKey(KeyCode.D)) {
-                    m_CurrentPlayerIndex += 1;
-                    if (m_CurrentPlayerIndex == players.Length)
+                    if (m_CurrentPlayerIndex >= players.Length)
                     {
                         m_CurrentPlayerIndex = 0;
                     }
+                    if (loadedPlayers == null || players.Length != loadedPlayers.Length)
+                    {
+                        loadedPlayers = players;
+                    }
+                    focusedPlayer = loadedPlayers[m_CurrentPlayerIndex];
                 }
+                if (Input.GetKeyDown(KeyCode.D)) {
+                    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+                    m_CurrentPlayerIndex += 1;
+                    if (m_CurrentPlayerIndex >= players.Length)
+                    {
+                        m_CurrentPlayerIndex = 0;
+                    }
+                    if (loadedPlayers == null || players.Length != loadedPlayers.Length)
+                    {
+                        loadedPlayers = players;
+                    }
+                    focusedPlayer = loadedPlayers[m_CurrentPlayerIndex];
+                }
+                Debug.Log(m_CurrentPlayerIndex);
             } else
             {
                 m_LockOnPlayer = !m_LockOnPlayer;
             }
 
         }
-        
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             m_LockOnPlayer = !m_LockOnPlayer;
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            if (m_CurrentPlayerIndex >= players.Length)
+            {
+                m_CurrentPlayerIndex = 0;
+            }
+            if (loadedPlayers == null || players.Length != loadedPlayers.Length)
+            {
+                loadedPlayers = players;
+            }
+            focusedPlayer = loadedPlayers[m_CurrentPlayerIndex];
         }
 
-        
+        Camera.main.transform.position = transform.position + (offsetY * transform.up) + (offsetX * -transform.forward);
         Camera.main.transform.rotation = transform.rotation;
     }
 
