@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class RoomUI : MonoBehaviour {
     public static RoomUI singleton = null;
@@ -13,6 +16,7 @@ public class RoomUI : MonoBehaviour {
     public Button addSurvivorAiBtn;
     public Button removeSurvivorAiBtn;
     public Button readyBtn;
+    //public Button quitRoomBtn;
 
     public Image[] hunterImages = new Image[2];
     public Image[] survivorImages = new Image[4];
@@ -33,4 +37,34 @@ public class RoomUI : MonoBehaviour {
     {
         singleton = this;
     }
+
+    //private void Start()
+    //{
+    //    quitRoomBtn.onClick.AddListener(QuitRoom);
+    //}
+
+    //void QuitRoom()
+    //{
+    //    Destroy(LobbyManager.Singleton.gameObject);
+
+    //    if (Network.isClient)
+    //    {
+    //        LobbyManager.singleton.client.Disconnect();
+    //        LobbyManager.singleton.client.Shutdown();
+    //    }
+    //    else if (Network.isServer)
+    //    {
+    //        NetworkManager.singleton.StopClient();
+    //        NetworkManager.singleton.StopHost();
+    //        NetworkManager.singleton.StopMatchMaker();
+    //        Network.Disconnect();
+    //    }
+
+    //    if (LobbyPlayer.localPlayer)
+    //    {
+    //        Destroy(LobbyPlayer.localPlayer.gameObject);
+    //    }
+
+    //    SceneManager.LoadScene(GameScene.MainMenu);
+    //}
 }

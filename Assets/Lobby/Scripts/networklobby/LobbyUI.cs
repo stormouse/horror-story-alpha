@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
+
 
 public class LobbyUI : MonoBehaviour {
     public Button hostBtn;
@@ -18,6 +20,7 @@ public class LobbyUI : MonoBehaviour {
     void StartHostCallback()
     {
         LocalPlayerInfo.playerName = playerNameInput.text;
+        NetworkServer.Reset();
         lobbyManager.StartHost(); // no need to explicitly set ip:port
     }
 
